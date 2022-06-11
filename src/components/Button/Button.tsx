@@ -104,6 +104,7 @@ const Button: FunctionComponent<ButtonProps> = ({ type, loading, ...props }) => 
     );
   } else if (type === 'secondary') {
     return (
+      //@ts-ignore
       <SecondaryButton loading={loading} {...props}>
         {loading && <LoadingIcon />}
         {props.children}
