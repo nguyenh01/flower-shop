@@ -1,0 +1,43 @@
+{
+  "label": {
+    "firstName": "tên",
+    "lastName": "họ và tên đệm",
+    "email": "email",
+    "phone": "số điện thoại",
+    "password": "mật khẩu",
+    "confirmPassword": "nhập lại mật khẩu",
+    "province": "thành phố",
+    "district": "quận",
+    "ward": "phường",
+    "address": "địa chỉ",
+    "note": "ghi chú"
+  },
+  "menu": {
+    "home": "trang chủ",
+    "shop": "cửa hàng",
+    "aboutUs": "về chúng tôi",
+    "contact": "liên hệ",
+    "description": "Được thành lập từ tháng 2/2022, đến nay Flower Sun đang trở thành sự lựa chọn hàng đầu của quý khách hàng, quý doanh nghiệp mỗi khi cần đặt tặng hoa tươi chúc mừng, kệ hoa sự kiện trên phạm vi cả nước. Bạn cần một bó hoa chúc mừng sinh nhật người yêu hay một kệ hoa mừng khai trương đối tác? Với Flower Sun, bạn chỉ cần nói rõ yêu cầu của mình, phần còn lại cứ để Flower Sun lo, từ hỗ trợ tư vấn chọn mẫu, gợi ý nội dung băng rôn, thiệp mừng cho tới đóng gói, vận chuyển an toàn tới nơi người nhận.",
+    "language": "ngôn ngữ",
+    "login": "đăng nhập",
+    "register": "đăng ký",
+    "logout": "đăng xuất",
+    "myAccount": "tài khoản của tôi"
+  },
+  "home": {
+    "wonderfulGift": "quà tặng tuyệt vời",
+    "featureProduct": "sản phẩm nổi bật",
+    "historySection1": "câu chuyện của chúng tôi",
+    "historySection2": "lịch sử của chúng tôi",
+    "historyTitle": "Tầm nhìn: Hợp tác, hỗ trợ các shop hoa tươi, quà tặng trên cả nước trong việc cung cấp các dịch vụ trong lĩnh vực hoa tươi, quà tặng."
+  },
+  "register": {
+    "createAccount": "tạo tài khoản",
+    "subtitle": "Vui lòng Đăng Ký bằng cách điền các thông tin bên dưới.",
+    "returnStore": "Trở lại Cửa Hàng"
+  },
+  "login": {
+    "subtitle": "Vui lòng Đăng Nhập bằng cách điền tài khoản của bạn bên dưới.",
+    "createAccount": "Tạo Tài Khoản"
+  }
+}

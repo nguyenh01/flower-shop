@@ -1,0 +1,43 @@
+{
+  "label": {
+    "firstName": "first name",
+    "lastName": "last name",
+    "email": "email",
+    "phone": "phone",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "province": "province",
+    "district": "district",
+    "ward": "ward",
+    "address": "address",
+    "note": "note"
+  },
+  "menu": {
+    "home": "home",
+    "shop": "shop",
+    "aboutUs": "about us",
+    "contact": "contact",
+    "description": "Established in June 2022, Flower Sun is now becoming the choice of products the head of customers, every time you need to order fresh flowers to congratulate, flower shelves cases nationwide. Do you need a bouquet of flowers to celebrate your lover's birthday or a flower shelf? Happy partner opening? With Flower Sun, you just need to state your request. Let Flower Sun take care of the rest, from consulting support to choosing samples, suggesting content of banners, greeting cards to packaging, safe transportation to the recipient.",
+    "language": "language",
+    "login": "login",
+    "register": "register",
+    "logout": "logout",
+    "myAccount": "my account"
+  },
+  "home": {
+    "wonderfulGift": "wonderful gift",
+    "featureProduct": "featured products",
+    "historySection1": "a little story about us",
+    "historySection2": "our history",
+    "historyTitle": "Vision: Cooperate and support fresh flower and gift shops across the country in providing services in the field of fresh flowers and gifts."
+  },
+  "register": {
+    "createAccount": "create account",
+    "subtitle": "Please Register using account detail bellow.",
+    "returnStore": "Return to Store"
+  },
+  "login": {
+    "subtitle": "Please Login using account detail bellow.",
+    "createAccount": "Create Account"
+  }
+}

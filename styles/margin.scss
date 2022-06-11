@@ -1,0 +1,17 @@
+$length: 150;
+
+@for $i from 1 through $length {
+  @if $i % 5 == 0 {
+    .mb-#{$i} {
+      margin-bottom: #{$i}px;
+    }
+  }
+}
+
+@for $i from 1 through $length {
+  @if $i % 5 == 0 {
+    .mt-#{$i} {
+      margin-top: #{$i}px;
+    }
+  }
+}

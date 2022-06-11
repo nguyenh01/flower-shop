@@ -1,0 +1,24 @@
+.popover {
+  width: 105px;
+  padding-top: 29px !important;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover-inner-content {
+    padding: 12px 0 !important;
+  }
+
+  .popover-user-item {
+    padding: 8px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    text-transform: capitalize;
+
+    &:hover {
+      color: #fff;
+      background-color: #e72463;
+    }
+  }
+}
