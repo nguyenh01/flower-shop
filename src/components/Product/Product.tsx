@@ -8,8 +8,7 @@ import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import { handleAddToCartWithCookie } from '@src/containers/Product/ProductCookie';
 import useSelector from '@src/utils/useSelector';
-import { CartAPI, usePostCartItemMutation } from '@src/api/CartAPI';
-import dispatch from '@src/utils/dispatch';
+import { usePostCartItemMutation } from '@src/api/CartAPI';
 
 interface ProductProps {
   product: ProductItem;
@@ -42,9 +41,7 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
       };
       postCartItem(payload)
         .unwrap()
-        .then(() => {
-          dispatch(CartAPI.util.invalidateTags(['CART']));
-        })
+        .then(() => {})
         .catch((error) => console.log(error));
     }
   };

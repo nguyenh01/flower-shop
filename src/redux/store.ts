@@ -2,7 +2,7 @@ import { combineReducers, configureStore, ThunkAction, Action } from '@reduxjs/t
 import { StatusCodeErrorMiddleware } from '@src/redux/middlewares/StatusCodeErrorMiddleware';
 
 import userProfile from '@src/redux/slices/userSlice';
-import productSilce from '@src/redux/slices/productSlice';
+import productSlice from '@src/redux/slices/productSlice';
 
 import { AuthenticationAPI } from '@src/api/AuthenticationAPI';
 import { ProductAPI } from '@src/api/ProductAPI';
@@ -11,7 +11,7 @@ import { LocationAPI } from '@src/api/LocationAPI';
 
 const rootReducer = combineReducers({
   userProfile,
-  productSilce,
+  productSlice,
 
   [AuthenticationAPI.reducerPath]: AuthenticationAPI.reducer,
   [ProductAPI.reducerPath]: ProductAPI.reducer,

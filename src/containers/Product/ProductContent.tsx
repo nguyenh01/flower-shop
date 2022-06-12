@@ -16,8 +16,7 @@ import { ProductItem } from '@src/api/DataModel/product.data-model';
 import formatAmount from '@src/utils/formatAmount';
 import { handleAddToCartWithCookie } from '@src/containers/Product/ProductCookie';
 import useSelector from '@src/utils/useSelector';
-import { CartAPI, usePostCartItemMutation } from '@src/api/CartAPI';
-import dispatch from '@src/utils/dispatch';
+import { usePostCartItemMutation } from '@src/api/CartAPI';
 
 const categoriyLinks = [
   { name: 'Deal Product', href: '/' },
@@ -64,9 +63,7 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
       };
       postCartItem(payload)
         .unwrap()
-        .then(() => {
-          dispatch(CartAPI.util.invalidateTags(['CART']));
-        })
+        .then(() => {})
         .catch((error) => console.log(error));
     }
   };

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 function CheckoutPage() {
   const router = useRouter();
-  const { cart } = useSelector((state) => state.productSilce);
+  const { cart } = useSelector((state) => state.productSlice);
 
   useEffect(() => {
     if (cart.length === 0) {

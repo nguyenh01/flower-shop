@@ -12,7 +12,7 @@ const initialState = {
   ],
 };
 
-const productSilce = createSlice({
+const productSlice = createSlice({
   name: 'productSlice',
   initialState,
   reducers: {
@@ -22,7 +22,7 @@ const productSilce = createSlice({
   },
 });
 
-const { actions, reducer } = productSilce;
+const { actions, reducer } = productSlice;
 
 export const { setCart } = actions;
 

@@ -22,3 +22,11 @@ export interface PostCartItemRequest {
   product_id?: string;
   quantity: number;
 }
+
+export interface DeleteCartRequest {
+  id?: string;
+}
+
+export interface DeleteCartResponse {
+  msg: string;
+}

@@ -1,7 +1,7 @@
 import Wrapper from '@src/components/Layout/Wrapper';
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { cartHeader } from '@src/containers/Cart/constant';
-import { Image } from 'antd';
+import { Image, message } from 'antd';
 import Link from 'next/link';
 import QuantityControl from '@src/components/QuantityControl/QuantityControl';
 import { FaRegTrashAlt } from 'react-icons/fa';
@@ -9,7 +9,7 @@ import Button from '@src/components/Button/Button';
 import Container from './style';
 import Cookies from 'js-cookie';
 import {
-  handleClearCart,
+  handleClearCart as handleClearCookieCart,
   handleDeleteItemInCart,
   handleUpdateQuantity,
   Product,
@@ -19,15 +19,19 @@ import Path from '@src/utils/path';
 import formatAmount from '@src/utils/formatAmount';
 import { useRouter } from 'next/router';
 import useSelector from '@src/utils/useSelector';
+import { useDeleteCartItemMutation } from '@src/api/CartAPI';
 
 const Cart: FunctionComponent = () => {
   const router = useRouter();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
-  const { cart } = useSelector((state) => state.productSilce);
+  const { cart } = useSelector((state) => state.productSlice);
   const cartCookie = Cookies.get('carts');
 
   const [product, setProduct] = useState<Product[]>([]);
   const [total, setTotal] = useState<number>();
+
+  const [deleteCartItem] = useDeleteCartItemMutation();
+  //const [deleteCart] = useDeleteCartMutation();
 
   useEffect(() => {
     if (!isAuth) {
@@ -57,9 +61,18 @@ const Cart: FunctionComponent = () => {
   };
 
   const handleDeleteItem = (id?: string) => {
-    const newCart = product.filter((item: Product) => item.id !== id);
-    setProduct(newCart);
-    handleDeleteItemInCart(newCart);
+    if (!isAuth) {
+      const newCart = product.filter((item: Product) => item.id !== id);
+      setProduct(newCart);
+      handleDeleteItemInCart(newCart);
+    } else {
+      deleteCartItem({ id })
+        .unwrap()
+        .then(() => {
+          message.success('Delete Success');
+        })
+        .catch(() => {});
+    }
   };
 
   const handleUpdateCart = () => {
@@ -68,6 +81,14 @@ const Cart: FunctionComponent = () => {
 
   const handleContinueShopping = () => {
     router.push(Path.SHOP);
+  };
+
+  const handleClearCart = () => {
+    if (!isAuth) {
+      handleClearCookieCart();
+    } else {
+      return;
+    }
   };
 
   return (
@@ -88,7 +109,12 @@ const Cart: FunctionComponent = () => {
               {product.map((item: Product) => (
                 <tr key={item.id}>
                   <td>
-                    <Image width="100%" src={`${imgPath}${item.image}`} preview={false} />
+                    <Image
+                      width="100%"
+                      src={`${imgPath}${item.image}`}
+                      preview={false}
+                      alt="img_cart"
+                    />
                   </td>
                   <td className="product-link">
                     <Link href={Path.PRODUCT_DETAIL(item.id as string)}>{item.name}</Link>

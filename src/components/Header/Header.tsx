@@ -20,9 +20,8 @@ const Header: FunctionComponent = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const drawer = useBooleanState();
-  const { isAuth } = useSelector((state) => state.userProfile);
-  const { profile } = useSelector((state) => state.userProfile);
-  const { cart } = useSelector((state) => state.productSilce);
+  const { isAuth, profile } = useSelector((state) => state.userProfile);
+  const { cart } = useSelector((state) => state.productSlice);
 
   const headerValue = [
     { name: t('menu.home'), link: Path.HOME },
