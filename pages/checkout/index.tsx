@@ -1,20 +1,11 @@
-import { Fragment, ReactElement, useEffect } from 'react';
+import { Fragment, ReactElement } from 'react';
 import EmptyLayout from '@src/components/Layout/EmptyLayout';
 import Head from 'next/head';
 import Checkout from '@src/containers/Checkout';
-import useSelector from '@src/utils/useSelector';
-import { useRouter } from 'next/router';
+import RoutingProtection from '@src/components/ServerSideRendering/RoutingProtection';
+import { allRole } from '@src/utils/constants';
 
 function CheckoutPage() {
-  const router = useRouter();
-  const { cart } = useSelector((state) => state.productSlice);
-
-  useEffect(() => {
-    if (cart.length === 0) {
-      router.push('/');
-    }
-  }, [cart]);
-
   return (
     <Fragment>
       <Head>
@@ -29,4 +20,4 @@ CheckoutPage.getLayout = function getLayout(page: ReactElement) {
   return <EmptyLayout>{page}</EmptyLayout>;
 };
 
-export default CheckoutPage;
+export default RoutingProtection(CheckoutPage, allRole);

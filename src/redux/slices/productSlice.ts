@@ -1,15 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  cart: [
-    {
-      id: '',
-      image: '',
-      name: '',
-      price: '',
-      quantity: '',
-    },
-  ],
+  cartItems: [],
+  count: 0,
 };
 
 const productSlice = createSlice({
@@ -17,13 +10,16 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     setCart(state, action) {
-      state.cart = action.payload;
+      state.cartItems = action.payload;
+    },
+    setCountCookie(state, action) {
+      state.count = action.payload;
     },
   },
 });
 
 const { actions, reducer } = productSlice;
 
-export const { setCart } = actions;
+export const { setCart, setCountCookie } = actions;
 
 export default reducer;

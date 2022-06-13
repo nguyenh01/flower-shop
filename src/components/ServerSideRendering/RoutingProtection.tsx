@@ -37,12 +37,14 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
       if (cart) {
         const product = cart.listShoppingCartDetail.map((item) => ({
           id: item.product_id,
-          image: 'Image',
+          image: item.imageList[0],
           name: item.product_name,
           price: item.unit_price,
           quantity: item.quantity,
         }));
         dispatch(setCart(product));
+      } else {
+        dispatch(setCart([]));
       }
     }, [cart]);
 
@@ -68,6 +70,24 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
         const checkType = type.some((item) => item === response.data.user.type);
         if (!checkType) {
           redirect(server, Path.PAGE_NOT_FOUND);
+          return { query: server.query };
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      if (req && server?.req?.cookies?.token) {
+        const token = server?.req?.cookies?.token;
+        const response = await axios.get(`${host}/shoppingCarts`, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        });
+        const checkCartItem = response.data.listShoppingCartDetail.length === 0;
+        if (checkCartItem && asPath === Path.CHECK_OUT) {
+          redirect(server, Path.CART);
           return { query: server.query };
         }
       }

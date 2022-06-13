@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import Logo from '@src/components/Logo/Logo';
 import Container from './style';
 import { Badge, Col, message, Row } from 'antd';
@@ -15,13 +15,15 @@ import { useLogoutMutation } from '@src/api/AuthenticationAPI';
 import dispatch from '@src/utils/dispatch';
 import { logout as logOutSlice } from '@src/redux/slices/userSlice';
 import useSelector from '@src/utils/useSelector';
+import { setCart } from '@src/redux/slices/productSlice';
+import Cookies from 'js-cookie';
 
 const Header: FunctionComponent = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const drawer = useBooleanState();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
-  const { cart } = useSelector((state) => state.productSlice);
+  const { cartItems, count } = useSelector((state) => state.productSlice);
 
   const headerValue = [
     { name: t('menu.home'), link: Path.HOME },
@@ -29,6 +31,20 @@ const Header: FunctionComponent = () => {
     { name: t('menu.aboutUs'), link: Path.ABOUT_US },
     { name: t('menu.contact'), link: Path.CONTACT },
   ];
+
+  const [totalCartItem, setTotalCartItem] = useState<number>();
+
+  useEffect(() => {
+    if (isAuth) {
+      setTotalCartItem(cartItems.length);
+    } else {
+      const cartCookie = Cookies.get('carts');
+      if (cartCookie) {
+        const parseJson = JSON.parse(cartCookie);
+        setTotalCartItem(parseJson.length);
+      }
+    }
+  }, [cartItems, isAuth, count]);
 
   const handleGoToPage = (link: string) => {
     router.push(link);
@@ -52,7 +68,7 @@ const Header: FunctionComponent = () => {
         <Col lg={6} md={12}>
           <div className="header-right">
             <div className="cart-wrap" onClick={() => handleGoToPage(Path.CART)}>
-              <Badge count={cart.length} overflowCount={10} offset={[2, 0]}>
+              <Badge count={totalCartItem} showZero overflowCount={10} offset={[2, 0]}>
                 <IoCartOutline className="cart-icon" />
               </Badge>
             </div>
@@ -125,6 +141,7 @@ const PopoverContentWithAuthentication = ({ t }: PopoverContentProps) => {
     logout(null)
       .unwrap()
       .then(() => {});
+    dispatch(setCart([]));
     dispatch(logOutSlice());
     message.success('Logout Success');
   };

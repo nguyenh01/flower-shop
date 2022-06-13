@@ -24,16 +24,7 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
   };
 
   const handleAddToCart = (id?: string) => {
-    if (!isAuth) {
-      const item = {
-        id: product?._id,
-        image: product?.imageList[0],
-        name: product?.name,
-        price: product?.price,
-        quantity: 1,
-      };
-      handleAddToCartWithCookie(id, item, 1);
-    } else {
+    if (isAuth) {
       const payload = {
         cus_id: profile.id,
         product_id: product?._id,
@@ -43,6 +34,15 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
         .unwrap()
         .then(() => {})
         .catch((error) => console.log(error));
+    } else {
+      const item = {
+        id: product?._id,
+        image: product?.imageList[0],
+        name: product?.name,
+        price: product?.price,
+        quantity: 1,
+      };
+      handleAddToCartWithCookie(id, item, 1);
     }
   };
 

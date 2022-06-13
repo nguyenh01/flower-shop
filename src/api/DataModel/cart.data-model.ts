@@ -6,6 +6,7 @@ export interface CartItem {
   unit_price: number;
   quantity: number;
   total: number;
+  imageList: string[];
 }
 
 export interface CartResponse {
@@ -23,8 +24,19 @@ export interface PostCartItemRequest {
   quantity: number;
 }
 
+export interface PutCartItemResponse {
+  message: string;
+}
+
+export interface PutCartItemRequest {
+  carts: {
+    product_id: string;
+    quantity: number;
+  }[];
+}
+
 export interface DeleteCartRequest {
-  id?: string;
+  product_id?: string;
 }
 
 export interface DeleteCartResponse {

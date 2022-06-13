@@ -19,22 +19,41 @@ import Path from '@src/utils/path';
 import formatAmount from '@src/utils/formatAmount';
 import { useRouter } from 'next/router';
 import useSelector from '@src/utils/useSelector';
-import { useDeleteCartItemMutation } from '@src/api/CartAPI';
+import {
+  useDeleteCartItemMutation,
+  useDeleteCartMutation,
+  usePutCartItemMutation,
+} from '@src/api/CartAPI';
+
+interface CartItem {
+  product_id: string;
+  quantity: number;
+}
 
 const Cart: FunctionComponent = () => {
   const router = useRouter();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
-  const { cart } = useSelector((state) => state.productSlice);
+  const { cartItems } = useSelector((state) => state.productSlice);
   const cartCookie = Cookies.get('carts');
 
   const [product, setProduct] = useState<Product[]>([]);
+  const [cartItem, setCartItem] = useState<CartItem[]>([]);
   const [total, setTotal] = useState<number>();
 
+  const [putCartItem] = usePutCartItemMutation();
   const [deleteCartItem] = useDeleteCartItemMutation();
-  //const [deleteCart] = useDeleteCartMutation();
+  const [deleteCart] = useDeleteCartMutation();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (isAuth) {
+      const total = cartItems.reduce(
+        (preValue: any, curValue: any) =>
+          preValue + (curValue.price as number) * (curValue.quantity as number),
+        0
+      );
+      setTotal(total);
+      setProduct(cartItems as any);
+    } else {
       if (cartCookie) {
         const parseJson = JSON.parse(cartCookie);
         setProduct(parseJson);
@@ -45,38 +64,62 @@ const Cart: FunctionComponent = () => {
         );
         setTotal(total);
       }
-    } else {
-      const total = cart.reduce(
-        (preValue: any, curValue: any) =>
-          preValue + (curValue.price as number) * (curValue.quantity as number),
-        0
-      );
-      setTotal(total);
-      setProduct(cart as any);
     }
-  }, [isAuth, profile, cart]);
+  }, [isAuth, profile, cartItems]);
 
   const handleChange = (quantity: number, id: string) => {
-    handleUpdateQuantity(id, quantity);
+    if (isAuth) {
+      setCartItem((prevState) => [...prevState, { product_id: id, quantity }]);
+    } else {
+      handleUpdateQuantity(id, quantity);
+    }
   };
 
   const handleDeleteItem = (id?: string) => {
-    if (!isAuth) {
-      const newCart = product.filter((item: Product) => item.id !== id);
-      setProduct(newCart);
-      handleDeleteItemInCart(newCart);
-    } else {
-      deleteCartItem({ id })
+    if (isAuth) {
+      deleteCartItem({ product_id: id })
         .unwrap()
         .then(() => {
           message.success('Delete Success');
         })
-        .catch(() => {});
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      const newCart = product.filter((item: Product) => item.id !== id);
+      setProduct(newCart);
+      handleDeleteItemInCart(newCart);
     }
   };
 
+  const uniqueIdWithMaxQuantity = (cartItems: CartItem[]) => {
+    const arrayFiltered: CartItem[] = [];
+    cartItems.forEach((item) => {
+      const hasDuplicateId = arrayFiltered.find((value) => value.product_id === item.product_id);
+      if (hasDuplicateId) {
+        if (hasDuplicateId.quantity < item.quantity) {
+          hasDuplicateId.quantity = item.quantity;
+        }
+        return;
+      }
+      arrayFiltered.push(item);
+    });
+    return arrayFiltered;
+  };
+
   const handleUpdateCart = () => {
-    window.location.reload();
+    if (isAuth) {
+      putCartItem({ carts: uniqueIdWithMaxQuantity(cartItem) })
+        .unwrap()
+        .then(() => {
+          message.success('Update Cart Success');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      window.location.reload();
+    }
   };
 
   const handleContinueShopping = () => {
@@ -84,10 +127,17 @@ const Cart: FunctionComponent = () => {
   };
 
   const handleClearCart = () => {
-    if (!isAuth) {
-      handleClearCookieCart();
+    if (isAuth) {
+      deleteCart({})
+        .unwrap()
+        .then(() => {
+          message.success('Delete Success');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
-      return;
+      handleClearCookieCart();
     }
   };
 
@@ -154,7 +204,7 @@ const Cart: FunctionComponent = () => {
             Clear Cart
           </Button>
         </div>
-        {!isAuth ? <CartTotal total={total} /> : <CartTotal total={total} />}
+        <CartTotal total={total} />
       </Wrapper>
     </Container>
   );

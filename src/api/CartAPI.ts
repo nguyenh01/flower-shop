@@ -5,6 +5,8 @@ import {
   DeleteCartRequest,
   DeleteCartResponse,
   PostCartItemRequest,
+  PutCartItemRequest,
+  PutCartItemResponse,
 } from '@src/api/DataModel/cart.data-model';
 
 const baseEndpoint = `/shoppingCarts`;
@@ -14,11 +16,11 @@ export const CartAPI = createApi({
   baseQuery,
   tagTypes: ['CART'],
   endpoints: (builder) => ({
-    getCartById: builder.query<CartResponse, { id: string }>({
-      query: ({ id }) => ({
-        url: `${baseEndpoint}/${id}`,
+    getCartById: builder.query<CartResponse, any>({
+      query: () => ({
+        url: baseEndpoint,
       }),
-      providesTags: (res, err, arg) => (err ? [] : [{ type: 'CART', id: arg.id }]),
+      providesTags: (res, err) => (err ? [] : [{ type: 'CART' }]),
     }),
 
     postCartItem: builder.mutation<any, PostCartItemRequest>({
@@ -30,20 +32,27 @@ export const CartAPI = createApi({
       invalidatesTags: ['CART'],
     }),
 
+    putCartItem: builder.mutation<PutCartItemResponse, PutCartItemRequest>({
+      query: (body) => ({
+        url: `${baseEndpoint}/updateProduct`,
+        method: 'PUT',
+        body,
+      }),
+    }),
+
     deleteCartItem: builder.mutation<DeleteCartResponse, DeleteCartRequest>({
       query: (body) => ({
-        url: '/shoppingCartDetails',
+        url: baseEndpoint,
         method: 'DELETE',
         body,
       }),
       invalidatesTags: ['CART'],
     }),
 
-    deleteCart: builder.mutation<DeleteCartResponse, DeleteCartRequest>({
-      query: (body) => ({
+    deleteCart: builder.mutation<DeleteCartResponse, any>({
+      query: () => ({
         url: baseEndpoint,
         method: 'DELETE',
-        body,
       }),
       invalidatesTags: ['CART'],
     }),
@@ -53,6 +62,7 @@ export const CartAPI = createApi({
 export const {
   useGetCartByIdQuery,
   usePostCartItemMutation,
+  usePutCartItemMutation,
   useDeleteCartItemMutation,
   useDeleteCartMutation,
 } = CartAPI;

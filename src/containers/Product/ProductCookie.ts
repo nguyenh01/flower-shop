@@ -1,3 +1,5 @@
+import { setCountCookie } from '@src/redux/slices/productSlice';
+import dispatch from '@src/utils/dispatch';
 import Cookies from 'js-cookie';
 
 export interface Product {
@@ -20,6 +22,7 @@ export const handleAddToCartWithCookie = (id?: string, product?: Product, quanti
       const pr = cartCopy[index];
       cartCopy[index] = { ...pr, quantity: pr.quantity + quantity };
     }
+    dispatch(setCountCookie(cartCopy.length));
     const jsonString = JSON.stringify(cartCopy);
     Cookies.set('carts', jsonString);
   } else {
@@ -46,6 +49,7 @@ export const handleUpdateQuantity = (id: string, quantity: number) => {
 };
 
 export const handleDeleteItemInCart = (newCart: Product[]) => {
+  dispatch(setCountCookie(newCart.length));
   const jsonString = JSON.stringify(newCart);
   Cookies.set('carts', jsonString);
 };

@@ -46,16 +46,7 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
   };
 
   const handleAddToCart = (id?: string) => {
-    if (!isAuth) {
-      const product = {
-        id: content?._id,
-        image: content?.imageList[0],
-        name: content?.name,
-        price: content?.price,
-        quantity,
-      };
-      handleAddToCartWithCookie(id, product, quantity);
-    } else {
+    if (isAuth) {
       const payload = {
         cus_id: profile.id,
         product_id: content?._id,
@@ -65,6 +56,15 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
         .unwrap()
         .then(() => {})
         .catch((error) => console.log(error));
+    } else {
+      const product = {
+        id: content?._id,
+        image: content?.imageList[0],
+        name: content?.name,
+        price: content?.price,
+        quantity,
+      };
+      handleAddToCartWithCookie(id, product, quantity);
     }
   };
 
