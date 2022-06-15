@@ -51,7 +51,7 @@ const ProductImage: FunctionComponent<ProductImageProps> = ({ thumbnails }) => {
   return (
     <Fragment>
       <div className="product-image mb-40">
-        <Image className="image" width={470} src={`${imgPath}${source}`} />
+        <Image className="image" width={470} src={`${imgPath}${source}`} alt="img" />
       </div>
       <div className="product-thumbnail">
         {thumbnails?.map((item, index) => (
@@ -62,6 +62,7 @@ const ProductImage: FunctionComponent<ProductImageProps> = ({ thumbnails }) => {
             src={`${imgPath}${item}`}
             preview={false}
             onClick={() => handleClickThumbnail(item as string, index)}
+            alt="img"
           />
         ))}
       </div>

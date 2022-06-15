@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, useState } from 'react';
+import { Fragment, FunctionComponent, useMemo, useState } from 'react';
 import Rate from '@src/components/Rate/Rate';
 import QuantityControl from '@src/components/QuantityControl/QuantityControl';
 import { Space } from 'antd';
@@ -17,8 +17,12 @@ import formatAmount from '@src/utils/formatAmount';
 import { handleAddToCartWithCookie } from '@src/containers/Product/ProductCookie';
 import useSelector from '@src/utils/useSelector';
 import { usePostCartItemMutation } from '@src/api/CartAPI';
+import ModalAddToCart from '@src/components/ModalAddToCart/ModalAddToCart';
+import useBooleanState from '@src/hooks/useBooleanState';
+import { useRouter } from 'next/router';
+import Path from '@src/utils/path';
 
-const categoriyLinks = [
+const categoryLinks = [
   { name: 'Deal Product', href: '/' },
   { name: 'Featured Products', href: '/' },
   { name: 'Latest Products', href: '/' },
@@ -35,17 +39,27 @@ interface ProductContentProps {
 }
 
 const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => {
+  const router = useRouter();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
+  const modalAddToCart = useBooleanState();
 
   const [postCartItem] = usePostCartItemMutation();
 
   const [quantity, setQuantity] = useState(1);
 
+  const modalContent = useMemo(
+    () => ({
+      image: content?.imageList[0],
+      name: content?.name,
+    }),
+    [content]
+  );
+
   const handleChangeQuantity = (quantity?: number) => {
     setQuantity(quantity as number);
   };
 
-  const handleAddToCart = (id?: string) => {
+  const handleAddToCart = async (id?: string, buyNow = false) => {
     if (isAuth) {
       const payload = {
         cus_id: profile.id,
@@ -54,7 +68,13 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
       };
       postCartItem(payload)
         .unwrap()
-        .then(() => {})
+        .then(() => {
+          if (buyNow) {
+            router.push(Path.CHECK_OUT);
+          } else {
+            modalAddToCart.toggle();
+          }
+        })
         .catch((error) => console.log(error));
     } else {
       const product = {
@@ -64,10 +84,14 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
         price: content?.price,
         quantity,
       };
-      handleAddToCartWithCookie(id, product, quantity);
+      await handleAddToCartWithCookie(id, product, quantity);
+      if (buyNow) {
+        router.push(Path.CHECK_OUT);
+      } else {
+        modalAddToCart.toggle();
+      }
     }
   };
-
   return (
     <Fragment>
       <div className="product-title mb-15">{content?.name}</div>
@@ -96,12 +120,12 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
         </Space>
       </div>
       <div className="payment-button mb-15">
-        <Button className="btn" type="primary">
+        <Button className="btn" type="primary" onClick={() => handleAddToCart(content?._id, true)}>
           buy it now
         </Button>
       </div>
       <div className="product-category mb-10">
-        <ProductMeta title="Category" links={categoriyLinks} />
+        <ProductMeta title="Category" links={categoryLinks} />
       </div>
       <div className="product-tag mb-15">
         <ProductMeta title="Tag" links={tagLinks} />
@@ -119,6 +143,11 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
           </Space>
         </div>
       </div>
+      <ModalAddToCart
+        visible={modalAddToCart.visible}
+        onClose={modalAddToCart.toggle}
+        content={modalContent}
+      />
     </Fragment>
   );
 };

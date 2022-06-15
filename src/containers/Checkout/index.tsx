@@ -11,9 +11,12 @@ import { useFormik } from 'formik';
 import { initialValues } from '@src/containers/Checkout/constant';
 import Select from '@src/components/Select/Select';
 import { useGetDistrictQuery, useGetProvinceQuery, useGetWardQuery } from '@src/api/LocationAPI';
+import useSelector from '@src/utils/useSelector';
 
 const Checkout: FunctionComponent = () => {
   const { t } = useTranslation();
+  const { isAuth, profile } = useSelector((state) => state.userProfile);
+
   const gutter: [Gutter, Gutter] = useMemo(() => [12, 15], []);
   const span = useMemo(() => 24, []);
 
@@ -40,6 +43,13 @@ const Checkout: FunctionComponent = () => {
   };
 
   useEffect(() => {
+    formik.setFieldValue('email', profile?.email);
+    formik.setFieldValue('firstName', profile?.firstName);
+    formik.setFieldValue('lastName', profile?.lastName);
+    formik.setFieldValue('phone', profile?.phone);
+  }, [profile]);
+
+  useEffect(() => {
     formik.setFieldValue('district', undefined);
     formik.setFieldValue('ward', undefined);
     formik.setFieldValue('address', '');
@@ -59,9 +69,11 @@ const Checkout: FunctionComponent = () => {
           </div>
           <div className="section-header mb-20">
             <div className="section-title">Contact information</div>
-            <div className="check-account">
-              Already have an account? <Link href={Path.LOGIN}>Log in</Link>
-            </div>
+            {!isAuth && (
+              <div className="check-account">
+                Already have an account? <Link href={Path.LOGIN}>Log in</Link>
+              </div>
+            )}
           </div>
           <div className="checkout-form">
             <Row gutter={gutter}>
@@ -71,6 +83,7 @@ const Checkout: FunctionComponent = () => {
                   label={t('label.email')}
                   name="email"
                   value={formik.values.email}
+                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -80,15 +93,17 @@ const Checkout: FunctionComponent = () => {
                   label={t('label.firstName')}
                   name="firstName"
                   value={formik.values.firstName}
+                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
               <Col span={12}>
                 <Input
                   type="text"
-                  label={t('label.firstName')}
+                  label={t('label.lastName')}
                   name="lastName"
                   value={formik.values.lastName}
+                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -98,6 +113,7 @@ const Checkout: FunctionComponent = () => {
                   label={t('label.phone')}
                   name="phone"
                   value={formik.values.phone}
+                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -142,7 +158,7 @@ const Checkout: FunctionComponent = () => {
                     options={districts?.result.map((item) => ({
                       key: item.DistrictID,
                       value: item.DistrictID,
-                      render: () => item.DistrctName,
+                      render: () => item.DistrictName,
                     }))}
                     {...reuseProps}
                   />

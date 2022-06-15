@@ -1,5 +1,5 @@
 import { Image } from 'antd';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 import styled from 'styled-components';
 import { ProductItem } from '@src/api/DataModel/product.data-model';
 import { imgPath } from '@src/utils/constants';
@@ -9,6 +9,8 @@ import Path from '@src/utils/path';
 import { handleAddToCartWithCookie } from '@src/containers/Product/ProductCookie';
 import useSelector from '@src/utils/useSelector';
 import { usePostCartItemMutation } from '@src/api/CartAPI';
+import useBooleanState from '@src/hooks/useBooleanState';
+import ModalAddToCart from '../ModalAddToCart/ModalAddToCart';
 
 interface ProductProps {
   product: ProductItem;
@@ -18,12 +20,21 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
   const router = useRouter();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
   const [postCartItem] = usePostCartItemMutation();
+  const modalAddToCart = useBooleanState();
+
+  const modalContent = useMemo(
+    () => ({
+      image: product?.imageList[0],
+      name: product?.name,
+    }),
+    [product]
+  );
 
   const handleGoToProductDetail = (id: string) => {
     router.push(Path.PRODUCT_DETAIL(id));
   };
 
-  const handleAddToCart = (id?: string) => {
+  const handleAddToCart = async (id?: string) => {
     if (isAuth) {
       const payload = {
         cus_id: profile.id,
@@ -32,7 +43,9 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
       };
       postCartItem(payload)
         .unwrap()
-        .then(() => {})
+        .then(() => {
+          modalAddToCart.toggle();
+        })
         .catch((error) => console.log(error));
     } else {
       const item = {
@@ -42,7 +55,8 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
         price: product?.price,
         quantity: 1,
       };
-      handleAddToCartWithCookie(id, item, 1);
+      await handleAddToCartWithCookie(id, item, 1);
+      modalAddToCart.toggle();
     }
   };
 
@@ -53,17 +67,17 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
           <div className="image_1">
             <Image
               src={`${imgPath}${product?.imageList[0]}`}
-              alt="flower"
               width={262}
               preview={false}
+              alt="img"
             />
           </div>
           <div className="image_2">
             <Image
               src={`${imgPath}${product?.imageList[1]}`}
-              alt="flower"
               width={262}
               preview={false}
+              alt="img"
             />
           </div>
         </div>
@@ -75,6 +89,11 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
           </a>
         </div>
       </div>
+      <ModalAddToCart
+        visible={modalAddToCart.visible}
+        onClose={modalAddToCart.toggle}
+        content={modalContent}
+      />
     </Container>
   );
 };

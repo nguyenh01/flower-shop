@@ -8,6 +8,10 @@ const Container = styled.div`
     flex-direction: row;
   }
 
+  .main {
+    flex: 1 0 auto;
+  }
+
   .sidebar {
     position: relative;
     color: #535353;

@@ -10,7 +10,7 @@ export interface DistrictResponse {
   msg: string;
   result: {
     DistrictID: number;
-    DistrctName: string;
+    DistrictName: string;
   }[];
 }
 
