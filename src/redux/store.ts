@@ -8,6 +8,7 @@ import { AuthenticationAPI } from '@src/api/AuthenticationAPI';
 import { ProductAPI } from '@src/api/ProductAPI';
 import { CartAPI } from '@src/api/CartAPI';
 import { LocationAPI } from '@src/api/LocationAPI';
+import { OrderAPI } from '@src/api/OrderAPI';
 
 const rootReducer = combineReducers({
   userProfile,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   [ProductAPI.reducerPath]: ProductAPI.reducer,
   [CartAPI.reducerPath]: CartAPI.reducer,
   [LocationAPI.reducerPath]: LocationAPI.reducer,
+  [OrderAPI.reducerPath]: OrderAPI.reducer,
 });
 
 export function makeStore() {
@@ -28,7 +30,8 @@ export function makeStore() {
         .concat(AuthenticationAPI.middleware)
         .concat(ProductAPI.middleware)
         .concat(CartAPI.middleware)
-        .concat(LocationAPI.middleware),
+        .concat(LocationAPI.middleware)
+        .concat(OrderAPI.middleware),
   });
 }
 

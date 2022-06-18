@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  height: 98vh;
+
   .wrap {
     display: flex;
     flex: 1 0 auto;
     margin: 0 auto;
     flex-direction: row;
+    height: 100%;
   }
 
   .main {
@@ -25,6 +28,77 @@ const Container = styled.div`
       bottom: 0;
       background: #fafafa;
       z-index: -1;
+    }
+
+    .product-list {
+      .product {
+        ${(props) => props.theme.displayFlex('space-between', 'center')};
+
+        &:not(:last-child) {
+          margin-bottom: 20px;
+        }
+      }
+
+      .product-info {
+        ${(props) => props.theme.displayFlex('center', 'center')};
+
+        .ant-badge-count {
+          background: rgba(114, 114, 114, 0.9);
+        }
+      }
+
+      .product-description,
+      .product-price {
+        color: #323232;
+        font-weight: 500;
+      }
+
+      .product-thumbnail {
+        border-radius: 8px;
+        border: 1px solid #e5e5e5;
+        overflow: hidden;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .total-line {
+    padding: 20px 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+
+    .line {
+      ${(props) => props.theme.displayFlex('space-between', 'center')};
+    }
+
+    .text {
+      font-size: 15px;
+    }
+
+    .price {
+      color: #323232;
+      font-weight: 500;
+    }
+  }
+
+  .total {
+    ${(props) => props.theme.displayFlex('space-between', 'center')};
+
+    .text {
+      font-size: 16px;
+    }
+
+    .price {
+      color: #323232;
+      ${(props) => props.theme.fontCustom(24, 500, 24)}
+      ${(props) => props.theme.displayFlex('center', 'center')};
+
+      .currency {
+        color: #717171;
+        font-size: 12px;
+        line-height: 24px;
+        margin-right: 15px;
+      }
     }
   }
 
@@ -53,6 +127,18 @@ const Container = styled.div`
     .shipping-title {
       color: #333;
       ${(props) => props.theme.fontCustom(18, 400, 23.4)}
+    }
+
+    .order-btn {
+      background-color: ${(props) => props.theme.colors.primary};
+      border-radius: 5px;
+      height: 60px;
+      margin-right: 20px;
+      ${(props) => props.theme.fontCustom(14, 500, 14)};
+    }
+
+    .order-place {
+      ${(props) => props.theme.displayFlex('flex-start', 'center')};
     }
   }
 

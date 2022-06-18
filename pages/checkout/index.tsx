@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from 'react';
+import { Fragment, ReactElement, useMemo } from 'react';
 import EmptyLayout from '@src/components/Layout/EmptyLayout';
 import Head from 'next/head';
 import Checkout from '@src/containers/Checkout';
@@ -8,16 +8,22 @@ import Path from '@src/utils/path';
 import { redirect } from '@src/utils/redirect';
 import { GetServerSidePropsContext } from 'next';
 import useAuthentication from '@src/hooks/useAuthentication';
+import { CartResponse } from '@src/api/DataModel/cart.data-model';
 
-function CheckoutPage() {
+interface CheckoutPageProps {
+  data: CartResponse;
+}
+
+function CheckoutPage({ data }: CheckoutPageProps) {
   useAuthentication();
+  const cart = useMemo(() => data, [data]);
 
   return (
     <Fragment>
       <Head>
         <title>Flower Sun - Checkout</title>
       </Head>
-      <Checkout />
+      <Checkout cart={cart} />
     </Fragment>
   );
 }

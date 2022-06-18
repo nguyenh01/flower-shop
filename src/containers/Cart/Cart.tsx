@@ -215,6 +215,12 @@ interface CartTotalProps {
 }
 
 const CartTotal = ({ total }: CartTotalProps) => {
+  const router = useRouter();
+
+  const handleGoToCheckout = () => {
+    router.push(Path.CHECK_OUT);
+  };
+
   return (
     <div className="cart-calculate-items">
       <div className="calculate-title">Cart Totals</div>
@@ -230,7 +236,7 @@ const CartTotal = ({ total }: CartTotalProps) => {
           </tr>
         </tbody>
       </table>
-      <Button className="custom-btn" type="secondary">
+      <Button className="custom-btn" type="secondary" onClick={handleGoToCheckout}>
         Proceed to Checkout
       </Button>
     </div>

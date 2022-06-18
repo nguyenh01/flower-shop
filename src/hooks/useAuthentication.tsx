@@ -19,13 +19,13 @@ const useAuthentication = () => {
   useEffect(() => {
     if (data) {
       const payload = {
-        email: data.user.email,
-        firstName: data.user.firstName,
-        lastName: data.user.lastName,
-        phone: data.user.phone,
-        id: data.user._id,
+        email: data.user?.email,
+        firstName: data.user?.firstName,
+        lastName: data.user?.lastName,
+        phone: data.user?.phone,
+        id: data.user?._id,
       };
-      localStorage.setItem('user_id', data.user._id);
+      localStorage.setItem('user_id', data.user?._id);
       dispatch(setUserProfile(payload));
     }
   }, [data]);

@@ -37,15 +37,16 @@ const Input: FunctionComponent<InputProps> = ({
         {required ? <span className="required-mark">&nbsp;*</span> : null}
       </Label>
       {type === 'text' ? (
-        <StyledInput name={name} {...props} />
+        <StyledInput name={name} isError={isFormikError} {...props} />
       ) : type === 'password' ? (
         <StyledPasswordInput
           name={name}
-          {...props}
+          isError={isFormikError}
           iconRender={(visible) => (visible ? <BsFillEyeFill /> : <BsFillEyeSlashFill />)}
+          {...props}
         />
       ) : (
-        <StyledTextareaInput name={name} {...props} />
+        <StyledTextareaInput name={name} isError={isFormikError} {...props} />
       )}
       {errorMessage && isFormikError && (
         <ErrorText className="error-message">{errorMessage}</ErrorText>
@@ -54,10 +55,11 @@ const Input: FunctionComponent<InputProps> = ({
   );
 };
 
-const StyledInput = styled(InputAntd)`
+const StyledInput = styled(InputAntd)<{ isError: boolean }>`
   height: 40px;
   color: #333;
   border: 1px #d9d9d9 solid;
+  border: 1px solid ${(props) => (!props.isError ? '#d9d9d9' : props.theme.colors.red)};
   border-radius: 5px;
   padding: 13px 11px;
   outline: none;
@@ -72,10 +74,10 @@ const StyledInput = styled(InputAntd)`
   }
 `;
 
-const StyledPasswordInput = styled(InputAntd.Password)`
+const StyledPasswordInput = styled(InputAntd.Password)<{ isError: boolean }>`
   height: 40px;
   color: #333;
-  border: 1px #d9d9d9 solid;
+  border: 1px solid ${(props) => (!props.isError ? '#d9d9d9' : props.theme.colors.red)};
   border-radius: 5px;
   padding: 8px 11px;
   outline: none;
@@ -95,10 +97,10 @@ const StyledPasswordInput = styled(InputAntd.Password)`
   }
 `;
 
-const StyledTextareaInput = styled(InputAntd.TextArea)`
+const StyledTextareaInput = styled(InputAntd.TextArea)<{ isError: boolean }>`
   height: 40px;
   color: #333;
-  border: 1px #d9d9d9 solid;
+  border: 1px solid ${(props) => (!props.isError ? '#d9d9d9' : props.theme.colors.red)};
   border-radius: 5px;
   padding: 8px 11px;
   outline: none;
