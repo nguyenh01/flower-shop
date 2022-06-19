@@ -45,7 +45,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
     0
   );
   const cartItem = cart.listShoppingCartDetail.map((item) => ({
-    id: item._id,
+    id: item.product_id,
     quantity: item.quantity,
   }));
 
@@ -112,6 +112,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   };
 
   const handleConfirmOrder = (values: OrderFormik) => {
+    console.log({ item: cartItem, ...payload(values) });
     createOrder({
       item: cartItem,
       ...payload(values),

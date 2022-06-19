@@ -9,9 +9,10 @@ export const OrderAPI = createApi({
   baseQuery,
   endpoints: (builder) => ({
     createOrder: builder.mutation<OrderResponse, OrderRequest>({
-      query: () => ({
+      query: (body) => ({
         url: baseEndpoint,
         method: 'POST',
+        body,
       }),
     }),
   }),

@@ -10,7 +10,8 @@
     "analyze": "cross-env ANALYZE=true next build",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
-    "test-all": "yarn lint && yarn type-check"
+    "test-all": "yarn lint && yarn type-check",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^12.1.5",
