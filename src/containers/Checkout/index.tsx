@@ -343,6 +343,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
         visible={successModal.visible}
         onClose={successModal.toggle}
         onConfirm={handleConfirmSuccess}
+        confirmText="Close"
       />
     </Container>
   );
