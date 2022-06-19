@@ -120,6 +120,18 @@ const Container = styled.div`
       width: 100%;
     }
   }
+
+  .cart-empty {
+    color: #333;
+
+    .title {
+      ${(props) => props.theme.fontCustom(30, 400, 30)};
+    }
+
+    .subtitle {
+      ${(props) => props.theme.fontCustom(24, 400, 24)};
+    }
+  }
 `;
 
 export default Container;

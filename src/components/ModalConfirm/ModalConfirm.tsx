@@ -17,6 +17,7 @@ interface ModalConfirmProps {
   description?: string;
   showCloseButton?: boolean;
   showConfirmButton?: boolean;
+  showCloseIcon?: boolean;
   isConfirmLoading?: boolean;
 }
 
@@ -32,6 +33,7 @@ const ModalConfirm: FunctionComponent<ModalConfirmProps> = ({
   showCloseButton = true,
   showConfirmButton = true,
   isConfirmLoading,
+  showCloseIcon = true,
 }) => {
   const handleCloseModal = () => {
     onClose && onClose();
@@ -44,9 +46,11 @@ const ModalConfirm: FunctionComponent<ModalConfirmProps> = ({
   return (
     <ModalContainer type={type} visible={visible} closable={false} footer={null}>
       <div className="modal-content">
-        <div className="close-icon">
-          <IoClose onClick={handleCloseModal} />
-        </div>
+        {showCloseIcon && (
+          <div className="close-icon">
+            <IoClose onClick={handleCloseModal} />
+          </div>
+        )}
         <div className="type-icon mb-20">
           {type === 'success' ? (
             <BsCheckCircleFill className="success-icon" />

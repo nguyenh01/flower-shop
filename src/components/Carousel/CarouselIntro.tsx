@@ -1,4 +1,7 @@
+import Path from '@src/utils/path';
+import { useRouter } from 'next/router';
 import { FunctionComponent, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 interface CarouselIntroProps {
@@ -14,12 +17,21 @@ const CarouselIntro: FunctionComponent<CarouselIntroProps> = ({
   description,
   animation,
 }) => {
+  const router = useRouter();
+  const { t } = useTranslation();
+
+  const handleGoToShop = () => {
+    router.push(Path.SHOP);
+  };
+
   return (
     <Container>
       <div className={animation ? 'title-slider animation' : 'title-slider'}>{tag}</div>
       <div className={animation ? 'title animation' : 'title'}>{title}</div>
       <div className={animation ? 'description animation' : 'description'}>{description}</div>
-      <div className={animation ? 'button animation' : 'button'}>Shop Now</div>
+      <div className={animation ? 'button animation' : 'button'} onClick={handleGoToShop}>
+        {t('home.shopNow')}
+      </div>
     </Container>
   );
 };
@@ -45,7 +57,7 @@ const Container = styled.div`
   }
 
   .title {
-    ${(props) => props.theme.fontCustom(80, 500, 80)};
+    ${(props) => props.theme.fontCustom(80, 500, 80, 'Jura, sans-serif')};
     text-transform: capitalize;
     margin-bottom: 15px;
 
@@ -73,6 +85,8 @@ const Container = styled.div`
     color: #fff;
     background: ${(props) => props.theme.colors.primary};
     ${(props) => props.theme.fontCustom(15, 600, 45)};
+    cursor: pointer;
+    text-transform: capitalize;
 
     &.animation {
       animation: fadeInUpCarousel 1s 1.6s both;

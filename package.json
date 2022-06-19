@@ -10,13 +10,13 @@
     "analyze": "cross-env ANALYZE=true next build",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
-    "test-all": "yarn lint && yarn type-check",
-    "postinstall": "prisma generate"
+    "test-all": "yarn lint && yarn type-check"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^12.1.5",
     "@reduxjs/toolkit": "^1.8.1",
     "@types/js-cookie": "^3.0.2",
+    "@types/react-google-recaptcha": "^2.1.5",
     "@types/styled-components": "^5.1.25",
     "antd": "^4.19.5",
     "axios": "^0.27.2",
@@ -29,6 +29,7 @@
     "node-sass": "^7.0.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-google-recaptcha": "^2.1.0",
     "react-i18next": "^11.16.9",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.8",

@@ -4,8 +4,10 @@ import background from '@public/images/carousel_1.png';
 import background2 from '@public/images/carousel_2.png';
 import styled from 'styled-components';
 import CarouselIntro from './CarouselIntro';
+import { useTranslation } from 'react-i18next';
 
 const Carousel: FunctionComponent = () => {
+  const { t } = useTranslation();
   const [animation, setAnimation] = useState(true);
   const [animation2, setAnimation2] = useState(false);
 
@@ -37,8 +39,6 @@ const Carousel: FunctionComponent = () => {
     }
   };
 
-  const handleAfterChange = () => {};
-
   return (
     <Container>
       <CarouselAntD
@@ -47,14 +47,13 @@ const Carousel: FunctionComponent = () => {
         effect="fade"
         easing={'ease-in-out'}
         beforeChange={handleBeforeChange}
-        afterChange={handleAfterChange}
       >
         <div>
           <div style={carouselContent1}>
             <CarouselIntro
-              tag="top trend"
-              title="2021 Flower Trend"
-              description="Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire."
+              tag={t('home.topTrend')}
+              title={t('home.title1')}
+              description={t('home.description1')}
               animation={animation}
             />
           </div>
@@ -62,15 +61,13 @@ const Carousel: FunctionComponent = () => {
         <div>
           <div style={carouselContent2}>
             <CarouselIntro
-              tag="collection"
+              tag={t('home.collection')}
               title={
                 <Fragment>
-                  Flowers And Candle
-                  <br />
-                  Birthday Gift
+                  <div dangerouslySetInnerHTML={{ __html: t('home.title2') }}></div>
                 </Fragment>
               }
-              description="Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire."
+              description={t('home.description2')}
               animation={animation2}
             />
           </div>

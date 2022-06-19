@@ -6,16 +6,17 @@ import { Col, Row, message } from 'antd';
 import { Gutter } from 'antd/lib/grid/row';
 import { useFormik } from 'formik';
 import Link from 'next/link';
-import { FunctionComponent, useEffect, useMemo } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { initialValue, validationSchema } from './constant';
-import cookie from 'js-cookie';
 import { useLazyVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
 import { useRouter } from 'next/router';
 import dispatch from '@src/utils/dispatch';
-import { setUserProfile, login as loginSlice } from '@src/redux/slices/userSlice';
+import { setUserProfile } from '@src/redux/slices/userSlice';
 import Wrapper from '@src/components/Layout/Wrapper';
+import { handleAuthentication } from '../Register/constant';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Login: FunctionComponent = () => {
   const { t } = useTranslation();
@@ -27,32 +28,46 @@ const Login: FunctionComponent = () => {
   const gutter: [Gutter, Gutter] = useMemo(() => [0, 10], []);
   const span = useMemo(() => 24, []);
 
+  const [tokenReCAPTCHA, setTokenReCAPTCHA] = useState<string | null>(null);
+  const [countSubmit, setCountSubmit] = useState<number>();
+
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
     onSubmit: (value) => {
-      login(value)
-        .unwrap()
-        .then(async (response) => {
-          if (response.message === 'Successful') {
-            const convertTypeToString = response.type + '';
-            cookie.set('token', response.token, { expires: 2 });
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('type', convertTypeToString);
-            dispatch(loginSlice({ type: response.type }));
-            await verifyAccessToken({});
-            const { redirectPath } = router.query;
-            router.push(redirectPath ? String(redirectPath) : '/');
-            message.success('Login Succsess');
-          }
-        })
-        .catch((error) => {
-          if (error.data?.message === 'Fail') {
-            message.error(error.data.error);
-          }
-        });
+      if ((countSubmit as number) > 2) {
+        if (tokenReCAPTCHA) {
+          handleLogin(value);
+        } else {
+          message.error('Please verify reCAPTCHA');
+        }
+      } else {
+        handleLogin(value);
+      }
     },
   });
+
+  const handleLogin = (value: any) => {
+    return login(value)
+      .unwrap()
+      .then(async (response) => {
+        if (response.message === 'Successful') {
+          await handleAuthentication(response);
+          await verifyAccessToken({});
+          router.push(Path.HOME);
+          message.success('Login Succsess');
+        }
+      })
+      .catch((error) => {
+        if (error.data?.message === 'Fail') {
+          message.error(error.data.error);
+        }
+      });
+  };
+
+  useEffect(() => {
+    setCountSubmit(formik.submitCount);
+  }, [formik.submitCount]);
 
   useEffect(() => {
     if (data) {
@@ -73,8 +88,12 @@ const Login: FunctionComponent = () => {
     required: true,
   };
 
-  const handleLogin = () => {
+  const handleSubmitLogin = () => {
     formik.handleSubmit();
+  };
+
+  const handleChangeTokenReCAPCHA = (value: string) => {
+    setTokenReCAPTCHA(value);
   };
 
   return (
@@ -107,7 +126,15 @@ const Login: FunctionComponent = () => {
               </Col>
             </Row>
           </div>
-          <Button type="default" className="mb-20" loading={isLoading} onClick={handleLogin}>
+          {(countSubmit as number) > 2 && (
+            <div className="recapcha">
+              <ReCAPTCHA
+                sitekey="6LeSz0gaAAAAACrbGZeaCv7Bmw-CrITup8xR-Cek"
+                onChange={handleChangeTokenReCAPCHA as any}
+              />
+            </div>
+          )}
+          <Button type="default" className="mb-20" loading={isLoading} onClick={handleSubmitLogin}>
             {t('menu.login')}
           </Button>
           <div className="optional-action">

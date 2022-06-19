@@ -68,7 +68,7 @@ const Header: FunctionComponent = () => {
         <Col lg={6} md={12}>
           <div className="header-right">
             <div className="cart-wrap" onClick={() => handleGoToPage(Path.CART)}>
-              <Badge count={totalCartItem} showZero overflowCount={10} offset={[2, 0]}>
+              <Badge count={totalCartItem || 0} showZero overflowCount={10} offset={[2, 0]}>
                 <IoCartOutline className="cart-icon" />
               </Badge>
             </div>

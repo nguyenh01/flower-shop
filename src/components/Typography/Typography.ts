@@ -19,13 +19,13 @@ const SectionTitle1 = styled.div`
 `;
 
 const SectionTitle2 = styled.div`
-  ${(props) => props.theme.fontCustom(80, 600, 100, 'Josefin Slab,serif')};
+  ${(props) => props.theme.fontCustom(80, 600, 100, 'Jura, serif')};
   color: #000;
   text-transform: capitalize;
 `;
 
 const SectionTitle3 = styled.div`
-  ${(props) => props.theme.fontCustom(36, 700, 36, 'Josefin Slab,serif')};
+  ${(props) => props.theme.fontCustom(36, 700, 36, 'Jura, serif')};
   color: #000;
   text-transform: uppercase;
 `;

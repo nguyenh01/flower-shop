@@ -27,7 +27,7 @@ const Container = styled.div`
     padding-bottom: 12px;
     margin-bottom: 30px;
     border-bottom: 2px solid ${(props) => props.theme.colors.gray};
-    ${(props) => props.theme.fontCustom(22, 700, 22, 'Josefin Slab, serif')};
+    ${(props) => props.theme.fontCustom(22, 700, 22, 'Jura, serif')};
   }
 `;
 

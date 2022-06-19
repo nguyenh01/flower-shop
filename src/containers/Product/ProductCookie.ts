@@ -26,6 +26,7 @@ export const handleAddToCartWithCookie = (id?: string, product?: Product, quanti
     const jsonString = JSON.stringify(cartCopy);
     Cookies.set('carts', jsonString);
   } else {
+    dispatch(setCountCookie([product].length));
     const jsonString = JSON.stringify([product]);
     Cookies.set('carts', jsonString);
   }
@@ -43,6 +44,7 @@ export const handleUpdateQuantity = (id: string, quantity: number) => {
       const pr = cartCopy[index];
       cartCopy[index] = { ...pr, quantity: quantity };
     }
+    dispatch(setCountCookie(cartCopy.length));
     const jsonString = JSON.stringify(cartCopy);
     Cookies.set('carts', jsonString);
   }
@@ -56,4 +58,7 @@ export const handleDeleteItemInCart = (newCart: Product[]) => {
 
 export const handleClearCart = () => {
   Cookies.remove('carts');
+  const cartCookie = Cookies.get('carts');
+  const parseJson = JSON.parse(cartCookie || '[]');
+  dispatch(setCountCookie(parseJson.length));
 };

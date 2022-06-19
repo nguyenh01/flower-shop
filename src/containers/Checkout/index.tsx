@@ -112,7 +112,6 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   };
 
   const handleConfirmOrder = (values: OrderFormik) => {
-    console.log({ item: cartItem, ...payload(values) });
     createOrder({
       item: cartItem,
       ...payload(values),
@@ -126,7 +125,12 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   };
 
   const handleConfirmSuccess = () => {
-    router.push(Path.MY_ACCOUNT);
+    if (isAuth) {
+      router.push(Path.MY_ACCOUNT);
+    } else {
+      handleClearCookieCart();
+      router.push(Path.MY_ACCOUNT);
+    }
   };
 
   return (
@@ -152,7 +156,6 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                   label={t('label.email')}
                   name="email"
                   value={formik.values.email}
-                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -162,7 +165,6 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                   label={t('label.firstName')}
                   name="firstName"
                   value={formik.values.firstName}
-                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -172,7 +174,6 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                   label={t('label.lastName')}
                   name="lastName"
                   value={formik.values.lastName}
-                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -182,7 +183,6 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                   label={t('label.phone')}
                   name="phone"
                   value={formik.values.phone}
-                  disabled={isAuth}
                   {...reuseProps}
                 />
               </Col>
@@ -345,9 +345,13 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
         onClose={successModal.toggle}
         onConfirm={handleConfirmSuccess}
         confirmText="Close"
+        showCloseIcon={false}
       />
     </Container>
   );
 };
 
 export default Checkout;
+function handleClearCookieCart() {
+  throw new Error('Function not implemented.');
+}

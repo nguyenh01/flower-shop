@@ -29,7 +29,14 @@
     "featureProduct": "sản phẩm nổi bật",
     "historySection1": "câu chuyện của chúng tôi",
     "historySection2": "lịch sử của chúng tôi",
-    "historyTitle": "Tầm nhìn: Hợp tác, hỗ trợ các shop hoa tươi, quà tặng trên cả nước trong việc cung cấp các dịch vụ trong lĩnh vực hoa tươi, quà tặng."
+    "historyTitle": "Tầm nhìn: Hợp tác, hỗ trợ các shop hoa tươi, quà tặng trên cả nước trong việc cung cấp các dịch vụ trong lĩnh vực hoa tươi, quà tặng.",
+    "topTrend": "xu hướng",
+    "title1": "hoa nổi bật 2022",
+    "description1": "Những mẫu hoa tươi tại Flower Sun giúp bạn gửi lời chúc Tết 2022 ý nghĩa sẽ là món quà tinh thần to lớn dành cho mọi nhà và mọi người trong những ngày đầu xuân năm mới 2022 nhiều may mắn nhất.",
+    "collection": "bộ sưu tập",
+    "title2": "hoa và nến <br /> quà sinh nhật",
+    "description2": "Để tìm được một bó hoa sinh nhật đẹp dành tặng người thân yêu, cửa hàng Flower Sun luôn có rất nhiều lựa chọn cho bạn. Từ đơn giản đến sang trọng, từ cổ điển đến cách tân, tất cả đều được người bán hoa kết hợp một cách tỉ mỉ để tạo nên bó hoa đẹp nhất cho ngày ý nghĩa nhất mà bạn muốn dành tặng người thân yêu của mình.",
+    "shopNow": "mua ngay"
   },
   "register": {
     "createAccount": "tạo tài khoản",

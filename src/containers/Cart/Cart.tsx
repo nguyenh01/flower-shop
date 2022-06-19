@@ -1,5 +1,5 @@
 import Wrapper from '@src/components/Layout/Wrapper';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { cartHeader } from '@src/containers/Cart/constant';
 import { Image, message } from 'antd';
 import Link from 'next/link';
@@ -24,6 +24,8 @@ import {
   useDeleteCartMutation,
   usePutCartItemMutation,
 } from '@src/api/CartAPI';
+import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import useBooleanState from '@src/hooks/useBooleanState';
 
 interface CartItem {
   product_id: string;
@@ -32,6 +34,7 @@ interface CartItem {
 
 const Cart: FunctionComponent = () => {
   const router = useRouter();
+  const confirmClearCart = useBooleanState();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
   const { cartItems } = useSelector((state) => state.productSlice);
   const cartCookie = Cookies.get('carts');
@@ -127,85 +130,114 @@ const Cart: FunctionComponent = () => {
   };
 
   const handleClearCart = () => {
+    confirmClearCart.toggle();
+  };
+
+  const handleConfirmClearCart = () => {
     if (isAuth) {
       deleteCart({})
         .unwrap()
         .then(() => {
           message.success('Delete Success');
+          confirmClearCart.toggle();
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
       handleClearCookieCart();
+      confirmClearCart.toggle();
+      window.location.reload();
     }
   };
 
   return (
     <Container>
       <Wrapper>
-        <div className="cart-table mb-15">
-          <table className="table">
-            <thead>
-              <tr>
-                {cartHeader.map((item) => (
-                  <th key={item.name} className={item.className}>
-                    {item.name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {product.map((item: Product) => (
-                <tr key={item.id}>
-                  <td>
-                    <Image
-                      width="100%"
-                      src={`${imgPath}${item.image}`}
-                      preview={false}
-                      alt="img_cart"
-                    />
-                  </td>
-                  <td className="product-link">
-                    <Link href={Path.PRODUCT_DETAIL(item.id as string)}>{item.name}</Link>
-                  </td>
-                  <td>
-                    <div className="product-price">{formatAmount(item.price)}</div>
-                  </td>
-                  <td>
-                    <QuantityControl
-                      className="product-quantity"
-                      value={item.quantity as number}
-                      id={item.id}
-                      onChange={handleChange as any}
-                    />
-                  </td>
-                  <td>
-                    <div className="product-price">
-                      {formatAmount((item.price as number) * (item.quantity as number))}
-                    </div>
-                  </td>
-                  <td>
-                    <FaRegTrashAlt onClick={() => handleDeleteItem(item.id)} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="cart-update-option mb-30">
-          <Button className="custom-btn" type="secondary" onClick={handleUpdateCart}>
-            Update Cart
-          </Button>
-          <Button className="custom-btn" type="secondary" onClick={handleContinueShopping}>
-            Continue Shopping
-          </Button>
-          <Button className="custom-btn" type="secondary" onClick={handleClearCart}>
-            Clear Cart
-          </Button>
-        </div>
-        <CartTotal total={total} />
+        {product.length > 0 ? (
+          <Fragment>
+            <div className="cart-table mb-15">
+              <table className="table">
+                <thead>
+                  <tr>
+                    {cartHeader.map((item) => (
+                      <th key={item.name} className={item.className}>
+                        {item.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {product.map((item: Product) => (
+                    <tr key={item.id}>
+                      <td>
+                        <Image
+                          width="100%"
+                          src={`${imgPath}${item.image}`}
+                          preview={false}
+                          alt="img_cart"
+                        />
+                      </td>
+                      <td className="product-link">
+                        <Link href={Path.PRODUCT_DETAIL(item.id as string)}>{item.name}</Link>
+                      </td>
+                      <td>
+                        <div className="product-price">{formatAmount(item.price)}</div>
+                      </td>
+                      <td>
+                        <QuantityControl
+                          className="product-quantity"
+                          value={item.quantity as number}
+                          id={item.id}
+                          onChange={handleChange as any}
+                        />
+                      </td>
+                      <td>
+                        <div className="product-price">
+                          {formatAmount((item.price as number) * (item.quantity as number))}
+                        </div>
+                      </td>
+                      <td>
+                        <FaRegTrashAlt onClick={() => handleDeleteItem(item.id)} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="cart-update-option mb-30">
+              <Button className="custom-btn" type="secondary" onClick={handleUpdateCart}>
+                Update Cart
+              </Button>
+              <Button className="custom-btn" type="secondary" onClick={handleContinueShopping}>
+                Continue Shopping
+              </Button>
+              <Button className="custom-btn" type="secondary" onClick={handleClearCart}>
+                Clear Cart
+              </Button>
+            </div>
+            <CartTotal total={total} />
+          </Fragment>
+        ) : (
+          <div className="cart-empty">
+            <div className="title mb-10">Shopping Cart</div>
+            <div className="subtitle mb-10">Your cart is currently empty.</div>
+            <div className="description">
+              Continue browsing <Link href={Path.SHOP}>here</Link>
+            </div>
+          </div>
+        )}
       </Wrapper>
+      <ModalConfirm
+        type="confirm"
+        title="Clear Cart"
+        description="Are you sure you want to delete the cart?"
+        closeText="Cancel"
+        confirmText="Yes"
+        visible={confirmClearCart.visible}
+        onClose={confirmClearCart.toggle}
+        onConfirm={handleConfirmClearCart}
+      />
     </Container>
   );
 };

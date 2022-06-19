@@ -8,13 +8,8 @@ import Path from '@src/utils/path';
 import { redirect } from '@src/utils/redirect';
 import { GetServerSidePropsContext } from 'next';
 import useAuthentication from '@src/hooks/useAuthentication';
-import { CartResponse } from '@src/api/DataModel/cart.data-model';
 
-interface CheckoutPageProps {
-  data: CartResponse;
-}
-
-function CheckoutPage({ data }: CheckoutPageProps) {
+function CheckoutPage({ data }: any) {
   useAuthentication();
   const cart = useMemo(() => data, [data]);
 
@@ -35,8 +30,25 @@ CheckoutPage.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async (server: GetServerSidePropsContext) => {
   const { resolvedUrl, req } = server;
   const token = server?.req?.cookies?.token;
+  const cartCookies = server?.req?.cookies?.carts;
 
   try {
+    if (!token) {
+      const parseJson = JSON.parse(cartCookies);
+      const formatCart = parseJson.map((item: any) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        product_name: item.name,
+        imageList: [item.image],
+        unit_price: item.price,
+      }));
+      if (parseJson.length === 0) {
+        redirect(server, Path.CART);
+        return { query: server.query };
+      } else {
+        return { props: { data: { shoppingCart: {}, listShoppingCartDetail: formatCart } } };
+      }
+    }
     if (req && token) {
       const response = await axios.get(`${host}/shoppingCarts`, {
         headers: {

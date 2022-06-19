@@ -9,11 +9,10 @@ import Link from 'next/link';
 import { FunctionComponent, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { initialValue, payload, validationSchema } from './constant';
-import cookie from 'js-cookie';
+import { handleAuthentication, initialValue, payload, validationSchema } from './constant';
 import { useRouter } from 'next/router';
 import { useLazyVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
-import { login as loginSlice, setUserProfile } from '@src/redux/slices/userSlice';
+import { setUserProfile } from '@src/redux/slices/userSlice';
 import dispatch from '@src/utils/dispatch';
 import Wrapper from '@src/components/Layout/Wrapper';
 
@@ -35,14 +34,9 @@ const Register: FunctionComponent = () => {
         .unwrap()
         .then(async (response) => {
           if (response.message === 'Successful') {
-            const convertTypeToString = response.type + '';
-            cookie.set('token', response.token, { expires: 2 });
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('type', convertTypeToString);
-            dispatch(loginSlice({ type: response.type }));
+            await handleAuthentication(response);
             await verifyAccessToken({});
-            const { redirectPath } = router.query;
-            router.push(redirectPath ? String(redirectPath) : '/');
+            router.push(Path.HOME);
             message.success('Create Account Success');
           }
         })

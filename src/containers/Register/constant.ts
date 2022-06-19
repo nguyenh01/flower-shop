@@ -1,4 +1,7 @@
 import * as yup from 'yup';
+import cookie from 'js-cookie';
+import { login as loginSlice } from '@src/redux/slices/userSlice';
+import dispatch from '@src/utils/dispatch';
 
 export const initialValue = {
   firstName: '',
@@ -35,4 +38,12 @@ export const payload = (object: any) => {
     phone: object.phone,
     password: object.password,
   };
+};
+
+export const handleAuthentication = (response: any) => {
+  const convertTypeToString = response.type + '';
+  cookie.set('token', response.token, { expires: 2 });
+  localStorage.setItem('token', response.token);
+  localStorage.setItem('type', convertTypeToString);
+  dispatch(loginSlice({ type: response.type }));
 };
