@@ -114,13 +114,22 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
             value={quantity}
             onChange={handleChangeQuantity}
           />
-          <Button type="secondary" onClick={() => handleAddToCart(content?._id)}>
+          <Button
+            type="secondary"
+            onClick={() => handleAddToCart(content?._id)}
+            disabled={content?.unitsinstock === 0}
+          >
             Add to cart
           </Button>
         </Space>
       </div>
       <div className="payment-button mb-15">
-        <Button className="btn" type="primary" onClick={() => handleAddToCart(content?._id, true)}>
+        <Button
+          className="btn"
+          type="primary"
+          onClick={() => handleAddToCart(content?._id, true)}
+          disabled={content?.unitsinstock === 0}
+        >
           buy it now
         </Button>
       </div>

@@ -115,6 +115,10 @@ const Container = styled.div`
       }
     }
   }
+
+  .search-wrap {
+    padding: 0px;
+  }
 `;
 
 export default Container;

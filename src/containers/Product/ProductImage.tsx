@@ -3,7 +3,7 @@ import { Image } from 'antd';
 import { imgPath } from '@src/utils/constants';
 
 interface ProductImageProps {
-  thumbnails: string[] | undefined;
+  thumbnails?: string[];
 }
 
 const ProductImage: FunctionComponent<ProductImageProps> = ({ thumbnails }) => {

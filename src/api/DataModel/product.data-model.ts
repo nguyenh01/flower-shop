@@ -21,6 +21,9 @@ export interface ProductResponse {
 export interface ProductRequest {
   page?: number;
   size?: number;
-  cate_id?: string;
+  cate_id?: string[];
+  mate_id?: string[];
   name?: string;
+  order_by?: string;
+  is_instock?: boolean[];
 }

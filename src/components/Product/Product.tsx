@@ -80,13 +80,18 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
               alt="img"
             />
           </div>
+          {product?.unitsinstock === 0 && <span className="soldout-title">Soldout</span>}
         </div>
         <div className="product-content">
           <div className="product-title mb-10">{product?.name}</div>
           <div className="product-price">{formatAmount(product?.price)}</div>
-          <a className="cart-title" onClick={() => handleAddToCart(product?._id)}>
-            add to cart
-          </a>
+          {product?.unitsinstock === 0 ? (
+            <div className="cart-title">Out of stock</div>
+          ) : (
+            <a className="cart-title" onClick={() => handleAddToCart(product?._id)}>
+              add to cart
+            </a>
+          )}
         </div>
       </div>
       <ModalAddToCart
@@ -99,7 +104,7 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
 };
 
 const Container = styled.div`
-  width: 292px;
+  width: 100%;
   cursor: pointer;
 
   .product {
@@ -114,6 +119,7 @@ const Container = styled.div`
   .product-image {
     position: relative;
     text-align: center;
+    overflow: hidden;
 
     .image_2 {
       position: absolute;
@@ -129,6 +135,19 @@ const Container = styled.div`
         visibility: visible;
         opacity: 1;
       }
+    }
+
+    .soldout-title {
+      ${(props) => props.theme.fontCustom(15, 500, 170)};
+      background-color: ${(props) => props.theme.colors.primary};
+      color: #fff;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: -50px;
+      top: -50px;
+      transform: rotate(-45deg) translateZ(0) scale(1);
+      backface-visibility: hidden;
     }
   }
 

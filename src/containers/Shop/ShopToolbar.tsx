@@ -1,16 +1,18 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import Select from '@src/components/Select/Select';
 import { optionsSortBy } from '@src/containers/Shop/constant';
 
 interface ShopToolbarProps {
-  data?: any;
+  onChange: (value: string) => void;
 }
 
-const ShopToolbar: FunctionComponent<ShopToolbarProps> = ({ data }) => {
-  console.log(data);
-  const handleChange = (value: any) => {
-    console.log(value);
+const ShopToolbar: FunctionComponent<ShopToolbarProps> = ({ onChange }) => {
+  const [value, setValue] = useState<string>('a-z');
+
+  const handleChange = (event: any) => {
+    onChange && onChange(event.target.value);
+    setValue(event.target.value);
   };
 
   return (
@@ -20,7 +22,7 @@ const ShopToolbar: FunctionComponent<ShopToolbarProps> = ({ data }) => {
         <div className="sort-by">Sort by</div>
         <Select
           name="sort"
-          value="a-z"
+          value={value}
           onChange={handleChange}
           options={optionsSortBy.map((item) => ({
             key: item.value,

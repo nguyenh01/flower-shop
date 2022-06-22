@@ -17,6 +17,7 @@ import { logout as logOutSlice } from '@src/redux/slices/userSlice';
 import useSelector from '@src/utils/useSelector';
 import { setCart } from '@src/redux/slices/productSlice';
 import Cookies from 'js-cookie';
+import Input from '../Input/Input';
 
 const Header: FunctionComponent = () => {
   const router = useRouter();
@@ -73,7 +74,9 @@ const Header: FunctionComponent = () => {
               </Badge>
             </div>
             <div className="search-wrap">
-              <IoSearch className="search-icon" />
+              <Popover content={<PopoverSearchContent />} overlayClassName="popover-search">
+                <IoSearch className="search-icon" />
+              </Popover>
             </div>
             <div className="user-wrap">
               <div className="popover-wrapper">
@@ -155,6 +158,26 @@ const PopoverContentWithAuthentication = ({ t }: PopoverContentProps) => {
         {t('menu.logout')}
       </div>
     </div>
+  );
+};
+
+const PopoverSearchContent = () => {
+  const [search, setSearch] = useState('');
+
+  console.log(search);
+
+  const handleChangeSearch = (event: any) => {
+    setSearch(event.target.value);
+  };
+
+  return (
+    <Input
+      className="search-input"
+      type="text"
+      placeholder="Search out store"
+      value={search}
+      onChange={handleChangeSearch}
+    />
   );
 };
 

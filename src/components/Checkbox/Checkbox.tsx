@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export interface option {
   label: string;
-  value: string;
+  value: string | boolean;
 }
 
 interface CheckboxProps extends AntdCheckboxProps {

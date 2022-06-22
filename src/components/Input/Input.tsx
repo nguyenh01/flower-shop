@@ -7,14 +7,15 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 interface InputProps {
   type: 'text' | 'password' | 'textarea';
-  label: string;
-  name: string;
+  label?: string;
+  name?: string;
   onChange: (event?: any) => void;
   value: string | number;
   required?: boolean;
   disabled?: boolean;
   formik?: any;
-  className?: any;
+  className?: string;
+  placeholder?: string;
 }
 
 const Input: FunctionComponent<InputProps> = ({
