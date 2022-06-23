@@ -5,7 +5,6 @@ import Checkout from '@src/containers/Checkout';
 import axios from 'axios';
 import host from '@src/api/host';
 import Path from '@src/utils/path';
-import { redirect } from '@src/utils/redirect';
 import { GetServerSidePropsContext } from 'next';
 import useAuthentication from '@src/hooks/useAuthentication';
 
@@ -36,8 +35,12 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
     if (!token) {
       const parseJson = JSON.parse(cartCookies);
       if (parseJson.length === 0) {
-        redirect(server, Path.CART);
-        return { query: server.query };
+        return {
+          redirect: {
+            permanent: false,
+            destination: Path.CART,
+          },
+        };
       } else {
         const formatCart = parseJson.map((item: any) => ({
           product_id: item?.id,
@@ -57,8 +60,12 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
       });
       const checkCartItem = response?.data?.listShoppingCartDetail.length === 0;
       if (checkCartItem && resolvedUrl === Path.CHECK_OUT) {
-        redirect(server, Path.CART);
-        return { query: server.query };
+        return {
+          redirect: {
+            permanent: false,
+            destination: Path.CART,
+          },
+        };
       }
       return { props: { data: response?.data } };
     }
