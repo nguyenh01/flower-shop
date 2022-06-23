@@ -40,11 +40,11 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
 
   const gutter: [Gutter, Gutter] = useMemo(() => [12, 15], []);
   const span = useMemo(() => 24, []);
-  const subtotal = cart.listShoppingCartDetail?.reduce(
+  const subtotal = cart?.listShoppingCartDetail?.reduce(
     (prevValue, currentValue) => prevValue + currentValue.unit_price * currentValue.quantity,
     0
   );
-  const cartItem = cart.listShoppingCartDetail?.map((item) => ({
+  const cartItem = cart?.listShoppingCartDetail?.map((item) => ({
     id: item.product_id,
     quantity: item.quantity,
   }));
@@ -202,7 +202,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                   label={t('label.province')}
                   name="province"
                   value={formik.values.province}
-                  options={provinces?.result.map((item) => ({
+                  options={provinces?.result?.map((item) => ({
                     key: item.ProvinceID,
                     value: item.ProvinceID,
                     render: () => item.ProvinceName,
@@ -224,7 +224,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                     name="district"
                     placeholder="Select District"
                     value={formik.values.district}
-                    options={districts?.result.map((item) => ({
+                    options={districts?.result?.map((item) => ({
                       key: item.DistrictID,
                       value: item.DistrictID,
                       render: () => item.DistrictName,
@@ -248,7 +248,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                       name="ward"
                       placeholder="Select Ward"
                       value={formik.values.ward}
-                      options={wards?.result.map((item) => ({
+                      options={wards?.result?.map((item) => ({
                         key: item.WardCode,
                         value: item.WardCode,
                         render: () => item.WardName,
@@ -287,7 +287,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
         </div>
         <div className="sidebar">
           <div className="product-list mt-10 mb-20">
-            {cart?.listShoppingCartDetail.map((item) => (
+            {cart?.listShoppingCartDetail?.map((item) => (
               <div className="product" key={item._id}>
                 <div className="product-info">
                   <Badge count={item.quantity} offset={[-13, 0]}>
