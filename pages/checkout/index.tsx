@@ -36,11 +36,11 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
     if (!token) {
       const parseJson = JSON.parse(cartCookies);
       const formatCart = parseJson.map((item: any) => ({
-        product_id: item.id,
-        quantity: item.quantity,
-        product_name: item.name,
-        imageList: [item.image],
-        unit_price: item.price,
+        product_id: item?.id,
+        quantity: item?.quantity,
+        product_name: item?.name,
+        imageList: [item?.image],
+        unit_price: item?.price,
       }));
       if (parseJson.length === 0) {
         redirect(server, Path.CART);
@@ -55,12 +55,12 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
           Authorization: 'Bearer ' + token,
         },
       });
-      const checkCartItem = response.data.listShoppingCartDetail.length === 0;
+      const checkCartItem = response?.data?.listShoppingCartDetail.length === 0;
       if (checkCartItem && resolvedUrl === Path.CHECK_OUT) {
         redirect(server, Path.CART);
         return { query: server.query };
       }
-      return { props: { data: response.data } };
+      return { props: { data: response?.data } };
     }
   } catch (error) {
     return { props: { data: 'error' } };

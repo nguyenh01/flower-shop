@@ -1,4 +1,4 @@
-export const imgPath = 'http://localhost:3000/';
+export const imgPath = 'https://thien-flower.herokuapp.com/';
 
 export enum RoleEnum {
   BUYER,
