@@ -35,17 +35,17 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
   try {
     if (!token) {
       const parseJson = JSON.parse(cartCookies);
-      const formatCart = parseJson.map((item: any) => ({
-        product_id: item?.id,
-        quantity: item?.quantity,
-        product_name: item?.name,
-        imageList: [item?.image],
-        unit_price: item?.price,
-      }));
-      if (parseJson.length === 0 || parseJson === undefined) {
+      if (parseJson.length === 0 || !cartCookies) {
         redirect(server, Path.CART);
         return { query: server.query };
       } else {
+        const formatCart = parseJson.map((item: any) => ({
+          product_id: item?.id,
+          quantity: item?.quantity,
+          product_name: item?.name,
+          imageList: [item?.image],
+          unit_price: item?.price,
+        }));
         return { props: { data: { shoppingCart: {}, listShoppingCartDetail: formatCart } } };
       }
     }
