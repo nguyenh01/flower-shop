@@ -5,7 +5,7 @@ import 'styles/styles.scss';
 import 'styles/margin.scss';
 import '@src/components/Popover/popover.scss';
 
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 
@@ -21,6 +21,7 @@ import english_translation from '@src/i18n/english/translation.json';
 import vietnamese_translation from '@src/i18n/vietnamese/translation.json';
 
 import Layout from '@src/components/Layout/Layout';
+import Cookies from 'js-cookie';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -45,6 +46,13 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+
+  useEffect(() => {
+    const cartCookie = Cookies.get('carts');
+    if (!cartCookie) {
+      Cookies.set('carts', '[]');
+    }
+  }, []);
 
   return (
     <Provider store={store}>

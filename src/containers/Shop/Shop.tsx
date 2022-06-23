@@ -10,6 +10,8 @@ import { useGetProductsQuery } from '@src/api/ProductAPI';
 import { useGetCategoriesQuery } from '@src/api/CategoryAPI';
 import Pagination from '@src/components/Pagination/Pagination';
 import { useGetMaterialsQuery } from '@src/api/MaterialAPI';
+import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
+import { useRouter } from 'next/router';
 
 interface Option {
   label: string;
@@ -17,6 +19,9 @@ interface Option {
 }
 
 const Shop: FunctionComponent = () => {
+  const router = useRouter();
+  const { product_name } = router.query;
+
   const [page, setPage] = useState(1);
   const { data: categories } = useGetCategoriesQuery({});
   const { data: materials } = useGetMaterialsQuery({});
@@ -29,13 +34,18 @@ const Shop: FunctionComponent = () => {
   const [optionCategories, setOptionCategories] = useState<Option[]>([]);
   const [optionMaterials, setOptionMaterials] = useState<Option[]>([]);
 
-  const { data: product } = useGetProductsQuery({
+  const {
+    data: product,
+    isLoading,
+    isFetching,
+  } = useGetProductsQuery({
     size: 9,
     page: page,
     cate_id: category.length === 0 ? undefined : category,
     mate_id: material.length === 0 ? undefined : material,
     order_by: sort || undefined,
     is_instock: stock.length === 0 ? undefined : stock,
+    name: product_name,
   });
 
   useEffect(() => {
@@ -126,6 +136,7 @@ const Shop: FunctionComponent = () => {
           </Col>
         </Row>
       </Wrapper>
+      {(isLoading || isFetching) && <SpinnerFullScreen />}
     </Container>
   );
 };

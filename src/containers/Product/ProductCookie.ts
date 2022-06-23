@@ -57,7 +57,7 @@ export const handleDeleteItemInCart = (newCart: Product[]) => {
 };
 
 export const handleClearCart = () => {
-  Cookies.remove('carts');
+  Cookies.set('carts', '[]');
   const cartCookie = Cookies.get('carts');
   const parseJson = JSON.parse(cartCookie || '[]');
   dispatch(setCountCookie(parseJson.length));

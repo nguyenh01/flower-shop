@@ -35,7 +35,7 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
   try {
     if (!token) {
       const parseJson = JSON.parse(cartCookies);
-      if (parseJson.length === 0 || !cartCookies) {
+      if (parseJson.length === 0) {
         redirect(server, Path.CART);
         return { query: server.query };
       } else {

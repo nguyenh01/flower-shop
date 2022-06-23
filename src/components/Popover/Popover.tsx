@@ -5,11 +5,12 @@ import { Popover as PopoverAntd } from 'antd';
 interface PopoverProps extends PopoverAntdProps {
   content: ReactNode;
   children: ReactNode;
+  overlayClassName?: string;
 }
 
-const Popover: FunctionComponent<PopoverProps> = ({ content, children }) => {
+const Popover: FunctionComponent<PopoverProps> = ({ content, children, ...props }) => {
   return (
-    <PopoverAntd overlayClassName="popover" placement="bottom" content={content} trigger="hover">
+    <PopoverAntd placement="bottom" content={content} trigger="hover" {...props}>
       {children}
     </PopoverAntd>
   );

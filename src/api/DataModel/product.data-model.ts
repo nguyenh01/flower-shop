@@ -23,7 +23,7 @@ export interface ProductRequest {
   size?: number;
   cate_id?: string[];
   mate_id?: string[];
-  name?: string;
+  name?: string | string[];
   order_by?: string;
   is_instock?: boolean[];
 }

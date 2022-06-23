@@ -1,5 +1,5 @@
-.popover {
-  width: 105px;
+.popover-user {
+  width: 110px;
   padding-top: 29px !important;
 
   .ant-popover-arrow {
@@ -20,5 +20,18 @@
       color: #fff;
       background-color: #e72463;
     }
+  }
+}
+
+.popover-search {
+  width: 300px;
+  padding-top: 29px !important;
+
+  .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover-inner-content {
+    padding: 8px 8px !important;
   }
 }

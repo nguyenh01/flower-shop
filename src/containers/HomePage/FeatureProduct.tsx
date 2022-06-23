@@ -6,10 +6,11 @@ import { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useGetProductsQuery } from '@src/api/ProductAPI';
+import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 
 const FeatureProduct: FunctionComponent = () => {
   const { t } = useTranslation();
-  const { data: product } = useGetProductsQuery({ size: 4, page: 1 });
+  const { data: product, isLoading, isFetching } = useGetProductsQuery({ size: 4, page: 1 });
   const { SectionTitle1, SectionTitle3 } = Typography;
 
   return (
@@ -27,6 +28,7 @@ const FeatureProduct: FunctionComponent = () => {
           ))}
         </Row>
       </Wrapper>
+      {(isLoading || isFetching) && <SpinnerFullScreen />}
     </Container>
   );
 };

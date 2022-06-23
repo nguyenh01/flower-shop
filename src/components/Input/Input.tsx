@@ -16,6 +16,7 @@ interface InputProps {
   formik?: any;
   className?: string;
   placeholder?: string;
+  onPressEnter?: (event?: any) => void;
 }
 
 const Input: FunctionComponent<InputProps> = ({

@@ -155,6 +155,7 @@ const Container = styled.div`
     background-color: #fff;
     padding: 20px;
     text-align: center;
+    height: 85px;
 
     .product-title {
       ${(props) => props.theme.fontCustom(16, 650, 16)};

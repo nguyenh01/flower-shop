@@ -81,6 +81,7 @@ const Header: FunctionComponent = () => {
             <div className="user-wrap">
               <div className="popover-wrapper">
                 <Popover
+                  overlayClassName="popover-user"
                   content={
                     isAuth ? <PopoverContentWithAuthentication t={t} /> : <PopoverContent t={t} />
                   }
@@ -162,12 +163,15 @@ const PopoverContentWithAuthentication = ({ t }: PopoverContentProps) => {
 };
 
 const PopoverSearchContent = () => {
+  const router = useRouter();
   const [search, setSearch] = useState('');
-
-  console.log(search);
 
   const handleChangeSearch = (event: any) => {
     setSearch(event.target.value);
+  };
+
+  const handleEnterSearch = (event: any) => {
+    router.push(`/shop?product_name=${event.target.value}`);
   };
 
   return (
@@ -177,6 +181,7 @@ const PopoverSearchContent = () => {
       placeholder="Search out store"
       value={search}
       onChange={handleChangeSearch}
+      onPressEnter={handleEnterSearch}
     />
   );
 };
