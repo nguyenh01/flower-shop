@@ -42,7 +42,7 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
         imageList: [item?.image],
         unit_price: item?.price,
       }));
-      if (parseJson.length === 0) {
+      if (parseJson.length === 0 || parseJson === undefined) {
         redirect(server, Path.CART);
         return { query: server.query };
       } else {

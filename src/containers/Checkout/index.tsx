@@ -26,6 +26,7 @@ import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
 import { useCreateOrderMutation } from '@src/api/OrderAPI';
 import { OrderFormik } from '@src/api/DataModel/order.data-model';
 import { useRouter } from 'next/router';
+import { handleClearCart } from '../Product/ProductCookie';
 
 interface CheckoutProps {
   cart: CartResponse;
@@ -128,7 +129,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
     if (isAuth) {
       router.push(Path.MY_ACCOUNT);
     } else {
-      handleClearCookieCart();
+      handleClearCart();
       router.push(Path.MY_ACCOUNT);
     }
   };
@@ -352,6 +353,3 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
 };
 
 export default Checkout;
-function handleClearCookieCart() {
-  throw new Error('Function not implemented.');
-}
