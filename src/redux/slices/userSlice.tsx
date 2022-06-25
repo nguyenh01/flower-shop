@@ -4,7 +4,7 @@ import router from 'next/router';
 
 const initialState = {
   isAuth: false,
-  type: '',
+  type: 0,
   profile: { email: '', firstName: '', lastName: '', phone: '', id: '' },
 };
 
@@ -18,7 +18,7 @@ const userSlice = createSlice({
     },
     logout(state) {
       state.isAuth = false;
-      state.type = '';
+      state.type = 0;
       state.profile = initialState.profile;
       cookies.remove('token');
       localStorage.removeItem('token');

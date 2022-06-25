@@ -10,6 +10,7 @@ const Path = {
   PRODUCT_DETAIL: (id: string) => `/product/${id}`,
   CART: '/cart',
   CHECK_OUT: '/checkout',
+  ADMIN: '/admin'
 };
 
 export default Path;

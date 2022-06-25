@@ -9,7 +9,7 @@ const OurHistory: FunctionComponent = () => {
   const { SectionTitle1, SectionTitle2 } = Typography;
 
   return (
-    <Container>
+    <Container className="mb-40">
       <Wrapper>
         <SectionTitle1 className="mb-15">{t('home.historySection1')}</SectionTitle1>
         <SectionTitle2 className="mb-10">{t('home.historySection2')}</SectionTitle2>
