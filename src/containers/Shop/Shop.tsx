@@ -23,8 +23,8 @@ const Shop: FunctionComponent = () => {
   const { product_name } = router.query;
 
   const [page, setPage] = useState(1);
-  const { data: categories } = useGetCategoriesQuery({});
-  const { data: materials } = useGetMaterialsQuery({});
+  const { data: categories } = useGetCategoriesQuery({ is_paging: false });
+  const { data: materials } = useGetMaterialsQuery({ is_paging: false });
 
   const [stock, setStock] = useState<boolean[]>([]);
   const [category, setCategory] = useState<string[]>([]);
@@ -50,7 +50,7 @@ const Shop: FunctionComponent = () => {
 
   useEffect(() => {
     if (categories) {
-      const formatOption = categories.data.map((item) => ({
+      const formatOption = categories.data.result.map((item) => ({
         label: item.name,
         value: item._id,
       }));
@@ -60,7 +60,7 @@ const Shop: FunctionComponent = () => {
 
   useEffect(() => {
     if (materials) {
-      const formatOption = materials.data.map((item) => ({
+      const formatOption = materials.data.result.map((item) => ({
         label: item.name,
         value: item._id,
       }));

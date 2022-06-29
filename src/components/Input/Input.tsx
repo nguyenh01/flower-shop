@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 interface InputProps {
-  type: 'text' | 'password' | 'textarea';
+  type: 'text' | 'number' | 'password' | 'textarea';
   label?: string;
   name?: string;
   onChange: (event?: any) => void;
-  value: string | number;
+  value: string | number | undefined;
   required?: boolean;
   disabled?: boolean;
   formik?: any;
@@ -47,6 +47,8 @@ const Input: FunctionComponent<InputProps> = ({
           iconRender={(visible) => (visible ? <BsFillEyeFill /> : <BsFillEyeSlashFill />)}
           {...props}
         />
+      ) : type === 'number' ? (
+        <StyledInput type="number" name={name} isError={isFormikError} {...props} />
       ) : (
         <StyledTextareaInput name={name} isError={isFormikError} {...props} />
       )}

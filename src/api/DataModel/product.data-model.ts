@@ -1,6 +1,7 @@
 export interface ProductItem {
   _id: string;
   cate_id: string;
+  mate_id: string;
   name: string;
   price: number;
   unitsinstock: number;
@@ -26,4 +27,19 @@ export interface ProductRequest {
   name?: string | string[];
   order_by?: string;
   is_instock?: boolean[];
+  sort?: string;
+  direction?: string;
+}
+export interface PostProductResponse {
+  data: {
+    images: string[];
+    cate_id: string;
+    name: string;
+    price: number;
+    unitsinstock: number;
+    description: string;
+    mate_id: string;
+    _id: string;
+    __v: number;
+  };
 }

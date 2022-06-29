@@ -11,7 +11,7 @@ const useAuthentication = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token && !isAuth) {
-      const type = localStorage.getItem('type');
+      const type = Number(localStorage.getItem('type'));
       dispatch(login({ type }));
     }
   }, [dispatch]);

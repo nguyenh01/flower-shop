@@ -2,6 +2,7 @@ import * as yup from 'yup';
 import cookie from 'js-cookie';
 import { login as loginSlice } from '@src/redux/slices/userSlice';
 import dispatch from '@src/utils/dispatch';
+import { requiredValidation } from '@src/utils/constants';
 
 export const initialValue = {
   firstName: '',
@@ -11,8 +12,6 @@ export const initialValue = {
   password: '',
   confirmPassword: '',
 };
-
-const requiredValidation = (message: string) => `${message} is required`;
 
 export const validationSchema = yup.object().shape({
   firstName: yup.string().trim().required(requiredValidation('First Name')),

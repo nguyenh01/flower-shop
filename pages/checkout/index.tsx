@@ -8,7 +8,7 @@ import Path from '@src/utils/path';
 import { GetServerSidePropsContext } from 'next';
 import useAuthentication from '@src/hooks/useAuthentication';
 
-function CheckoutPage({ data }: any) {
+const CheckoutPage = ({ data }: any) => {
   useAuthentication();
   const cart = useMemo(() => data, [data]);
 
@@ -20,7 +20,7 @@ function CheckoutPage({ data }: any) {
       <Checkout cart={cart} />
     </Fragment>
   );
-}
+};
 
 CheckoutPage.getLayout = function getLayout(page: ReactElement) {
   return <EmptyLayout>{page}</EmptyLayout>;

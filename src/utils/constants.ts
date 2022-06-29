@@ -1,12 +1,34 @@
 export const imgPath = 'https://thien-flower.herokuapp.com/';
 
 export enum RoleEnum {
-  BUYER,
-  MEMBERSHIP,
-  EMPLOYEE,
-  ADMIN,
+  BUYER = 0,
+  MEMBERSHIP = 1,
+  EMPLOYEE = 2,
+  ADMIN = 3,
 }
 
 export const allRole = [RoleEnum.BUYER, RoleEnum.MEMBERSHIP, RoleEnum.EMPLOYEE, RoleEnum.ADMIN];
 
+export enum MenuAdminEnum {
+  DASHBOARD = '1',
+  REVENUE = '2',
+  ORDER = '3',
+  CATEGORY = '4',
+  MATERIAL = '5',
+  PRODUCT = '6',
+  MESSAGE = '7',
+  CUSTOMER = '8',
+  EMPLOYEE = '9',
+}
+
 export const DEFAULT_FORMAT_DATE = 'MM/DD/YYYY';
+
+export const requiredValidation = (field: string) => `${field} is required`;
+export const integerValidation = (field: string) => `${field} must be an integer`;
+export const positiveValidation = (field: string) => `${field} must be a positive number`;
+
+export const truncateString = (string: string) => {
+  const character = 80;
+  if (string.length > character) return string.slice(0, character) + '...';
+  return string;
+};

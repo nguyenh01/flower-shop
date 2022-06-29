@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '@src/api/baseQuery';
 import {
+  PostProductResponse,
   ProductItem,
   ProductRequest,
   ProductResponse,
@@ -24,7 +25,28 @@ export const ProductAPI = createApi({
         url: `${baseEndpoint}/${id}`,
       }),
     }),
+
+    postProduct: builder.mutation<PostProductResponse, FormData>({
+      query: (body) => ({
+        url: `${baseEndpoint}/create`,
+        method: 'POST',
+        body,
+      }),
+    }),
+
+    putProduct: builder.mutation<PostProductResponse, FormData>({
+      query: (body) => ({
+        url: baseEndpoint,
+        method: 'PUT',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductQuery } = ProductAPI;
+export const {
+  useGetProductsQuery,
+  useGetProductQuery,
+  usePostProductMutation,
+  usePutProductMutation,
+} = ProductAPI;

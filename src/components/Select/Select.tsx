@@ -16,7 +16,7 @@ interface SelectProps {
   name?: string;
   value?: any;
   onChange: (event: any) => void;
-  options: SelectOption[] | undefined;
+  options?: SelectOption[] | undefined;
   disabled?: boolean;
   className?: string;
   label?: string;

@@ -6,6 +6,7 @@ const theme = {
     red: '#ff0000',
     gray: '#eceff8',
     border: '#d9d9d9',
+    blue: '#0D6EFD',
   },
 
   fadeInUp: (hide: number) => {

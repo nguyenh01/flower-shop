@@ -1,11 +1,10 @@
 import * as yup from 'yup';
+import { requiredValidation } from '@src/utils/constants';
 
 export const initialValue = {
   email: '',
   password: '',
 };
-
-const requiredValidation = (message: string) => `${message} is required`;
 
 export const validationSchema = yup.object().shape({
   email: yup.string().trim().email('Invalid Email').required(requiredValidation('Email')),

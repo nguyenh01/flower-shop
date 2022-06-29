@@ -13,13 +13,17 @@ const Footer: FunctionComponent = () => {
 
   const handleGoToAdminPage = () => {
     router.push(Path.ADMIN);
-  }
+  };
 
   return (
     <Container>
       <div className="copy-right">
         Copyright © 2022 | Built with <strong>Flower Sun</strong> by <strong>Nguyen</strong>.{' '}
-        {!isAuth && (!isAdmin || !isEmployee) && <span className="color" onClick={handleGoToAdminPage}>Administrator</span>}
+        {isAuth && (isAdmin || isEmployee) && (
+          <span className="color" onClick={handleGoToAdminPage}>
+            Administrator
+          </span>
+        )}
       </div>
     </Container>
   );
