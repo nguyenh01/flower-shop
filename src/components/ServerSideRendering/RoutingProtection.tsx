@@ -53,15 +53,15 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
 
   AuthenticationComponent.getInitialProps = async (server: { [key: string]: any }) => {
     const { asPath, req } = server;
-    const token = server?.req?.cookies?.token;
+    const token = await req?.cookies?.token;
 
-    if (req && token && (asPath === Path.REGISTER || asPath === Path.LOGIN)) {
+    if (token && (asPath === Path.REGISTER || asPath === Path.LOGIN)) {
       redirect(server, Path.PAGE_NOT_FOUND);
       return { query: server.query };
     }
 
     try {
-      if (req && token) {
+      if (token) {
         const response = await axios.get(`${host}/users/me`, {
           headers: {
             Authorization: 'Bearer ' + token,
@@ -78,7 +78,7 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
     }
 
     try {
-      if (req && token) {
+      if (token) {
         const response = await axios.get(`${host}/shoppingCarts`, {
           headers: {
             Authorization: 'Bearer ' + token,

@@ -39,15 +39,10 @@ const AdministrationRoutingProtection = (
 
   AuthenticationComponent.getInitialProps = async (server: { [key: string]: any }) => {
     const { req } = server;
-    const token = server?.req?.cookies?.token;
-
-    if (!token) {
-      redirect(server, Path.PAGE_NOT_FOUND);
-      return { query: server.query };
-    }
+    const token = await req?.cookies?.token;
 
     try {
-      if (req && token) {
+      if (token) {
         const response = await axios.get(`${host}/users/me`, {
           headers: {
             Authorization: 'Bearer ' + token,
