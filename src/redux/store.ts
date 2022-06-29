@@ -11,10 +11,12 @@ import { LocationAPI } from '@src/api/LocationAPI';
 import { OrderAPI } from '@src/api/OrderAPI';
 import { CategoryAPI } from '@src/api/CategoryAPI';
 import { MaterialAPI } from '@src/api/MaterialAPI';
+import selectedMenu from './slices/selectedMenuSlice';
 
 const rootReducer = combineReducers({
   userProfile,
   productSlice,
+  selectedMenu,
 
   [AuthenticationAPI.reducerPath]: AuthenticationAPI.reducer,
   [ProductAPI.reducerPath]: ProductAPI.reducer,

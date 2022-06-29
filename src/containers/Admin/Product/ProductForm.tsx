@@ -3,7 +3,7 @@ import Select from '@src/components/Select/Select';
 import Col from 'antd/lib/grid/col';
 import Row, { Gutter } from 'antd/lib/grid/row';
 import { useFormik } from 'formik';
-import { FunctionComponent, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { InitialValueFormik } from './data-model';
 import { Space, Upload } from 'antd';
@@ -12,12 +12,15 @@ import Typography from '@src/components/Typography/Typography';
 import Button from '@src/components/Button/Button';
 import { useGetCategoriesQuery } from '@src/api/CategoryAPI';
 import { useGetMaterialsQuery } from '@src/api/MaterialAPI';
-import { usePostProductMutation } from '@src/api/ProductAPI';
+import { usePostProductMutation, usePutProductMutation } from '@src/api/ProductAPI';
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import { validationSchema } from './constant';
+import { imgPath } from '@src/utils/constants';
+import { v4 as uuid } from 'uuid';
+import imageUrlToFile from '@src/utils/imageUrlToFile';
 
 interface ProductFormAdministrationProps {
   type: 'create' | 'update';
@@ -30,6 +33,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
 }) => {
   const { Label } = Typography;
   const isCreateForm = type === 'create';
+  const isUpdateForm = type === 'update';
   const router = useRouter();
 
   const confirmModal = useBooleanState();
@@ -42,31 +46,67 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  const [postProduct, { isLoading }] = usePostProductMutation();
+  const [postProduct, { isLoading: isPostLoading }] = usePostProductMutation();
+  const [putProduct, { isLoading: isPutLoading }] = usePutProductMutation();
+
+  const getPromiseResult = async (promise: Promise<File>) => {
+    const result = await promise;
+    return result;
+  };
+
+  useEffect(() => {
+    if (isUpdateForm) {
+      const formatFileList = (initialValue?.images ?? []).map((item) => {
+        const filePromise = imageUrlToFile(`${imgPath}${item}`).then((response) => response);
+        const file = getPromiseResult(filePromise);
+        return {
+          uid: uuid().slice(0, 5),
+          name: item.split('/').pop() as string,
+          status: 'done',
+          url: `${imgPath}${item}`,
+          originFileObj: file,
+        };
+      });
+      setFileList(formatFileList as any);
+    }
+  }, [initialValue]);
+
+  console.log(fileList);
 
   const formik = useFormik({
-    enableReinitialize: type === 'update',
+    enableReinitialize: isUpdateForm,
     initialValues: initialValue,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       const formData = new FormData();
       const imageList = fileList.map((item) => item.originFileObj);
-      imageList.forEach((file) => {
-        formData.append('images', file as Blob);
-      });
       for (const key in values) {
         formData.append(key, values[key as keyof InitialValueFormik] as any);
       }
-      postProduct(formData)
-        .unwrap()
-        .then(() => {
-          successModal.toggle();
-        })
-        .catch(() => {});
+      imageList.forEach((file) => {
+        formData.append('images', file as Blob);
+      });
+
+      if (isCreateForm) {
+        postProduct(formData)
+          .unwrap()
+          .then(() => {
+            successModal.toggle();
+          })
+          .catch(() => {});
+      } else {
+        putProduct(formData)
+          .unwrap()
+          .then(() => {
+            successModal.toggle();
+          })
+          .catch(() => {});
+      }
     },
   });
 
   const reuseProps = {
+    className: 'change-border',
     onChange: formik.handleChange,
     formik: formik,
     required: true,
@@ -100,11 +140,11 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
   };
 
   const handleConfirm = () => {
-    router.push(Path.ADMIN_PRODUCT);
+    router.push(Path.ADMIN.PRODUCT);
   };
 
   return (
-    <Container>
+    <FormContainer>
       <Row className="mb-60" gutter={gutter} wrap>
         <Col span={8}>
           <Input
@@ -191,6 +231,9 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
             fileList={fileList}
             onChange={onChange}
             onPreview={onPreview}
+            accept=".png, .jpg, .jpeg"
+            maxCount={3}
+            multiple
           >
             {fileList.length < 3 && '+ Upload'}
           </Upload>
@@ -201,7 +244,12 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
           <Button className="back-btn" type="default" onClick={handleBack}>
             Back
           </Button>
-          <Button className="submit-btn" type="default" onClick={handleSubmit} loading={isLoading}>
+          <Button
+            className="submit-btn"
+            type="default"
+            onClick={handleSubmit}
+            loading={isPostLoading || isPutLoading}
+          >
             {isCreateForm ? 'Create' : 'Update'}
           </Button>
         </Space>
@@ -218,7 +266,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
       />
       <ModalConfirm
         type="success"
-        title="Create Product Success"
+        title={`${isCreateForm ? 'Create' : 'Update'} Product Success`}
         showCloseButton={false}
         visible={successModal.visible}
         onClose={successModal.toggle}
@@ -226,26 +274,43 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
         confirmText="Close"
         showCloseIcon={false}
       />
-    </Container>
+    </FormContainer>
   );
 };
 
-const Container = styled.div`
+export const FormContainer = styled.div`
   .button-group {
     display: grid;
     place-items: center;
 
     .back-btn {
-      background-color: #000;
+      background-color: #001529;
     }
 
     .submit-btn {
-      background-color: ${(props) => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.colors.blue};
     }
   }
 
   .ant-upload.ant-upload-select-picture-card:hover {
-    border-color: ${(props) => props.theme.colors.primary};
+    border-color: ${(props) => props.theme.colors.blue};
+  }
+
+  .change-border {
+    &:hover {
+      border-color: ${(props) => props.theme.colors.blue} !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 1px ${(props) => props.theme.colors.blue} !important;
+      border-color: ${(props) => props.theme.colors.blue} !important;
+    }
+  }
+
+  .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+    .ant-select-selector {
+    box-shadow: 0 0 0 1px ${(props) => props.theme.colors.blue};
+    border-color: ${(props) => props.theme.colors.blue} !important;
   }
 `;
 

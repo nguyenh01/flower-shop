@@ -10,7 +10,7 @@ interface InputProps {
   label?: string;
   name?: string;
   onChange: (event?: any) => void;
-  value: string | number | undefined;
+  value?: string | number | undefined;
   required?: boolean;
   disabled?: boolean;
   formik?: any;

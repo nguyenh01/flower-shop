@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Table } from 'antd';
 
-const StyledTable = styled(Table)`
+export const StyledTable = styled(Table)`
   .ant-table-tbody > tr > td {
     border-bottom: 1px solid #ebedf3;
   }
@@ -138,4 +138,30 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export default StyledTable;
+export const SearchArea = styled.div`
+  background-color: #f4f4f4;
+  height: 77px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 21px;
+`;
+
+export const SearchWrapper = styled.div`
+  height: 32px;
+  display: flex;
+  align-items: center;
+  > input {
+    height: 100%;
+    width: 251px;
+  }
+
+  @media only screen and (max-width: 426px) {
+    width: 100%;
+  }
+`;
+
+export const SearchText = styled.span`
+  font-size: 14px;
+  padding-right: 9px;
+`;

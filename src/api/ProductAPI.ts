@@ -12,18 +12,21 @@ const baseEndpoint = `/products`;
 export const ProductAPI = createApi({
   reducerPath: 'UserAPI',
   baseQuery,
+  tagTypes: ['PRODUCT', 'UPDATE_PRODUCT'],
   endpoints: (builder) => ({
     getProducts: builder.query<ProductResponse, ProductRequest>({
       query: (params) => ({
         url: baseEndpoint,
         params,
       }),
+      providesTags: (res, err) => (err ? [] : [{ type: 'PRODUCT' }]),
     }),
 
     getProduct: builder.query<ProductItem, { id: string }>({
       query: ({ id }) => ({
         url: `${baseEndpoint}/${id}`,
       }),
+      providesTags: (res, err) => (err ? [] : [{ type: 'UPDATE_PRODUCT' }]),
     }),
 
     postProduct: builder.mutation<PostProductResponse, FormData>({
@@ -32,6 +35,7 @@ export const ProductAPI = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['PRODUCT'],
     }),
 
     putProduct: builder.mutation<PostProductResponse, FormData>({
@@ -40,6 +44,15 @@ export const ProductAPI = createApi({
         method: 'PUT',
         body,
       }),
+      invalidatesTags: ['PRODUCT', 'UPDATE_PRODUCT'],
+    }),
+
+    deleteProduct: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `${baseEndpoint}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['PRODUCT'],
     }),
   }),
 });
@@ -49,4 +62,5 @@ export const {
   useGetProductQuery,
   usePostProductMutation,
   usePutProductMutation,
+  useDeleteProductMutation,
 } = ProductAPI;

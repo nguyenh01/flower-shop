@@ -48,6 +48,7 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
   const router = useRouter();
   const [logout] = useLogoutMutation();
   const { profile } = useSelector((state) => state.userProfile);
+  const { selected } = useSelector((state) => state.selectedMenu);
   useAuthentication();
 
   const items: MenuItem[] = [
@@ -73,10 +74,10 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
   const handleClick = ({ key }: any) => {
     switch (key) {
       case MenuAdminEnum.DASHBOARD:
-        router.push(Path.ADMIN);
+        router.push(Path.ADMIN.DASHBOARD);
         break;
       case MenuAdminEnum.PRODUCT:
-        router.push(Path.ADMIN_PRODUCT);
+        router.push(Path.ADMIN.PRODUCT);
         break;
     }
   };
@@ -93,7 +94,7 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
   return (
     <Container>
       <Menu
-        defaultSelectedKeys={['1']}
+        selectedKeys={[selected]}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
@@ -107,7 +108,7 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
           </div>
           <div className="user">
             <Avatar
-              style={{ backgroundColor: '#7265e6', verticalAlign: 'middle', marginRight: '10px' }}
+              style={{ backgroundColor: '#0D6EFD', verticalAlign: 'middle', marginRight: '10px' }}
               size={40}
               gap={4}
             >

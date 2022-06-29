@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { FilterDefaultIcon, FilterVariantIcon } from '../Icons';
 import TablePagination from '../Pagination/TablePagination';
 import useTable from './hooks/useTable';
-import StyledTable from './style';
+import { StyledTable } from './style';
 import { LoadingOutlined } from '@ant-design/icons';
 
 declare type IDirection = 'asc' | 'desc' | '';

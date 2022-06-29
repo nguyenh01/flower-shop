@@ -12,7 +12,7 @@ const Footer: FunctionComponent = () => {
   const isEmployee = type === RoleEnum.EMPLOYEE;
 
   const handleGoToAdminPage = () => {
-    router.push(Path.ADMIN);
+    router.push(Path.ADMIN.DASHBOARD);
   };
 
   return (

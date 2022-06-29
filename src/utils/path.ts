@@ -10,16 +10,18 @@ const Path = {
   PRODUCT_DETAIL: (id: string) => `/product/${id}`,
   CART: '/cart',
   CHECK_OUT: '/checkout',
-  ADMIN: '/admin',
-  ADMIN_REVENUE: '/admin/revenue',
-  ADMIN_ORDER: '/admin/order',
-  ADMIN_CATEGORY: '/admin/category',
-  ADMIN_MATERIAL: '/admin/material',
-  ADMIN_PRODUCT: '/admin/product',
-  UPDATE_ADMIN_PRODUCT: (id: string) => `/admin/product/update/${id}`,
-  ADMIN_MESSAGE: '/admin/message',
-  ADMIN_CUSTOMER: '/admin/customer',
-  ADMIN_EMPLOYEE: '/admin/employee',
+  ADMIN: {
+    DASHBOARD: '/admin',
+    REVENUE: '/admin/revenue',
+    ORDER: '/admin/order',
+    MATERIAL: '/admin/material',
+    PRODUCT: '/admin/product',
+    CREATE_PRODUCT: '/admin/product/create',
+    UPDATE_PRODUCT: (id: string) => `/admin/product/update/${id}`,
+    MESSAGE: '/admin/message',
+    CUSTOMER: '/admin/customer',
+    EMPLOYEE: '/admin/employee',
+  },
 };
 
 export default Path;

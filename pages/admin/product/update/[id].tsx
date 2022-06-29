@@ -1,19 +1,23 @@
-import { Fragment, ReactElement, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import Head from 'next/head';
-import AdminLayout from '@src/components/Layout/AdminLayout';
 import ProductFormAdministration from '@src/containers/Admin/Product/ProductForm';
-import AdminTitle from '@src/components/AdminTitle/AdminTitle';
 import { useRouter } from 'next/router';
 import { useGetProductQuery } from '@src/api/ProductAPI';
+import dispatch from '@src/utils/dispatch';
+import { setSelection } from '@src/redux/slices/selectedMenuSlice';
+import { MenuAdminEnum, RoleEnum } from '@src/utils/constants';
+import AdministrationRoutingProtection from '@src/components/ServerSideRendering/AdministrationRoutingProtection';
 
 const UpdateProductPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  dispatch(setSelection(MenuAdminEnum.PRODUCT));
 
   const { data: product } = useGetProductQuery({ id: id as string }, { skip: !id });
 
   const initialValue = useMemo(
     () => ({
+      id: product?._id,
       name: product?.name,
       cate_id: product?.cate_id,
       mate_id: product?.mate_id,
@@ -28,26 +32,16 @@ const UpdateProductPage = () => {
   return (
     <Fragment>
       <Head>
-        <title>Administrator - Product Creation</title>
+        <title>Administrator - Update Product</title>
       </Head>
       <ProductFormAdministration type="update" initialValue={initialValue} />
     </Fragment>
   );
 };
 
-UpdateProductPage.getLayout = function getLayout(children: ReactElement) {
-  return (
-    <AdminLayout
-      adminTitle={
-        <AdminTitle
-          title="Update Product"
-          description="Fill in the fields below to update a product"
-        />
-      }
-    >
-      {children}
-    </AdminLayout>
-  );
-};
-
-export default UpdateProductPage;
+export default AdministrationRoutingProtection(
+  UpdateProductPage,
+  [RoleEnum.ADMIN, RoleEnum.EMPLOYEE],
+  'update product',
+  'Fill in the fields below to update a product.'
+);

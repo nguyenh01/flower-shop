@@ -1,7 +1,7 @@
 import Table from '@src/components/Table/Table';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
-import { useGetProductsQuery } from '@src/api/ProductAPI';
+import { useDeleteProductMutation, useGetProductsQuery } from '@src/api/ProductAPI';
 import formatAmount from '@src/utils/formatAmount';
 import ActionGroup from '@src/components/Table/ActionGroup/ActionGroup';
 import styled from 'styled-components';
@@ -9,6 +9,13 @@ import { Image } from 'antd';
 import { imgPath, truncateString } from '@src/utils/constants';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
+import useBooleanState from '@src/hooks/useBooleanState';
+import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import { SearchArea, SearchText, SearchWrapper } from '@src/components/Table/style';
+import Button from '@src/components/Button/Button';
+import Input from '@src/components/Input/Input';
+import useDebounceSearch from '@src/hooks/useDebounceSearch';
+import { PlusIcon } from '@src/components/Icons';
 
 interface ProductList {
   key: number;
@@ -27,6 +34,9 @@ interface StockProps {
 const ProductAdministration = () => {
   const router = useRouter();
   const { t } = useTranslation();
+  const confirmModal = useBooleanState();
+  const successModal = useBooleanState();
+
   const tableInstance = Table.useTable({
     initialSortValue: {
       sortBy: 'name',
@@ -36,16 +46,19 @@ const ProductAdministration = () => {
 
   const { currentPage, pageSize } = tableInstance.values.pagination;
   const { sortBy, sortDirection } = tableInstance.values.sort;
+  const { searchTerm, onChangeSearchTerm } = useDebounceSearch();
 
   const [productList, setProductList] = useState<ProductList[]>([]);
+  const [productId, setProductId] = useState<string>('');
 
   const { data: product, isFetching } = useGetProductsQuery({
     size: pageSize,
     page: currentPage,
     sort: sortBy,
     direction: sortDirection,
-    //name: product_name,
+    name: searchTerm,
   });
+  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
 
   const Stock = ({ quantity }: StockProps) => {
     const handleCheckQuantity = (quantity: number) => (quantity <= 10 ? 'red' : 'default');
@@ -54,7 +67,26 @@ const ProductAdministration = () => {
   };
 
   const handleGoToUpdatePage = (id: string) => {
-    router.push(Path.UPDATE_ADMIN_PRODUCT(id));
+    router.push(Path.ADMIN.UPDATE_PRODUCT(id));
+  };
+
+  const handleGoToCreateProductPage = () => {
+    router.push(Path.ADMIN.CREATE_PRODUCT);
+  };
+
+  const handleDeleteProduct = (id: string) => {
+    setProductId(id);
+    confirmModal.toggle();
+  };
+
+  const handleConfirmDelete = () => {
+    deleteProduct({ id: productId })
+      .unwrap()
+      .then(() => {
+        confirmModal.toggle();
+        successModal.toggle();
+      })
+      .catch(() => {});
   };
 
   const columns = useMemo(
@@ -101,7 +133,12 @@ const ProductAdministration = () => {
         width: '10%',
         title: 'ACTION',
         dataIndex: 'id',
-        render: (id: string) => <ActionGroup handleUpdate={() => handleGoToUpdatePage(id)} />,
+        render: (id: string) => (
+          <ActionGroup
+            handleUpdate={() => handleGoToUpdatePage(id)}
+            handleDelete={() => handleDeleteProduct(id)}
+          />
+        ),
       },
     ],
     [t]
@@ -127,7 +164,16 @@ const ProductAdministration = () => {
   }, [product]);
 
   return (
-    <Container>
+    <TableContainer>
+      <SearchArea>
+        <Button type="default" className="add-btn" onClick={handleGoToCreateProductPage}>
+          Add new <PlusIcon />
+        </Button>
+        <SearchWrapper>
+          <SearchText>Search:</SearchText>
+          <Input className="search-input" type="text" onChange={onChangeSearchTerm} />
+        </SearchWrapper>
+      </SearchArea>
       <Table
         tableInstance={tableInstance}
         dataSource={productList}
@@ -135,13 +181,53 @@ const ProductAdministration = () => {
         columns={columns as any}
         loading={isFetching}
       />
-    </Container>
+      <ModalConfirm
+        type="confirm"
+        title="Confirmation"
+        description="Do you want to delete this product?"
+        closeText="Cancel"
+        confirmText="Confirm"
+        visible={confirmModal.visible}
+        onClose={confirmModal.toggle}
+        onConfirm={handleConfirmDelete}
+        isConfirmLoading={isLoading}
+      />
+      <ModalConfirm
+        type="success"
+        title="Delete Success"
+        showCloseButton={false}
+        visible={successModal.visible}
+        onClose={successModal.toggle}
+        onConfirm={successModal.toggle}
+        confirmText="Close"
+        showCloseIcon={false}
+      />
+    </TableContainer>
   );
 };
 
-const Container = styled.div`
+export const TableContainer = styled.div`
   .ant-table-cell .red {
     color: ${(props) => props.theme.colors.red};
+  }
+
+  .add-btn {
+    background-color: ${(props) => props.theme.colors.blue};
+
+    svg {
+      margin-left: 5px;
+    }
+  }
+
+  .search-input {
+    &:hover {
+      border-color: ${(props) => props.theme.colors.blue};
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 1px ${(props) => props.theme.colors.blue};
+      border-color: ${(props) => props.theme.colors.blue};
+    }
   }
 `;
 

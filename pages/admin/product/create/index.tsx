@@ -1,10 +1,14 @@
-import { Fragment, ReactElement, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import Head from 'next/head';
-import AdminLayout from '@src/components/Layout/AdminLayout';
 import ProductFormAdministration from '@src/containers/Admin/Product/ProductForm';
-import AdminTitle from '@src/components/AdminTitle/AdminTitle';
+import dispatch from '@src/utils/dispatch';
+import { setSelection } from '@src/redux/slices/selectedMenuSlice';
+import { MenuAdminEnum, RoleEnum } from '@src/utils/constants';
+import AdministrationRoutingProtection from '@src/components/ServerSideRendering/AdministrationRoutingProtection';
 
 const CreateProductPage = () => {
+  dispatch(setSelection(MenuAdminEnum.PRODUCT));
+
   const initialValue = useMemo(
     () => ({
       name: '',
@@ -20,26 +24,16 @@ const CreateProductPage = () => {
   return (
     <Fragment>
       <Head>
-        <title>Administrator - Product Creation</title>
+        <title>Administrator - Create Product</title>
       </Head>
       <ProductFormAdministration type="create" initialValue={initialValue} />
     </Fragment>
   );
 };
 
-CreateProductPage.getLayout = function getLayout(children: ReactElement) {
-  return (
-    <AdminLayout
-      adminTitle={
-        <AdminTitle
-          title="Create Product"
-          description="Fill in the fields below to create a product"
-        />
-      }
-    >
-      {children}
-    </AdminLayout>
-  );
-};
-
-export default CreateProductPage;
+export default AdministrationRoutingProtection(
+  CreateProductPage,
+  [RoleEnum.ADMIN, RoleEnum.EMPLOYEE],
+  'create product',
+  'Fill in the fields below to create a product.'
+);
