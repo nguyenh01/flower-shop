@@ -27,8 +27,7 @@ export const requiredValidation = (field: string) => `${field} is required`;
 export const integerValidation = (field: string) => `${field} must be an integer`;
 export const positiveValidation = (field: string) => `${field} must be a positive number`;
 
-export const truncateString = (string: string) => {
-  const character = 80;
-  if (string.length > character) return string.slice(0, character) + '...';
+export const truncateString = (string: string, maxCharacter = 80) => {
+  if (string.length > maxCharacter) return string.slice(0, maxCharacter) + '...';
   return string;
 };

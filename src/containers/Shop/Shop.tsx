@@ -12,6 +12,8 @@ import Pagination from '@src/components/Pagination/Pagination';
 import { useGetMaterialsQuery } from '@src/api/MaterialAPI';
 import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 import { useRouter } from 'next/router';
+import { Category } from '@src/api/DataModel/category.data-model';
+import { Material } from '@src/api/DataModel/material.data-model';
 
 interface Option {
   label: string;
@@ -50,7 +52,7 @@ const Shop: FunctionComponent = () => {
 
   useEffect(() => {
     if (categories) {
-      const formatOption = categories.data.result.map((item) => ({
+      const formatOption = (categories.data as any).map((item: Category) => ({
         label: item.name,
         value: item._id,
       }));
@@ -60,7 +62,7 @@ const Shop: FunctionComponent = () => {
 
   useEffect(() => {
     if (materials) {
-      const formatOption = materials.data.result.map((item) => ({
+      const formatOption = (materials.data as any).map((item: Material) => ({
         label: item.name,
         value: item._id,
       }));

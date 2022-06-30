@@ -46,7 +46,7 @@ const MaterialAdministration: FunctionComponent = () => {
     size: pageSize,
     sort: sortBy,
     direction: sortDirection,
-    name: searchTerm,
+    name: searchTerm || undefined,
   });
 
   const handleGoToUpdatePage = (id: string) => {
@@ -85,6 +85,7 @@ const MaterialAdministration: FunctionComponent = () => {
         width: '15%',
         title: 'ACTION',
         dataIndex: 'id',
+        align: 'center',
         render: (id: string) => (
           <ActionGroup
             handleUpdate={() => handleGoToUpdatePage(id)}

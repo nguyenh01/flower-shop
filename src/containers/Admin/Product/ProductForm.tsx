@@ -3,10 +3,10 @@ import Select from '@src/components/Select/Select';
 import Col from 'antd/lib/grid/col';
 import Row, { Gutter } from 'antd/lib/grid/row';
 import { useFormik } from 'formik';
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { Fragment, FunctionComponent, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { InitialValueFormik } from './data-model';
-import { Space, Upload } from 'antd';
+import { Space, Upload, Image as AntdImage } from 'antd';
 import { RcFile, UploadFile, UploadProps } from 'antd/lib/upload/interface';
 import Typography from '@src/components/Typography/Typography';
 import Button from '@src/components/Button/Button';
@@ -18,9 +18,10 @@ import useBooleanState from '@src/hooks/useBooleanState';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import { validationSchema } from './constant';
+import { Category } from '@src/api/DataModel/category.data-model';
+import { Material } from '@src/api/DataModel/material.data-model';
+import { CgArrowsExchange, CgArrowsExchangeAlt } from 'react-icons/cg';
 import { imgPath } from '@src/utils/constants';
-import { v4 as uuid } from 'uuid';
-import convertImageUrlToFile from '@src/utils/imageUrlToFile';
 
 interface ProductFormAdministrationProps {
   type: 'create' | 'update';
@@ -38,6 +39,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
 
   const confirmModal = useBooleanState();
   const successModal = useBooleanState();
+  const showUpload = useBooleanState(isCreateForm);
 
   const gutter: [Gutter, Gutter] = useMemo(() => [20, 20], []);
 
@@ -48,25 +50,6 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
 
   const [postProduct, { isLoading: isPostLoading }] = usePostProductMutation();
   const [putProduct, { isLoading: isPutLoading }] = usePutProductMutation();
-
-  useEffect(() => {
-    if (isUpdateForm) {
-      const formatFileList = (initialValue?.images ?? []).map((item) => {
-        const filePromise = convertImageUrlToFile(`${imgPath}${item}`).then((response) => response);
-        const url = `${imgPath}${item}`;
-
-        return {
-          uid: uuid().slice(0, 5),
-          name: item.split('/').pop() as string,
-          url: url,
-          originFileObj: filePromise,
-        };
-      });
-      setFileList(formatFileList as any);
-    }
-  }, [initialValue]);
-
-  console.log(fileList);
 
   const formik = useFormik({
     enableReinitialize: isUpdateForm,
@@ -138,6 +121,10 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
     router.push(Path.ADMIN.PRODUCT);
   };
 
+  const handleShowUpload = () => {
+    showUpload.toggle();
+  };
+
   return (
     <FormContainer>
       <Row className="mb-60" gutter={gutter} wrap>
@@ -179,7 +166,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
             label="Category"
             name="cate_id"
             value={formik.values.cate_id}
-            options={categories?.data?.result.map((item) => ({
+            options={(categories?.data as any)?.map((item: Category) => ({
               key: item._id,
               value: item._id,
               render: () => item.name,
@@ -198,7 +185,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
             label="Material"
             name="mate_id"
             value={formik.values.mate_id}
-            options={materials?.data?.result.map((item) => ({
+            options={(materials?.data as any)?.map((item: Material) => ({
               key: item._id,
               value: item._id,
               render: () => item.name,
@@ -215,24 +202,52 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
             {...reuseProps}
           />
         </Col>
-        <Col span={24}>
-          <Label>
-            <span>Upload</span>
-            <span className="required-mark">&nbsp;*</span>
-          </Label>
-          <Upload
-            name="image"
-            listType="picture-card"
-            fileList={fileList}
-            onChange={onChange}
-            onPreview={onPreview}
-            accept=".png, .jpg, .jpeg"
-            maxCount={3}
-            multiple
-          >
-            {fileList.length < 3 && '+ Upload'}
-          </Upload>
-        </Col>
+        {isUpdateForm && (
+          <Fragment>
+            <Col span={24}>
+              <Space size={15}>
+                {(initialValue?.images ?? []).map((item) => (
+                  <AntdImage
+                    key={item}
+                    className="old-image"
+                    src={`${imgPath}${item}`}
+                    width={200}
+                    alt="img"
+                  />
+                ))}
+              </Space>
+            </Col>
+            <Col span={24}>
+              <Button type="default" className="add-btn" onClick={handleShowUpload}>
+                {showUpload.visible ? 'Close Upload Image' : 'Upload Image'}
+                {showUpload.visible ? (
+                  <CgArrowsExchangeAlt className="update-icon" />
+                ) : (
+                  <CgArrowsExchange className="update-icon" />
+                )}
+              </Button>
+            </Col>
+          </Fragment>
+        )}
+        {showUpload.visible && (
+          <Col span={24}>
+            <Label>
+              <span>Upload</span>
+              <span className="required-mark">&nbsp;*</span>
+            </Label>
+            <Upload
+              listType="picture-card"
+              fileList={fileList}
+              onChange={onChange}
+              onPreview={onPreview}
+              accept=".png, .jpg, .jpeg"
+              maxCount={3}
+              multiple
+            >
+              {fileList.length < 3 && '+ Upload'}
+            </Upload>
+          </Col>
+        )}
       </Row>
       <div className="button-group">
         <Space size={10}>
@@ -274,6 +289,21 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
 };
 
 export const FormContainer = styled.div`
+  .add-btn {
+    background-color: ${(props) => props.theme.colors.blue};
+
+    .update-icon {
+      fill: #fff;
+      width: 30px;
+      height: 30px;
+      margin-left: 10px;
+    }
+  }
+
+  .old-image {
+    border: 1px solid ${(props) => props.theme.colors.border};
+  }
+
   .button-group {
     display: grid;
     place-items: center;

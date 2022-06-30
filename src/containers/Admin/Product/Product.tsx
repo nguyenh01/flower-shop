@@ -104,35 +104,50 @@ const ProductAdministration: FunctionComponent = () => {
         render: (image: string) => <Image src={`${imgPath}${image}`} width={100} alt="img" />,
       },
       {
-        width: '20%',
+        width: '14%',
         title: 'NAME',
         dataIndex: 'name',
         sorter: true,
       },
       {
-        width: '25%',
+        width: '20%',
         title: 'DESCRIPTION',
         dataIndex: 'description',
-        render: (description: string) => truncateString(description),
+        render: (description: string) => truncateString(description, 50),
       },
       {
         width: '10%',
+        title: 'CATEGORY',
+        dataIndex: 'category',
+        sorter: true,
+      },
+      {
+        width: '10%',
+        title: 'MATERIAL',
+        dataIndex: 'material',
+        sorter: true,
+      },
+      {
+        width: '8%',
         title: 'STOCK',
         dataIndex: 'unitsinstock',
         sorter: true,
+        align: 'center',
         render: (stock: number) => <Stock quantity={stock} />,
       },
       {
-        width: '15%',
+        width: '8%',
         title: 'PRICE',
         dataIndex: 'price',
         sorter: true,
+        align: 'center',
         render: (price: number) => formatAmount(price),
       },
       {
         width: '10%',
         title: 'ACTION',
         dataIndex: 'id',
+        align: 'center',
         render: (id: string) => (
           <ActionGroup
             handleUpdate={() => handleGoToUpdatePage(id)}
@@ -156,6 +171,8 @@ const ProductAdministration: FunctionComponent = () => {
         image: item.imageList[0],
         name: item.name,
         description: item.description,
+        category: item.cate_id,
+        material: item.mate_id,
         unitsinstock: item.unitsinstock,
         price: item.price,
       }));
