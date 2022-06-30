@@ -6,6 +6,10 @@ export interface Material {
 }
 
 export interface MaterialsRequest {
+  size?: number;
+  page?: number;
+  sort?: string;
+  direction?: string;
   name?: string;
   is_paging?: boolean;
 }

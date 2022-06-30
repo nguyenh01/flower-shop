@@ -9,8 +9,9 @@ export const CategoryAPI = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getCategories: builder.query<CategoriesResponse, CategoriesRequest>({
-      query: () => ({
+      query: (params) => ({
         url: baseEndpoint,
+        params,
       }),
     }),
   }),

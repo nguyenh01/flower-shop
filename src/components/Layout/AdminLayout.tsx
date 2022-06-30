@@ -76,8 +76,29 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
       case MenuAdminEnum.DASHBOARD:
         router.push(Path.ADMIN.DASHBOARD);
         break;
+      case MenuAdminEnum.REVENUE:
+        router.push(Path.ADMIN.REVENUE);
+        break;
+      case MenuAdminEnum.ORDER:
+        router.push(Path.ADMIN.ORDER);
+        break;
+      case MenuAdminEnum.CATEGORY:
+        router.push(Path.ADMIN.CATEGORY);
+        break;
+      case MenuAdminEnum.MATERIAL:
+        router.push(Path.ADMIN.MATERIAL);
+        break;
       case MenuAdminEnum.PRODUCT:
         router.push(Path.ADMIN.PRODUCT);
+        break;
+      case MenuAdminEnum.MESSAGE:
+        router.push(Path.ADMIN.MESSAGE);
+        break;
+      case MenuAdminEnum.CUSTOMER:
+        router.push(Path.ADMIN.CUSTOMER);
+        break;
+      case MenuAdminEnum.EMPLOYEE:
+        router.push(Path.ADMIN.EMPLOYEE);
         break;
     }
   };

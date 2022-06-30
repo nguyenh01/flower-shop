@@ -1,6 +1,6 @@
 import Table from '@src/components/Table/Table';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { useDeleteProductMutation, useGetProductsQuery } from '@src/api/ProductAPI';
 import formatAmount from '@src/utils/formatAmount';
 import ActionGroup from '@src/components/Table/ActionGroup/ActionGroup';
@@ -31,7 +31,7 @@ interface StockProps {
   quantity: number;
 }
 
-const ProductAdministration = () => {
+const ProductAdministration: FunctionComponent = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const confirmModal = useBooleanState();
@@ -182,7 +182,7 @@ const ProductAdministration = () => {
         loading={isFetching}
       />
       <ModalConfirm
-        type="confirm"
+        type="delete"
         title="Confirmation"
         description="Do you want to delete this product?"
         closeText="Cancel"

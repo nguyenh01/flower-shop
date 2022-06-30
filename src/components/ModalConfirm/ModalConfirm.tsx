@@ -3,11 +3,12 @@ import { FunctionComponent } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
 import { RiErrorWarningFill } from 'react-icons/ri';
+import { TiDelete } from 'react-icons/ti';
 import styled from 'styled-components';
 import Button from '../Button/Button';
 
 interface ModalConfirmProps {
-  type: 'success' | 'confirm';
+  type: 'success' | 'confirm' | 'delete';
   visible: boolean;
   onClose: () => void;
   closeText?: string;
@@ -54,8 +55,10 @@ const ModalConfirm: FunctionComponent<ModalConfirmProps> = ({
         <div className="type-icon mb-20">
           {type === 'success' ? (
             <BsCheckCircleFill className="success-icon" />
+          ) : type === 'delete' ? (
+            <TiDelete className="delete-icon" />
           ) : (
-            <RiErrorWarningFill className="warning-icon" />
+            <RiErrorWarningFill className="confirm-icon" />
           )}
         </div>
         <div className="modal-title mb-25">{title}</div>
@@ -108,11 +111,15 @@ const ModalContainer = styled(Modal)<{ type: string }>`
       text-align: center;
 
       .success-icon {
-        fill: #32a937;
+        fill: ${(props) => props.theme.colors.green};
       }
 
-      .warning-icon {
-        fill: #40abdb;
+      .confirm-icon {
+        fill: ${(props) => props.theme.colors.blue};
+      }
+
+      .delete-icon {
+        fill: ${(props) => props.theme.colors.red};
       }
 
       svg {
@@ -139,7 +146,8 @@ const ModalContainer = styled(Modal)<{ type: string }>`
       }
 
       .confirm-btn {
-        background-color: ${({ type }) => (type === 'success' ? '#32a937' : '#40abdb')};
+        background-color: ${({ type }) =>
+          type === 'success' ? '#32a937' : type === 'confirm' ? '#0d6efd' : '#ff0000'};
       }
     }
   }

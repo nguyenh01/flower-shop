@@ -20,7 +20,7 @@ import Path from '@src/utils/path';
 import { validationSchema } from './constant';
 import { imgPath } from '@src/utils/constants';
 import { v4 as uuid } from 'uuid';
-import imageUrlToFile from '@src/utils/imageUrlToFile';
+import convertImageUrlToFile from '@src/utils/imageUrlToFile';
 
 interface ProductFormAdministrationProps {
   type: 'create' | 'update';
@@ -49,22 +49,17 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
   const [postProduct, { isLoading: isPostLoading }] = usePostProductMutation();
   const [putProduct, { isLoading: isPutLoading }] = usePutProductMutation();
 
-  const getPromiseResult = async (promise: Promise<File>) => {
-    const result = await promise;
-    return result;
-  };
-
   useEffect(() => {
     if (isUpdateForm) {
       const formatFileList = (initialValue?.images ?? []).map((item) => {
-        const filePromise = imageUrlToFile(`${imgPath}${item}`).then((response) => response);
-        const file = getPromiseResult(filePromise);
+        const filePromise = convertImageUrlToFile(`${imgPath}${item}`).then((response) => response);
+        const url = `${imgPath}${item}`;
+
         return {
           uid: uuid().slice(0, 5),
           name: item.split('/').pop() as string,
-          status: 'done',
-          url: `${imgPath}${item}`,
-          originFileObj: file,
+          url: url,
+          originFileObj: filePromise,
         };
       });
       setFileList(formatFileList as any);

@@ -16,6 +16,10 @@ export interface CategoriesResponse {
 }
 
 export interface CategoriesRequest {
+  size?: number;
+  page?: number;
+  sort?: string;
+  direction?: string;
   name?: string;
   is_paging?: boolean;
 }

@@ -9,8 +9,9 @@ export const MaterialAPI = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getMaterials: builder.query<MaterialsResponse, MaterialsRequest>({
-      query: () => ({
+      query: (params) => ({
         url: baseEndpoint,
+        params,
       }),
     }),
   }),
