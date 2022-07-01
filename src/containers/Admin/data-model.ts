@@ -1,4 +1,4 @@
-export interface InitialValueFormik {
+export interface InitialValueProductFormik {
   id?: string;
   name?: string;
   cate_id?: string;
@@ -7,4 +7,9 @@ export interface InitialValueFormik {
   unitsinstock?: number | string;
   description?: string;
   images?: string[];
+}
+
+export interface InitialValueCategoryAndMaterialFormik {
+  name?: string;
+  description?: string;
 }

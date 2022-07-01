@@ -15,6 +15,10 @@ export interface CategoriesResponse {
   };
 }
 
+export interface GetCategoryResponse {
+  data: Category;
+}
+
 export interface CategoriesRequest {
   size?: number;
   page?: number;
@@ -22,4 +26,12 @@ export interface CategoriesRequest {
   direction?: string;
   name?: string;
   is_paging?: boolean;
+}
+export interface PostCategoryRequest {
+  name?: string;
+  description?: string;
+}
+
+export interface PutCategoryRequest extends PostCategoryRequest {
+  _id?: string;
 }

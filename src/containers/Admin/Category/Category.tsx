@@ -4,7 +4,7 @@ import useDebounceSearch from '@src/hooks/useDebounceSearch';
 import { useRouter } from 'next/router';
 import { FunctionComponent, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useGetCategoriesQuery } from '@src/api/CategoryAPI';
+import { useDeleteCategoryMutation, useGetCategoriesQuery } from '@src/api/CategoryAPI';
 import { truncateString } from '@src/utils/constants';
 import ActionGroup from '@src/components/Table/ActionGroup/ActionGroup';
 import { TableContainer } from '../Product/Product';
@@ -48,6 +48,7 @@ const CategoryAdministration: FunctionComponent = () => {
     direction: sortDirection,
     name: searchTerm || undefined,
   });
+  const [deleteCategory, { isLoading: isDeleteLoading }] = useDeleteCategoryMutation();
 
   const handleGoToUpdatePage = (id: string) => {
     router.push(Path.ADMIN.UPDATE_CATEGORY(id));
@@ -60,6 +61,16 @@ const CategoryAdministration: FunctionComponent = () => {
   const handleDeleteCategory = (id: string) => {
     setCategoryId(id);
     confirmModal.toggle();
+  };
+
+  const handleConfirmDelete = () => {
+    deleteCategory({ id: categoryId })
+      .unwrap()
+      .then(() => {
+        confirmModal.toggle();
+        successModal.toggle();
+      })
+      .catch(() => {});
   };
 
   const columns = useMemo(
@@ -139,8 +150,8 @@ const CategoryAdministration: FunctionComponent = () => {
         confirmText="Confirm"
         visible={confirmModal.visible}
         onClose={confirmModal.toggle}
-        //onConfirm={handleConfirmDelete}
-        //isConfirmLoading={isLoading}
+        onConfirm={handleConfirmDelete}
+        isConfirmLoading={isDeleteLoading}
       />
       <ModalConfirm
         type="success"

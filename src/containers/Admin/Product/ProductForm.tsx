@@ -5,7 +5,7 @@ import Row, { Gutter } from 'antd/lib/grid/row';
 import { useFormik } from 'formik';
 import { Fragment, FunctionComponent, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { InitialValueFormik } from './data-model';
+import { InitialValueProductFormik } from '../data-model';
 import { Space, Upload, Image as AntdImage } from 'antd';
 import { RcFile, UploadFile, UploadProps } from 'antd/lib/upload/interface';
 import Typography from '@src/components/Typography/Typography';
@@ -25,7 +25,7 @@ import { imgPath } from '@src/utils/constants';
 
 interface ProductFormAdministrationProps {
   type: 'create' | 'update';
-  initialValue: InitialValueFormik;
+  initialValue: InitialValueProductFormik;
 }
 
 const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProps> = ({
@@ -59,7 +59,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
       const formData = new FormData();
       const imageList = fileList.map((item) => item.originFileObj);
       for (const key in values) {
-        formData.append(key, values[key as keyof InitialValueFormik] as any);
+        formData.append(key, values[key as keyof InitialValueProductFormik] as any);
       }
       imageList.forEach((file) => {
         formData.append('images', file as Blob);

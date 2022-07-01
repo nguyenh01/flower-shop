@@ -43,5 +43,5 @@ export default AdministrationRoutingProtection(
   UpdateProductPage,
   [RoleEnum.ADMIN, RoleEnum.EMPLOYEE],
   'update product',
-  'Fill in the fields below to update a product.'
+  'Edit the fields below to update a product.'
 );
