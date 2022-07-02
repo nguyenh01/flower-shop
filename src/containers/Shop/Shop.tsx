@@ -12,8 +12,8 @@ import Pagination from '@src/components/Pagination/Pagination';
 import { useGetMaterialsQuery } from '@src/api/MaterialAPI';
 import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 import { useRouter } from 'next/router';
-import { Category } from '@src/api/DataModel/category.data-model';
-import { Material } from '@src/api/DataModel/material.data-model';
+import { Category } from '@src/api/model/category.data-model';
+import { Material } from '@src/api/model/material.data-model';
 
 interface Option {
   label: string;

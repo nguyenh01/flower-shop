@@ -10,16 +10,16 @@ import { Col, Space } from 'antd';
 import Input from '@src/components/Input/Input';
 import Button from '@src/components/Button/Button';
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
-import { usePostCategoryMutation, usePutCategoryMutation } from '@src/api/CategoryAPI';
+import { usePostMaterialMutation, usePutMaterialMutation } from '@src/api/MaterialAPI';
 import { validationSchema } from './constant';
 
-interface CategoryFormProps {
+interface MaterialFormProps {
   type: 'create' | 'update';
   initialValue: InitialValueCategoryAndMaterialFormik;
-  categoryId?: string;
+  materialId?: string;
 }
 
-const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue, categoryId }) => {
+const MaterialForm: FunctionComponent<MaterialFormProps> = ({ type, initialValue, materialId }) => {
   const isCreateForm = type === 'create';
   const isUpdateForm = type === 'update';
   const router = useRouter();
@@ -29,8 +29,8 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
 
   const gutter: [Gutter, Gutter] = useMemo(() => [20, 20], []);
 
-  const [postCategory, { isLoading: isPostLoading }] = usePostCategoryMutation();
-  const [putCategory, { isLoading: isPutLoading }] = usePutCategoryMutation();
+  const [postMaterial, { isLoading: isPostLoading }] = usePostMaterialMutation();
+  const [putMaterial, { isLoading: isPutLoading }] = usePutMaterialMutation();
 
   const formik = useFormik({
     enableReinitialize: isUpdateForm,
@@ -38,16 +38,16 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (isCreateForm) {
-        postCategory(values)
+        postMaterial(values)
           .unwrap()
           .then(() => {
             successModal.toggle();
           })
           .catch(() => {});
       } else {
-        putCategory({
+        putMaterial({
           ...values,
-          _id: categoryId,
+          _id: materialId,
         })
           .unwrap()
           .then(() => {
@@ -74,7 +74,7 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
   };
 
   const handleConfirm = () => {
-    router.push(Path.ADMIN.CATEGORY);
+    router.push(Path.ADMIN.MATERIAL);
   };
 
   return (
@@ -83,7 +83,7 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
         <Col span={24}>
           <Input
             type="text"
-            label="Category Name"
+            label="Material Name"
             name="name"
             value={formik.values.name}
             {...reuseProps}
@@ -126,7 +126,7 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
       />
       <ModalConfirm
         type="success"
-        title={`${isCreateForm ? 'Create' : 'Update'} Category Success`}
+        title={`${isCreateForm ? 'Create' : 'Update'} Material Success`}
         showCloseButton={false}
         visible={successModal.visible}
         onClose={successModal.toggle}
@@ -138,4 +138,4 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
   );
 };
 
-export default CategoryForm;
+export default MaterialForm;

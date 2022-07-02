@@ -4,18 +4,14 @@ import { Space } from 'antd';
 
 interface ProductMetaProps {
   title: string;
-  links: { name: string; href: string }[];
+  item: { name: string; href: string };
 }
 
-const ProductMeta: FunctionComponent<ProductMetaProps> = ({ title, links }) => {
+const ProductMeta: FunctionComponent<ProductMetaProps> = ({ title, item }) => {
   return (
     <Space size={12}>
       <span className="product-meta-title">{title}:</span>
-      {links.map((item) => (
-        <Link key={item.name} href={item.href}>
-          {item.name}
-        </Link>
-      ))}
+      <Link href={item.href}>{item.name}</Link>
     </Space>
   );
 };

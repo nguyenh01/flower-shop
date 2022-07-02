@@ -24,8 +24,10 @@ interface CategoryList {
 const CategoryAdministration: FunctionComponent = () => {
   const router = useRouter();
   const { t } = useTranslation();
+
   const confirmModal = useBooleanState();
   const successModal = useBooleanState();
+  const failedModal = useBooleanState();
 
   const tableInstance = Table.useTable({
     initialSortValue: {
@@ -70,7 +72,12 @@ const CategoryAdministration: FunctionComponent = () => {
         confirmModal.toggle();
         successModal.toggle();
       })
-      .catch(() => {});
+      .catch((error) => {
+        if (error.status === 400) {
+          confirmModal.toggle();
+          failedModal.toggle();
+        }
+      });
   };
 
   const columns = useMemo(
@@ -160,6 +167,17 @@ const CategoryAdministration: FunctionComponent = () => {
         visible={successModal.visible}
         onClose={successModal.toggle}
         onConfirm={successModal.toggle}
+        confirmText="Close"
+        showCloseIcon={false}
+      />
+      <ModalConfirm
+        type="delete"
+        title="Cannot Delete"
+        description="This product category cannot be removed because there are some products with this category"
+        showCloseButton={false}
+        visible={failedModal.visible}
+        onClose={failedModal.toggle}
+        onConfirm={failedModal.toggle}
         confirmText="Close"
         showCloseIcon={false}
       />

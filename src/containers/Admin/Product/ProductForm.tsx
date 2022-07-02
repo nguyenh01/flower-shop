@@ -18,8 +18,8 @@ import useBooleanState from '@src/hooks/useBooleanState';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import { validationSchema } from './constant';
-import { Category } from '@src/api/DataModel/category.data-model';
-import { Material } from '@src/api/DataModel/material.data-model';
+import { Category } from '@src/api/model/category.data-model';
+import { Material } from '@src/api/model/material.data-model';
 import { CgArrowsExchange, CgArrowsExchangeAlt } from 'react-icons/cg';
 import { imgPath } from '@src/utils/constants';
 

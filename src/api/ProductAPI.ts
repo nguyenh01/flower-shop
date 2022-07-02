@@ -5,7 +5,7 @@ import {
   ProductItem,
   ProductRequest,
   ProductResponse,
-} from '@src/api/DataModel/product.data-model';
+} from '@src/api/model/product.data-model';
 
 const baseEndpoint = `/products`;
 

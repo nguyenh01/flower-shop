@@ -23,3 +23,16 @@ export interface MaterialsResponse {
     page: number;
   };
 }
+
+export interface GetMaterialResponse {
+  data: Material;
+}
+
+export interface PostMaterialRequest {
+  name?: string;
+  description?: string;
+}
+
+export interface PutMaterialRequest extends PostMaterialRequest {
+  _id?: string;
+}

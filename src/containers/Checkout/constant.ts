@@ -1,4 +1,4 @@
-import { OrderFormik } from '@src/api/DataModel/order.data-model';
+import { OrderFormik } from '@src/api/model/order.data-model';
 import * as yup from 'yup';
 import { requiredValidation } from '@src/utils/constants';
 

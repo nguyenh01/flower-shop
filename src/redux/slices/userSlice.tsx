@@ -23,6 +23,7 @@ const userSlice = createSlice({
       cookies.remove('token');
       localStorage.removeItem('token');
       localStorage.removeItem('type');
+      localStorage.removeItem('user_id');
       //localStorage.removeItem('refreshToken');
       router.push('/');
     },

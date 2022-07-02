@@ -1,7 +1,7 @@
 import { Image } from 'antd';
 import { FunctionComponent, useMemo } from 'react';
 import styled from 'styled-components';
-import { ProductItem } from '@src/api/DataModel/product.data-model';
+import { ProductItem } from '@src/api/model/product.data-model';
 import { imgPath } from '@src/utils/constants';
 import formatAmount from '@src/utils/formatAmount';
 import { useRouter } from 'next/router';

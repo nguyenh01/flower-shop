@@ -26,6 +26,7 @@ import {
 } from '@src/api/CartAPI';
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
+import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 
 interface CartItem {
   product_id: string;
@@ -238,6 +239,7 @@ const Cart: FunctionComponent = () => {
         onClose={confirmClearCart.toggle}
         onConfirm={handleConfirmClearCart}
       />
+      {product.length === 0 && <SpinnerFullScreen />}
     </Container>
   );
 };

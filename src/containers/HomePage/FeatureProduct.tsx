@@ -10,7 +10,7 @@ import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScre
 
 const FeatureProduct: FunctionComponent = () => {
   const { t } = useTranslation();
-  const { data: product, isLoading, isFetching } = useGetProductsQuery({ size: 4, page: 1 });
+  const { data: product, isLoading, isFetching } = useGetProductsQuery({ size: 8, page: 1 });
   const { SectionTitle1, SectionTitle3 } = Typography;
 
   return (

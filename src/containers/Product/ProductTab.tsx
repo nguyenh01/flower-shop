@@ -1,12 +1,13 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import useBooleanState from '@src/hooks/useBooleanState';
+import { ProductItem } from '@src/api/model/product.data-model';
 
 interface ProductTabProps {
-  data?: any;
+  product?: ProductItem;
 }
 
-const ProductTab: FunctionComponent<ProductTabProps> = ({ data }) => {
+const ProductTab: FunctionComponent<ProductTabProps> = ({ product }) => {
   const tabState = useBooleanState(true);
 
   const handleChange = () => {
@@ -24,7 +25,7 @@ const ProductTab: FunctionComponent<ProductTabProps> = ({ data }) => {
         </div>
       </div>
       {tabState.visible ? (
-        <div className="tab-content">Description</div>
+        <div className="tab-content">{product?.description}</div>
       ) : (
         <div className="tab-content">Reviews</div>
       )}

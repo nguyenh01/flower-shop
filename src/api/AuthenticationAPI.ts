@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '@src/api/baseQuery';
-import { LoginResponse, LoginRequest } from '@src/api/DataModel/login.data-model';
-import { RegisterResponse, RegisterRequest } from '@src/api/DataModel/register.data-model';
+import { LoginResponse, LoginRequest } from '@src/api/model/login.data-model';
+import { RegisterResponse, RegisterRequest } from '@src/api/model/register.data-model';
 
 const baseEndpoint = `/users`;
 

@@ -13,7 +13,7 @@ import { PlusIcon } from '@src/components/Icons';
 import Input from '@src/components/Input/Input';
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
 import Path from '@src/utils/path';
-import { useGetMaterialsQuery } from '@src/api/MaterialAPI';
+import { useDeleteMaterialMutation, useGetMaterialsQuery } from '@src/api/MaterialAPI';
 
 interface MaterialList {
   id: string;
@@ -24,8 +24,10 @@ interface MaterialList {
 const MaterialAdministration: FunctionComponent = () => {
   const router = useRouter();
   const { t } = useTranslation();
+
   const confirmModal = useBooleanState();
   const successModal = useBooleanState();
+  const failedModal = useBooleanState();
 
   const tableInstance = Table.useTable({
     initialSortValue: {
@@ -48,6 +50,7 @@ const MaterialAdministration: FunctionComponent = () => {
     direction: sortDirection,
     name: searchTerm || undefined,
   });
+  const [deleteMaterial, { isLoading: isDeleteLoading }] = useDeleteMaterialMutation();
 
   const handleGoToUpdatePage = (id: string) => {
     router.push(Path.ADMIN.UPDATE_MATERIAL(id));
@@ -60,6 +63,21 @@ const MaterialAdministration: FunctionComponent = () => {
   const handleDeleteMaterial = (id: string) => {
     setMaterialId(id);
     confirmModal.toggle();
+  };
+
+  const handleConfirmDelete = () => {
+    deleteMaterial({ id: materialId })
+      .unwrap()
+      .then(() => {
+        confirmModal.toggle();
+        successModal.toggle();
+      })
+      .catch((error) => {
+        if (error.status === 400) {
+          confirmModal.toggle();
+          failedModal.toggle();
+        }
+      });
   };
 
   const columns = useMemo(
@@ -139,8 +157,8 @@ const MaterialAdministration: FunctionComponent = () => {
         confirmText="Confirm"
         visible={confirmModal.visible}
         onClose={confirmModal.toggle}
-        //onConfirm={handleConfirmDelete}
-        //isConfirmLoading={isLoading}
+        onConfirm={handleConfirmDelete}
+        isConfirmLoading={isDeleteLoading}
       />
       <ModalConfirm
         type="success"
@@ -149,6 +167,17 @@ const MaterialAdministration: FunctionComponent = () => {
         visible={successModal.visible}
         onClose={successModal.toggle}
         onConfirm={successModal.toggle}
+        confirmText="Close"
+        showCloseIcon={false}
+      />
+      <ModalConfirm
+        type="delete"
+        title="Cannot Delete"
+        description="This product material cannot be removed because there are some products with this material"
+        showCloseButton={false}
+        visible={failedModal.visible}
+        onClose={failedModal.toggle}
+        onConfirm={failedModal.toggle}
         confirmText="Close"
         showCloseIcon={false}
       />

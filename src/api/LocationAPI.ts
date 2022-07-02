@@ -8,7 +8,7 @@ import {
   ShipFeeResponse,
   WardRequest,
   WardResponse,
-} from '@src/api/DataModel/location.data-model';
+} from '@src/api/model/location.data-model';
 
 const baseEndpoint = '/shipFee';
 

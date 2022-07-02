@@ -12,7 +12,7 @@ import {
   PaypalIcon,
   VisaIcon,
 } from '@src/components/Icons';
-import { ProductItem } from '@src/api/DataModel/product.data-model';
+import { ProductItem } from '@src/api/model/product.data-model';
 import formatAmount from '@src/utils/formatAmount';
 import { handleAddToCartWithCookie } from '@src/containers/Product/ProductCookie';
 import useSelector from '@src/utils/useSelector';
@@ -21,18 +21,6 @@ import ModalAddToCart from '@src/components/ModalAddToCart/ModalAddToCart';
 import useBooleanState from '@src/hooks/useBooleanState';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
-
-const categoryLinks = [
-  { name: 'Deal Product', href: '/' },
-  { name: 'Featured Products', href: '/' },
-  { name: 'Latest Products', href: '/' },
-];
-
-const tagLinks = [
-  { name: 'black', href: '/' },
-  { name: 'navy', href: '/' },
-  { name: 'pink', href: '/' },
-];
 
 interface ProductContentProps {
   content: ProductItem | undefined;
@@ -134,10 +122,10 @@ const ProductContent: FunctionComponent<ProductContentProps> = ({ content }) => 
         </Button>
       </div>
       <div className="product-category mb-10">
-        <ProductMeta title="Category" links={categoryLinks} />
+        {/* <ProductMeta title="Category" item={categoryLinks} /> */}
       </div>
       <div className="product-tag mb-15">
-        <ProductMeta title="Tag" links={tagLinks} />
+        {/* <ProductMeta title="Material" item={tagLinks} /> */}
       </div>
       <div className="payment-option">
         <div className="product-meta-title mb-5">Guaranteed safe checkout</div>

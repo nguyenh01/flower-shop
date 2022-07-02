@@ -39,7 +39,7 @@ export function makeStore() {
         .concat(LocationAPI.middleware)
         .concat(OrderAPI.middleware)
         .concat(CategoryAPI.middleware)
-        .concat(CategoryAPI.middleware),
+        .concat(MaterialAPI.middleware),
   });
 }
 

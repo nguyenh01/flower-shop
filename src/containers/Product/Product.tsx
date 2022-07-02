@@ -7,15 +7,15 @@ import ProductContent from '@src/containers/Product/ProductContent';
 import ProductTab from '@src/containers/Product/ProductTab';
 import { useRouter } from 'next/router';
 import { useGetProductQuery } from '@src/api/ProductAPI';
+import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 
 const Product: FunctionComponent = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: productDetail } = useGetProductQuery({ id: id as string });
+  const { data: productDetail, isFetching, isLoading } = useGetProductQuery({ id: id as string });
 
   const thumbnails = useMemo(() => productDetail?.imageList, [productDetail]);
-
   const content = useMemo(() => productDetail, [productDetail]);
 
   return (
@@ -29,8 +29,9 @@ const Product: FunctionComponent = () => {
             <ProductContent content={content} />
           </Col>
         </Row>
-        <ProductTab />
+        <ProductTab product={content} />
       </Wrapper>
+      {(isFetching || isLoading) && <SpinnerFullScreen />}
     </Container>
   );
 };

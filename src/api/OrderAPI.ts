@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '@src/api/baseQuery';
-import { OrderResponse, OrderRequest } from './DataModel/order.data-model';
+import { OrderResponse, OrderRequest } from './model/order.data-model';
 
 const baseEndpoint = '/orders/create';
 

@@ -6,7 +6,7 @@ import {
   GetCategoryResponse,
   PostCategoryRequest,
   PutCategoryRequest,
-} from './DataModel/category.data-model';
+} from './model/category.data-model';
 
 const baseEndpoint = '/categories';
 

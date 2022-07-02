@@ -7,7 +7,7 @@ import {
   PostCartItemRequest,
   PutCartItemRequest,
   PutCartItemResponse,
-} from '@src/api/DataModel/cart.data-model';
+} from '@src/api/model/cart.data-model';
 
 const baseEndpoint = `/shoppingCarts`;
 

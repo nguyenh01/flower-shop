@@ -259,7 +259,7 @@ const Container = styled.div`
 
     .children {
       width: 100%;
-      height: 93%;
+      height: auto;
       background-color: #fff;
       padding: 30px;
       border-radius: 10px;

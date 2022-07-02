@@ -17,14 +17,14 @@ import {
   useGetWardQuery,
 } from '@src/api/LocationAPI';
 import useSelector from '@src/utils/useSelector';
-import { CartResponse } from '@src/api/DataModel/cart.data-model';
+import { CartResponse } from '@src/api/model/cart.data-model';
 import { imgPath } from '@src/utils/constants';
 import formatAmount from '@src/utils/formatAmount';
 import Button from '@src/components/Button/Button';
 import useBooleanState from '@src/hooks/useBooleanState';
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
 import { useCreateOrderMutation } from '@src/api/OrderAPI';
-import { OrderFormik } from '@src/api/DataModel/order.data-model';
+import { OrderFormik } from '@src/api/model/order.data-model';
 import { useRouter } from 'next/router';
 import { handleClearCart } from '../Product/ProductCookie';
 

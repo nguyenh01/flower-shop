@@ -2,6 +2,8 @@ import { Space } from 'antd';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { FiEdit, FiDelete } from 'react-icons/fi';
+import useSelector from '@src/utils/useSelector';
+import { RoleEnum } from '@src/utils/constants';
 
 interface ActionGroupProps {
   handleUpdate?: () => void;
@@ -9,6 +11,9 @@ interface ActionGroupProps {
 }
 
 const ActionGroup: FunctionComponent<ActionGroupProps> = ({ handleUpdate, handleDelete }) => {
+  const { type } = useSelector((state) => state.userProfile);
+  const isAdmin = type === RoleEnum.ADMIN;
+
   const handleUpdateAction = () => {
     handleUpdate && handleUpdate();
   };
@@ -21,7 +26,7 @@ const ActionGroup: FunctionComponent<ActionGroupProps> = ({ handleUpdate, handle
     <Container>
       <Space size={15}>
         <FiEdit className="update-icon" onClick={handleUpdateAction} />
-        <FiDelete className="delete-icon" onClick={handleDeleteAction} />
+        {isAdmin && <FiDelete className="delete-icon" onClick={handleDeleteAction} />}
       </Space>
     </Container>
   );
