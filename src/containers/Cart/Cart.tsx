@@ -37,7 +37,7 @@ const Cart: FunctionComponent = () => {
   const router = useRouter();
   const confirmClearCart = useBooleanState();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
-  const { cartItems } = useSelector((state) => state.productSlice);
+  const { cartItems, loading } = useSelector((state) => state.productSlice);
   const cartCookie = Cookies.get('carts');
 
   const [product, setProduct] = useState<Product[]>([]);
@@ -239,7 +239,7 @@ const Cart: FunctionComponent = () => {
         onClose={confirmClearCart.toggle}
         onConfirm={handleConfirmClearCart}
       />
-      {product.length === 0 && <SpinnerFullScreen />}
+      {loading && <SpinnerFullScreen />}
     </Container>
   );
 };

@@ -8,16 +8,17 @@ import { useVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
 import { useGetCartByIdQuery } from '@src/api/CartAPI';
 import dispatch from '@src/utils/dispatch';
 import { setUserProfile } from '@src/redux/slices/userSlice';
-import { setCart } from '@src/redux/slices/productSlice';
+import { setCart, setLoadingCart } from '@src/redux/slices/productSlice';
 
 const RoutingProtection = (Component: FunctionComponent, type: number[] | undefined = []) => {
   const AuthenticationComponent = ({ ...restProps }) => {
     const { isAuth, profile } = useSelector((state) => state.userProfile);
     const { data } = useVerifyAccessTokenQuery({}, { skip: !isAuth });
-    const { data: cart } = useGetCartByIdQuery(
-      { id: profile.id },
-      { skip: !isAuth || !profile.id }
-    );
+    const {
+      data: cart,
+      isFetching,
+      isLoading,
+    } = useGetCartByIdQuery({ id: profile.id }, { skip: !isAuth || !profile.id });
 
     useEffect(() => {
       if (data) {
@@ -47,6 +48,10 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
         dispatch(setCart([]));
       }
     }, [cart]);
+
+    useEffect(() => {
+      dispatch(setLoadingCart(isFetching || isLoading));
+    }, [isFetching, isLoading]);
 
     return <Component {...restProps} />;
   };
