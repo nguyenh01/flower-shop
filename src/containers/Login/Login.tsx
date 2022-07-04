@@ -34,21 +34,21 @@ const Login: FunctionComponent = () => {
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: (value) => {
+    onSubmit: (values) => {
       if ((countSubmit as number) > 2) {
         if (tokenReCAPTCHA) {
-          handleLogin(value);
+          handleLogin(values);
         } else {
           message.error('Please verify reCAPTCHA');
         }
       } else {
-        handleLogin(value);
+        handleLogin(values);
       }
     },
   });
 
-  const handleLogin = (value: any) => {
-    return login(value)
+  const handleLogin = (values: any) => {
+    return login(values)
       .unwrap()
       .then(async (response) => {
         if (response.message === 'Successful') {
@@ -92,6 +92,10 @@ const Login: FunctionComponent = () => {
     formik.handleSubmit();
   };
 
+  const handlePressEnter = () => {
+    formik.handleSubmit();
+  };
+
   const handleChangeTokenReCAPCHA = (value: string) => {
     setTokenReCAPTCHA(value);
   };
@@ -121,6 +125,7 @@ const Login: FunctionComponent = () => {
                   label={t('label.password')}
                   name="password"
                   value={formik.values.password}
+                  onPressEnter={handlePressEnter}
                   {...reuseProps}
                 />
               </Col>
@@ -147,6 +152,7 @@ const Login: FunctionComponent = () => {
 };
 
 const Container = styled.div`
+  height: 100%;
   padding: 100px 0;
 
   .wrapper {

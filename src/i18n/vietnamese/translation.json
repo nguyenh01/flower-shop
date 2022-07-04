@@ -10,7 +10,10 @@
     "district": "quận",
     "ward": "phường",
     "address": "địa chỉ",
-    "note": "ghi chú"
+    "note": "ghi chú",
+    "currentPassword": "mật khẩu hiện tại",
+    "newPassword": "mật khẩu mới",
+    "confirmNewPassword": "nhập lại mật khẩu mới"
   },
   "menu": {
     "home": "trang chủ",

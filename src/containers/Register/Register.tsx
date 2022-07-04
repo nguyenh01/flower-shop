@@ -29,8 +29,8 @@ const Register: FunctionComponent = () => {
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: (value) => {
-      register(payload(value))
+    onSubmit: (values) => {
+      register(payload(values))
         .unwrap()
         .then(async (response) => {
           if (response.message === 'Successful') {
@@ -155,6 +155,7 @@ const Register: FunctionComponent = () => {
 };
 
 const Container = styled.div`
+  height: 100%;
   padding: 100px 0;
 
   .wrapper {

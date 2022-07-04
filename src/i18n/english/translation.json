@@ -10,7 +10,10 @@
     "district": "district",
     "ward": "ward",
     "address": "address",
-    "note": "note"
+    "note": "note",
+    "currentPassword": "current password",
+    "newPassword": "new password",
+    "confirmNewPassword": "Confirm New Password"
   },
   "menu": {
     "home": "home",

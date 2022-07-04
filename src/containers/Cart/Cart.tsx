@@ -113,6 +113,7 @@ const Cart: FunctionComponent = () => {
 
   const handleUpdateCart = () => {
     if (isAuth) {
+      //console.log({ carts: uniqueIdWithMaxQuantity(cartItem) });
       putCartItem({ carts: uniqueIdWithMaxQuantity(cartItem) })
         .unwrap()
         .then(() => {

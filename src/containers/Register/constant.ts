@@ -26,7 +26,7 @@ export const validationSchema = yup.object().shape({
     .trim()
     .min(8, 'Password must be at least 8 characters')
     .required(requiredValidation('Password')),
-  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Password must match'),
 });
 
 export const payload = (object: any) => {

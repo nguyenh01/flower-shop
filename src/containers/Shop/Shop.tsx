@@ -144,8 +144,8 @@ const Shop: FunctionComponent = () => {
 };
 
 const Container = styled.div`
-  padding-top: 80px;
-  padding-bottom: 80px;
+  height: 100%;
+  padding: 80px 0;
 `;
 
 export default Shop;
