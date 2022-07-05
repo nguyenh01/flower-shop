@@ -41,6 +41,7 @@ const Cart: FunctionComponent = () => {
   const cartCookie = Cookies.get('carts');
 
   const [product, setProduct] = useState<Product[]>([]);
+  const [productCookie, setProductCookie] = useState<Product[]>([]);
   const [cartItem, setCartItem] = useState<CartItem[]>([]);
   const [total, setTotal] = useState<number>();
 
@@ -60,7 +61,7 @@ const Cart: FunctionComponent = () => {
     } else {
       if (cartCookie) {
         const parseJson = JSON.parse(cartCookie);
-        setProduct(parseJson);
+        setProductCookie(parseJson);
         const total = parseJson.reduce(
           (preValue: any, curValue: Product) =>
             preValue + (curValue.price as number) * (curValue.quantity as number),
@@ -71,9 +72,21 @@ const Cart: FunctionComponent = () => {
     }
   }, [isAuth, profile, cartItems]);
 
+  const filterDuplicateId = (id: string, quantity: number) => {
+    const duplicateId = cartItem.find((item) => item.product_id === id);
+    if (duplicateId) {
+      const remainingFilter = cartItem.filter((item) => item.product_id !== id);
+      remainingFilter.push({ product_id: id, quantity: quantity });
+      setCartItem(remainingFilter);
+    } else {
+      return;
+    }
+  };
+
   const handleChange = (quantity: number, id: string) => {
     if (isAuth) {
       setCartItem((prevState) => [...prevState, { product_id: id, quantity }]);
+      filterDuplicateId(id, quantity);
     } else {
       handleUpdateQuantity(id, quantity);
     }
@@ -96,25 +109,9 @@ const Cart: FunctionComponent = () => {
     }
   };
 
-  const uniqueIdWithMaxQuantity = (cartItems: CartItem[]) => {
-    const arrayFiltered: CartItem[] = [];
-    cartItems.forEach((item) => {
-      const hasDuplicateId = arrayFiltered.find((value) => value.product_id === item.product_id);
-      if (hasDuplicateId) {
-        if (hasDuplicateId.quantity < item.quantity) {
-          hasDuplicateId.quantity = item.quantity;
-        }
-        return;
-      }
-      arrayFiltered.push(item);
-    });
-    return arrayFiltered;
-  };
-
   const handleUpdateCart = () => {
     if (isAuth) {
-      //console.log({ carts: uniqueIdWithMaxQuantity(cartItem) });
-      putCartItem({ carts: uniqueIdWithMaxQuantity(cartItem) })
+      putCartItem({ carts: cartItem })
         .unwrap()
         .then(() => {
           message.success('Update Cart Success');
@@ -156,7 +153,7 @@ const Cart: FunctionComponent = () => {
   return (
     <Container>
       <Wrapper>
-        {product.length > 0 ? (
+        {(isAuth ? product.length : productCookie.length) > 0 ? (
           <Fragment>
             <div className="cart-table mb-15">
               <table className="table">
@@ -170,7 +167,7 @@ const Cart: FunctionComponent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {product.map((item: Product) => (
+                  {(isAuth ? product : productCookie).map((item: Product) => (
                     <tr key={item.id}>
                       <td>
                         <Image

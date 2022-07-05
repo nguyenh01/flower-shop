@@ -27,6 +27,8 @@ import { useCreateOrderMutation } from '@src/api/OrderAPI';
 import { OrderFormik } from '@src/api/model/order.data-model';
 import { useRouter } from 'next/router';
 import { handleClearCart } from '../Product/ProductCookie';
+import dispatch from '@src/utils/dispatch';
+import { CartAPI } from '@src/api/CartAPI';
 
 interface CheckoutProps {
   cart: CartResponse;
@@ -118,8 +120,9 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
       ...payload(values),
     })
       .unwrap()
-      .then(() => {
+      .then(async () => {
         confirmModal.toggle();
+        await dispatch(CartAPI.util.invalidateTags(['CART']));
         successModal.toggle();
       })
       .catch(() => {});
