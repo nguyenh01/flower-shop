@@ -6,7 +6,7 @@ import formatAmount from '@src/utils/formatAmount';
 import ActionGroup from '@src/components/Table/ActionGroup/ActionGroup';
 import styled from 'styled-components';
 import { Image } from 'antd';
-import { imgPath, truncateString } from '@src/utils/constants';
+import { truncateString } from '@src/utils/constants';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import useBooleanState from '@src/hooks/useBooleanState';
@@ -16,6 +16,7 @@ import Button from '@src/components/Button/Button';
 import Input from '@src/components/Input/Input';
 import useDebounceSearch from '@src/hooks/useDebounceSearch';
 import { PlusIcon } from '@src/components/Icons';
+import host from '@src/utils/host';
 
 interface ProductList {
   key: number;
@@ -101,7 +102,7 @@ const ProductAdministration: FunctionComponent = () => {
         title: 'IMAGE',
         dataIndex: 'image',
         align: 'center',
-        render: (image: string) => <Image src={`${imgPath}${image}`} width={100} alt="img" />,
+        render: (image: string) => <Image src={`${host}${image}`} width={100} alt="img" />,
       },
       {
         width: '14%',

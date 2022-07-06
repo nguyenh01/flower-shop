@@ -2,7 +2,6 @@ import { Image } from 'antd';
 import { FunctionComponent, useMemo } from 'react';
 import styled from 'styled-components';
 import { ProductItem } from '@src/api/model/product.data-model';
-import { imgPath } from '@src/utils/constants';
 import formatAmount from '@src/utils/formatAmount';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
@@ -11,6 +10,7 @@ import useSelector from '@src/utils/useSelector';
 import { usePostCartItemMutation } from '@src/api/CartAPI';
 import useBooleanState from '@src/hooks/useBooleanState';
 import ModalAddToCart from '../ModalAddToCart/ModalAddToCart';
+import host from '@src/utils/host';
 
 interface ProductProps {
   product: ProductItem;
@@ -65,20 +65,10 @@ const Product: FunctionComponent<ProductProps> = ({ product }) => {
       <div className="product">
         <div className="product-image" onClick={() => handleGoToProductDetail(product._id)}>
           <div className="image_1">
-            <Image
-              src={`${imgPath}${product?.imageList[0]}`}
-              width={262}
-              preview={false}
-              alt="img"
-            />
+            <Image src={`${host}${product?.imageList[0]}`} width={262} preview={false} alt="img" />
           </div>
           <div className="image_2">
-            <Image
-              src={`${imgPath}${product?.imageList[1]}`}
-              width={262}
-              preview={false}
-              alt="img"
-            />
+            <Image src={`${host}${product?.imageList[1]}`} width={262} preview={false} alt="img" />
           </div>
           {product?.unitsinstock === 0 && <span className="soldout-title">Soldout</span>}
         </div>

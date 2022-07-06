@@ -3,7 +3,7 @@ import EmptyLayout from '@src/components/Layout/EmptyLayout';
 import Head from 'next/head';
 import Checkout from '@src/containers/Checkout';
 import axios from 'axios';
-import host from '@src/api/host';
+import apiHost from '@src/api/api-host';
 import Path from '@src/utils/path';
 import { GetServerSidePropsContext } from 'next';
 import useAuthentication from '@src/hooks/useAuthentication';
@@ -53,7 +53,7 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
       }
     }
     if (req && token) {
-      const response = await axios.get(`${host}/shoppingCarts`, {
+      const response = await axios.get(`${apiHost}/shoppingCarts`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

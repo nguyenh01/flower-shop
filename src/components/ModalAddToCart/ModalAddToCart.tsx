@@ -6,7 +6,7 @@ import { RiCloseCircleFill } from 'react-icons/ri';
 import Button from '../Button/Button';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
-import { imgPath } from '@src/utils/constants';
+import host from '@src/utils/host';
 
 interface ModalAddToCartProps {
   visible: boolean;
@@ -32,7 +32,7 @@ const ModalAddToCart: FunctionComponent<ModalAddToCartProps> = ({ visible, onClo
   return (
     <ModalContainer visible={visible} closable={false} footer={null}>
       <div className="modal-content">
-        <Image src={`${imgPath}${content?.image}`} width={141} preview={false} alt="img" />
+        <Image src={`${host}${content?.image}`} width={141} preview={false} alt="img" />
         <div className="content">
           <div className="product-name mb-15">{content?.name}</div>
           <div className="success-message mb-30">

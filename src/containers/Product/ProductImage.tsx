@@ -1,6 +1,6 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { Image } from 'antd';
-import { imgPath } from '@src/utils/constants';
+import host from '@src/utils/host';
 
 interface ProductImageProps {
   thumbnails?: string[];
@@ -51,7 +51,7 @@ const ProductImage: FunctionComponent<ProductImageProps> = ({ thumbnails }) => {
   return (
     <Fragment>
       <div className="product-image mb-40">
-        <Image className="image" width={470} src={`${imgPath}${source}`} alt="img" />
+        <Image className="image" width={470} src={`${host}${source}`} alt="img" />
       </div>
       <div className="product-thumbnail">
         {thumbnails?.map((item, index) => (
@@ -59,7 +59,7 @@ const ProductImage: FunctionComponent<ProductImageProps> = ({ thumbnails }) => {
             key={index}
             className={thumbnailClassName(index)}
             width={108}
-            src={`${imgPath}${item}`}
+            src={`${host}${item}`}
             preview={false}
             onClick={() => handleClickThumbnail(item as string, index)}
             alt="img"

@@ -1,8 +1,8 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
-import host from './host';
+import apiHost from './api-host';
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: host,
+  baseUrl: apiHost,
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
 

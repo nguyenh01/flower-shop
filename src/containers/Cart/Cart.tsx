@@ -14,7 +14,6 @@ import {
   handleUpdateQuantity,
   Product,
 } from '@src/containers/Product/ProductCookie';
-import { imgPath } from '@src/utils/constants';
 import Path from '@src/utils/path';
 import formatAmount from '@src/utils/formatAmount';
 import { useRouter } from 'next/router';
@@ -27,6 +26,7 @@ import {
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
 import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
+import host from '@src/utils/host';
 
 interface CartItem {
   product_id: string;
@@ -172,7 +172,7 @@ const Cart: FunctionComponent = () => {
                       <td>
                         <Image
                           width="100%"
-                          src={`${imgPath}${item.image}`}
+                          src={`${host}${item.image}`}
                           preview={false}
                           alt="img_cart"
                         />

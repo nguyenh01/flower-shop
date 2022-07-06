@@ -18,7 +18,6 @@ import {
 } from '@src/api/LocationAPI';
 import useSelector from '@src/utils/useSelector';
 import { CartResponse } from '@src/api/model/cart.data-model';
-import { imgPath } from '@src/utils/constants';
 import formatAmount from '@src/utils/formatAmount';
 import Button from '@src/components/Button/Button';
 import useBooleanState from '@src/hooks/useBooleanState';
@@ -29,6 +28,7 @@ import { useRouter } from 'next/router';
 import { handleClearCart } from '../Product/ProductCookie';
 import dispatch from '@src/utils/dispatch';
 import { CartAPI } from '@src/api/CartAPI';
+import host from '@src/utils/host';
 
 interface CheckoutProps {
   cart: CartResponse;
@@ -297,7 +297,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                   <Badge count={item.quantity} offset={[-13, 0]}>
                     <div className="product-thumbnail">
                       <Image
-                        src={`${imgPath}${item.imageList[0]}`}
+                        src={`${host}${item.imageList[0]}`}
                         width={65}
                         alt="img"
                         preview={false}

@@ -12,9 +12,7 @@ const nextConfig = {
 module.exports = {
   publicRuntimeConfig: {
     API_URL: process.env.API_URL,
-  },
-  env: {
-    APP_ENV: process.env.APP_ENV,
+    URL: process.env.URL,
   },
   nextConfig,
   ...withBundleAnalyzer({}),

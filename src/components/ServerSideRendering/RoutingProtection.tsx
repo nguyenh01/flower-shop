@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect } from 'react';
 import Path from '@src/utils/path';
 import { redirect } from '@src/utils/redirect';
 import axios from 'axios';
-import host from '@src/api/host';
+import apiHost from '@src/api/api-host';
 import useSelector from '@src/utils/useSelector';
 import { useVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
 import { useGetCartByIdQuery } from '@src/api/CartAPI';
@@ -67,7 +67,7 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
 
     try {
       if (token) {
-        const response = await axios.get(`${host}/users/me`, {
+        const response = await axios.get(`${apiHost}/users/me`, {
           headers: {
             Authorization: 'Bearer ' + token,
           },
@@ -84,7 +84,7 @@ const RoutingProtection = (Component: FunctionComponent, type: number[] | undefi
 
     try {
       if (token) {
-        const response = await axios.get(`${host}/shoppingCarts`, {
+        const response = await axios.get(`${apiHost}/shoppingCarts`, {
           headers: {
             Authorization: 'Bearer ' + token,
           },

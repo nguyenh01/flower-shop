@@ -6,7 +6,7 @@ import { IoClose } from 'react-icons/io5';
 import { GrSend } from 'react-icons/gr';
 import Container from './style';
 import { io } from 'socket.io-client';
-import { host } from '@src/utils/constants';
+import host from '@src/utils/host';
 
 interface ChatWindowProps {
   toggle: () => void;

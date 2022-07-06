@@ -21,7 +21,7 @@ import { validationSchema } from './constant';
 import { Category } from '@src/api/model/category.data-model';
 import { Material } from '@src/api/model/material.data-model';
 import { CgArrowsExchange, CgArrowsExchangeAlt } from 'react-icons/cg';
-import { imgPath } from '@src/utils/constants';
+import host from '@src/utils/host';
 
 interface ProductFormAdministrationProps {
   type: 'create' | 'update';
@@ -210,7 +210,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
                   <AntdImage
                     key={item}
                     className="old-image"
-                    src={`${imgPath}${item}`}
+                    src={`${host}${item}`}
                     width={200}
                     alt="img"
                   />
