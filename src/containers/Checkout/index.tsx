@@ -34,6 +34,18 @@ interface CheckoutProps {
   cart: CartResponse;
 }
 
+interface FullAddress {
+  province?: string;
+  district?: string;
+  ward?: string;
+}
+
+const initialFullAddressValue = {
+  province: '',
+  district: '',
+  ward: '',
+};
+
 const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -54,6 +66,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   }));
 
   const [shippingFee, setShippingFee] = useState(0);
+  const [fullAddress, setFullAddress] = useState<FullAddress>(initialFullAddressValue);
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -63,14 +76,14 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
     },
   });
 
-  const { data: provinces } = useGetProvinceQuery({});
-
   const province = formik.values.province;
-  const { data: districts } = useGetDistrictQuery({ id: province }, { skip: !province });
-
   const district = formik.values.district;
-  const { data: wards } = useGetWardQuery({ id: district }, { skip: !district });
   const ward = formik.values.ward;
+  const address = formik.values.address;
+
+  const { data: provinces } = useGetProvinceQuery({});
+  const { data: districts } = useGetDistrictQuery({ id: province }, { skip: !province });
+  const { data: wards } = useGetWardQuery({ id: district }, { skip: !district });
 
   const [getShipFee] = useGetShipFeeMutation();
   const [createOrder, { isLoading: isCreateOrderLoading }] = useCreateOrderMutation();
@@ -95,9 +108,30 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   }, [province]);
 
   useEffect(() => {
+    if (provinces && province) {
+      const getProvinceName = provinces.result.find((item) => item.ProvinceID === province);
+      setFullAddress((prev) => ({ ...prev, province: getProvinceName?.ProvinceName }));
+    }
+  }, [provinces, province]);
+
+  useEffect(() => {
     formik.setFieldValue('ward', undefined);
     formik.setFieldValue('address', '');
   }, [district]);
+
+  useEffect(() => {
+    if (districts && district) {
+      const getDistrictName = districts.result.find((item) => item.DistrictID === district);
+      setFullAddress((prev) => ({ ...prev, district: getDistrictName?.DistrictName }));
+    }
+  }, [districts, district]);
+
+  useEffect(() => {
+    if (wards && ward) {
+      const getWardName = wards.result.find((item) => item.WardCode === ward);
+      setFullAddress((prev) => ({ ...prev, ward: getWardName?.WardName }));
+    }
+  }, [wards, ward]);
 
   useEffect(() => {
     if (province && district && ward) {
@@ -116,8 +150,10 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   };
 
   const handleConfirmOrder = (values: OrderFormik) => {
+    const full_address = `${address}, ${fullAddress?.ward}, ${fullAddress?.district}, ${fullAddress?.province}`;
     createOrder({
       item: cartItem,
+      full_address: full_address,
       ...payload(values),
     })
       .unwrap()
