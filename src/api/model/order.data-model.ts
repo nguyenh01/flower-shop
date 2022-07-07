@@ -18,6 +18,7 @@ export interface OrderRequest {
   email: string;
   first_name: string;
   last_name: string;
+  full_address: string;
 }
 
 export interface OrderFormik {
