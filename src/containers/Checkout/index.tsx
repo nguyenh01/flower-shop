@@ -49,6 +49,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   );
   const cartItem = cart?.listShoppingCartDetail?.map((item) => ({
     id: item.product_id,
+    name: item.product_name,
     quantity: item.quantity,
   }));
 
