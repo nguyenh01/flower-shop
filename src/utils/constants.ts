@@ -19,6 +19,15 @@ export enum MenuAdminEnum {
   EMPLOYEE = '9',
 }
 
+export enum OrderStatusEnum {
+  Waiting,
+  Confirm,
+  Received,
+  Cancelled,
+}
+
+export const COLOR_STATUS = ['#3f51b5', '#2196f3', '#4caf50', '#f44336'];
+
 export const DEFAULT_FORMAT_DATE = 'MM/DD/YYYY';
 
 export const requiredValidation = (field: string) => `${field} is required`;

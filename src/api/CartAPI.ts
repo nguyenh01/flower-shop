@@ -38,6 +38,7 @@ export const CartAPI = createApi({
         method: 'PUT',
         body,
       }),
+      invalidatesTags: ['CART'],
     }),
 
     deleteCartItem: builder.mutation<DeleteCartResponse, DeleteCartRequest>({
