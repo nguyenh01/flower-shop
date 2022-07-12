@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useEffect } from 'react';
+import { Fragment, FunctionComponent, ReactElement, useEffect, useState } from 'react';
 import Path from '@src/utils/path';
 import { redirect } from '@src/utils/redirect';
 import axios from 'axios';
@@ -9,6 +9,8 @@ import dispatch from '@src/utils/dispatch';
 import { setUserProfile } from '@src/redux/slices/userSlice';
 import AdminLayout from '../Layout/AdminLayout';
 import AdminTitle from '../AdminTitle/AdminTitle';
+import SpinnerFullScreen from '../SpinnerFullScreen/SpinnerFullScreen';
+import { useRouter } from 'next/router';
 
 const AdministrationRoutingProtection = (
   Component: FunctionComponent,
@@ -17,8 +19,19 @@ const AdministrationRoutingProtection = (
   desc: string
 ) => {
   const AuthenticationComponent = ({ ...restProps }) => {
+    const router = useRouter();
     const { isAuth } = useSelector((state) => state.userProfile);
     const { data } = useVerifyAccessTokenQuery({}, { skip: !isAuth });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setLoading(false);
+      } else {
+        router.push(Path.PAGE_NOT_FOUND);
+      }
+    }, []);
 
     useEffect(() => {
       if (data) {
@@ -34,7 +47,11 @@ const AdministrationRoutingProtection = (
       }
     }, [data]);
 
-    return <Component {...restProps} />;
+    return (
+      <Fragment>
+        {loading ? <SpinnerFullScreen color="#fff" dark /> : <Component {...restProps} />}
+      </Fragment>
+    );
   };
 
   AuthenticationComponent.getInitialProps = async (server: { [key: string]: any }) => {

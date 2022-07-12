@@ -20,7 +20,7 @@ interface OrderList {
   type: string;
   order_date: string;
   status: number;
-  payment: number;
+  total_fee: number;
 }
 
 const OrderAdministration: FunctionComponent = () => {
@@ -86,7 +86,7 @@ const OrderAdministration: FunctionComponent = () => {
       {
         width: '15%',
         title: 'PAYMENT',
-        dataIndex: 'payment',
+        dataIndex: 'total_fee',
         sorter: true,
         render: (price: number) => formatAmount(price),
       },
@@ -116,7 +116,7 @@ const OrderAdministration: FunctionComponent = () => {
         type: item.customer_id === '' ? 'Walk-in Guest' : 'Member',
         order_date: item.order_date,
         status: item.status,
-        payment: item.total_fee,
+        total_fee: item.total_fee,
       }));
       setOrderList(list);
     }

@@ -1,14 +1,22 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-const SpinnerFullScreen: FunctionComponent = () => {
+interface SpinnerFullScreenProps {
+  color?: string;
+  dark?: boolean;
+}
+
+const SpinnerFullScreen: FunctionComponent<SpinnerFullScreenProps> = ({
+  color = '#fc6767',
+  dark,
+}) => {
   return (
-    <Container>
+    <Container color={color} dark={dark}>
       <div className="wrapper">
         <svg viewBox="0 0 100 100">
           <defs>
             <filter id="shadow">
-              <feDropShadow dx="0" dy="0" stdDeviation="1.5" floodColor="#fc6767" />
+              <feDropShadow dx="0" dy="0" stdDeviation="1.5" floodColor={color} />
             </filter>
           </defs>
           <circle id="spinner" cx="50" cy="50" r="45" />
@@ -18,7 +26,7 @@ const SpinnerFullScreen: FunctionComponent = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ color?: string; dark?: boolean }>`
   position: fixed;
   z-index: 999;
   height: 2em;
@@ -38,8 +46,8 @@ const Container = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8));
-    background: -webkit-radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8));
+    background: ${({ dark }) =>
+      dark ? '#000' : 'radial-gradient(rgba(20, 20, 20, 0.8), rgba(0, 0, 0, 0.8))'};
   }
 
   .wrapper {
@@ -53,7 +61,7 @@ const Container = styled.div`
 
   circle {
     fill: transparent;
-    stroke: ${(props) => props.theme.colors.primary};
+    stroke: ${({ color, theme }) => color || theme.colors.primary};
     stroke-width: 7px;
     stroke-linecap: round;
     filter: url(#shadow);
