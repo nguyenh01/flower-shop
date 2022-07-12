@@ -40,6 +40,7 @@ export interface GetOrdersRequest {
   sort?: string;
   direction?: string;
   is_paging?: boolean;
+  order_code?: string;
 }
 
 export interface OrderItem {

@@ -23,16 +23,16 @@ const ActionGroup: FunctionComponent<ActionGroupProps> = ({ handleUpdate, handle
   };
 
   return (
-    <Container>
+    <ActionContainer>
       <Space size={15}>
         <FiEdit className="update-icon" onClick={handleUpdateAction} />
         {isAdmin && <FiDelete className="delete-icon" onClick={handleDeleteAction} />}
       </Space>
-    </Container>
+    </ActionContainer>
   );
 };
 
-const Container = styled.div`
+const ActionContainer = styled.div`
   svg {
     width: 22px;
     height: 22px;

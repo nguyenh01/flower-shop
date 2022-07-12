@@ -8,6 +8,7 @@ const theme = {
     border: '#d9d9d9',
     blue: '#0d6efd',
     green: '#32a937',
+    bold_gray: '#818181',
   },
 
   fadeInUp: (hide: number) => {

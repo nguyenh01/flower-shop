@@ -14,6 +14,7 @@ const Path = {
     DASHBOARD: '/admin',
     REVENUE: '/admin/revenue',
     ORDER: '/admin/order',
+    ORDER_DETAIL: (id: string) => `/admin/order/detail/${id}`,
     CATEGORY: '/admin/category',
     CREATE_CATEGORY: '/admin/category/create',
     UPDATE_CATEGORY: (id: string) => `/admin/category/update/${id}`,
