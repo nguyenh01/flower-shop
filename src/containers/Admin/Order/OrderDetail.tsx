@@ -140,6 +140,10 @@ const OrderDetailAdministration: FunctionComponent = () => {
           <div style={{ textAlign: 'right' }}>{order?.orderInfo?.full_address}</div>
         </div>
         <div className="order-detail">
+          <Typography.Label className="label">Recipient Email</Typography.Label>
+          <div>{order?.orderInfo?.email}</div>
+        </div>
+        <div className="order-detail">
           <Typography.Label className="label">Recipient Name</Typography.Label>
           <div>
             {order?.orderInfo?.first_name} {order?.orderInfo?.last_name}
