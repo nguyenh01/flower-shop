@@ -4,7 +4,7 @@ import { redirect } from '@src/utils/redirect';
 import axios from 'axios';
 import apiHost from '@src/api/api-host';
 import useSelector from '@src/utils/useSelector';
-import { useVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
+import { useVerifyAccessTokenQuery } from '@src/api/UserAPI';
 import { useGetCartByIdQuery } from '@src/api/CartAPI';
 import dispatch from '@src/utils/dispatch';
 import { setUserProfile } from '@src/redux/slices/userSlice';

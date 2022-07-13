@@ -16,7 +16,7 @@ import useAuthentication from '@src/hooks/useAuthentication';
 import { logout as logOutSlice } from '@src/redux/slices/userSlice';
 import dispatch from '@src/utils/dispatch';
 import { setCart } from '@src/redux/slices/productSlice';
-import { useLogoutMutation } from '@src/api/AuthenticationAPI';
+import { useLogoutMutation } from '@src/api/UserAPI';
 import { MenuAdminEnum } from '@src/utils/constants';
 import { FaMoneyCheck } from 'react-icons/fa';
 import { useRouter } from 'next/router';

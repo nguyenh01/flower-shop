@@ -27,9 +27,7 @@ const ChatWindow: FunctionComponent<ChatWindowProps> = ({ toggle }) => {
 
   useEffect(() => {
     const socket = io(host, {
-      auth: {
-        token: token,
-      },
+      auth: { token },
     });
 
     socketRef.current = socket;
@@ -64,7 +62,7 @@ const ChatWindow: FunctionComponent<ChatWindowProps> = ({ toggle }) => {
   const sendMessage = (message: string) => {
     if (message) {
       const socket = socketRef.current;
-      socket.emit('Chờ chó thiện lâu vl và còn gàaaaaa', message);
+      socket.emit('sendMessageToStore', message);
       setContent('');
     }
   };
@@ -113,7 +111,7 @@ const ChatWindow: FunctionComponent<ChatWindowProps> = ({ toggle }) => {
   );
 };
 
-const Typing = () => {
+export const Typing = () => {
   return (
     <div className="message service">
       <Space size={4}>

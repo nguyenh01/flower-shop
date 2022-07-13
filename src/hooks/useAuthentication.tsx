@@ -2,7 +2,7 @@ import useSelector from '@src/utils/useSelector';
 import { useEffect } from 'react';
 import dispatch from '@src/utils/dispatch';
 import { login, setUserProfile } from '@src/redux/slices/userSlice';
-import { useVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
+import { useVerifyAccessTokenQuery } from '@src/api/UserAPI';
 
 const useAuthentication = () => {
   const { isAuth } = useSelector((state) => state.userProfile);

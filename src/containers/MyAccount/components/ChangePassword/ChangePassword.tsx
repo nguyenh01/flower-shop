@@ -1,3 +1,4 @@
+import { useChangePasswordMutation } from '@src/api/UserAPI';
 import Button from '@src/components/Button/Button';
 import Input from '@src/components/Input/Input';
 import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
@@ -19,9 +20,11 @@ interface ChangePasswordFormik {
 
 const ChangePassword: FunctionComponent = () => {
   const { t } = useTranslation();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const confirmModal = useBooleanState();
   const successModal = useBooleanState();
+  const failedModal = useBooleanState();
 
   const gutter: [Gutter, Gutter] = useMemo(() => [0, 20], []);
   const span = useMemo(() => 24, []);
@@ -45,9 +48,23 @@ const ChangePassword: FunctionComponent = () => {
   };
 
   const handleConfirmOrder = (values: ChangePasswordFormik) => {
-    console.log(values);
-    confirmModal.toggle();
-    formik.handleReset(values);
+    const { current_password, new_password } = values;
+    changePassword({
+      oldPassword: current_password,
+      newPassword: new_password,
+    })
+      .unwrap()
+      .then(() => {
+        confirmModal.toggle();
+        formik.handleReset(values);
+        successModal.toggle();
+      })
+      .catch((error) => {
+        confirmModal.toggle();
+        if (error.status === 400) {
+          failedModal.toggle();
+        }
+      });
   };
 
   return (
@@ -94,16 +111,27 @@ const ChangePassword: FunctionComponent = () => {
         visible={confirmModal.visible}
         onClose={confirmModal.toggle}
         onConfirm={() => handleConfirmOrder(formik.values)}
-        //isConfirmLoading={isCreateOrderLoading}
+        isConfirmLoading={isLoading}
       />
       <ModalConfirm
         type="success"
         title="Change Password Success"
-        description="Your password has been changed"
+        description="Your password has been changed."
         showCloseButton={false}
         visible={successModal.visible}
         onClose={successModal.toggle}
-        //onConfirm={handleConfirmSuccess}
+        onConfirm={successModal.toggle}
+        confirmText="Close"
+        showCloseIcon={false}
+      />
+      <ModalConfirm
+        type="delete"
+        title="Can not change password"
+        description="Your current password is incorrect."
+        showCloseButton={false}
+        visible={failedModal.visible}
+        onClose={failedModal.toggle}
+        onConfirm={failedModal.toggle}
         confirmText="Close"
         showCloseIcon={false}
       />

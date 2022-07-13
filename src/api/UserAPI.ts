@@ -1,13 +1,20 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '@src/api/baseQuery';
 import { LoginResponse, LoginRequest } from '@src/api/model/login.data-model';
-import { RegisterResponse, RegisterRequest } from '@src/api/model/register.data-model';
+import {
+  RegisterResponse,
+  RegisterRequest,
+  PutUserResponse,
+  PutUserRequest,
+  ChangePasswordRequest,
+} from '@src/api/model/user.data-model';
 
 const baseEndpoint = `/users`;
 
-export const AuthenticationAPI = createApi({
+export const UserAPI = createApi({
   reducerPath: 'AuthenticationAPI',
   baseQuery,
+  tagTypes: ['UPDATE_INFO'],
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (body) => ({
@@ -32,10 +39,28 @@ export const AuthenticationAPI = createApi({
       }),
     }),
 
+    updateInfo: builder.mutation<PutUserResponse, PutUserRequest>({
+      query: (body) => ({
+        url: baseEndpoint,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['UPDATE_INFO'],
+    }),
+
+    changePassword: builder.mutation<PutUserResponse, ChangePasswordRequest>({
+      query: (body) => ({
+        url: `${baseEndpoint}/change-password`,
+        method: 'PUT',
+        body,
+      }),
+    }),
+
     verifyAccessToken: builder.query<any, any>({
       query: () => ({
         url: `${baseEndpoint}/me`,
       }),
+      providesTags: (res, err) => (err ? [] : [{ type: 'UPDATE_INFO' }]),
     }),
   }),
 });
@@ -45,5 +70,7 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useVerifyAccessTokenQuery,
+  useUpdateInfoMutation,
+  useChangePasswordMutation,
   useLazyVerifyAccessTokenQuery,
-} = AuthenticationAPI;
+} = UserAPI;

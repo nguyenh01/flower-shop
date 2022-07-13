@@ -8,5 +8,9 @@ export const initialValue = {
 
 export const validationSchema = yup.object().shape({
   email: yup.string().trim().email('Invalid Email').required(requiredValidation('Email')),
-  password: yup.string().trim().required(requiredValidation('Password')),
+  password: yup
+    .string()
+    .trim()
+    .min(8, 'Password must be at least 8 characters')
+    .required(requiredValidation('Password')),
 });

@@ -11,7 +11,7 @@ import useBooleanState from '@src/hooks/useBooleanState';
 import MenuDrawer from './Drawer';
 import { TFunction, useTranslation } from 'react-i18next';
 import Popover from '@src/components/Popover/Popover';
-import { useLogoutMutation } from '@src/api/AuthenticationAPI';
+import { useLogoutMutation } from '@src/api/UserAPI';
 import dispatch from '@src/utils/dispatch';
 import { logout as logOutSlice } from '@src/redux/slices/userSlice';
 import useSelector from '@src/utils/useSelector';

@@ -3,7 +3,7 @@ import Tab from '@src/components/Tab/Tab';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Order from '../Order/Order';
-import Account from './components/Account';
+import Account from './components/Account/Account';
 import ChangePassword from './components/ChangePassword/ChangePassword';
 
 const MyAccount: FunctionComponent = () => {

@@ -1,4 +1,4 @@
-import { useLoginMutation } from '@src/api/AuthenticationAPI';
+import { useLoginMutation } from '@src/api/UserAPI';
 import Button from '@src/components/Button/Button';
 import Input from '@src/components/Input/Input';
 import Path from '@src/utils/path';
@@ -10,7 +10,7 @@ import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { initialValue, validationSchema } from './constant';
-import { useLazyVerifyAccessTokenQuery } from '@src/api/AuthenticationAPI';
+import { useLazyVerifyAccessTokenQuery } from '@src/api/UserAPI';
 import { useRouter } from 'next/router';
 import dispatch from '@src/utils/dispatch';
 import { setUserProfile } from '@src/redux/slices/userSlice';

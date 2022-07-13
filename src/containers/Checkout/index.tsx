@@ -368,7 +368,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
       </div>
       <ModalConfirm
         type="confirm"
-        title="Order Confirmation"
+        title="Confirmation"
         description="Please double check your order and select confirm!"
         closeText="Cancel"
         confirmText="Confirm"

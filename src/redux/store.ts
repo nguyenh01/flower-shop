@@ -4,7 +4,7 @@ import { StatusCodeErrorMiddleware } from '@src/redux/middlewares/StatusCodeErro
 import userProfile from '@src/redux/slices/userSlice';
 import productSlice from '@src/redux/slices/productSlice';
 
-import { AuthenticationAPI } from '@src/api/AuthenticationAPI';
+import { UserAPI } from '@src/api/UserAPI';
 import { ProductAPI } from '@src/api/ProductAPI';
 import { CartAPI } from '@src/api/CartAPI';
 import { LocationAPI } from '@src/api/LocationAPI';
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   productSlice,
   selectedMenu,
 
-  [AuthenticationAPI.reducerPath]: AuthenticationAPI.reducer,
+  [UserAPI.reducerPath]: UserAPI.reducer,
   [ProductAPI.reducerPath]: ProductAPI.reducer,
   [CartAPI.reducerPath]: CartAPI.reducer,
   [LocationAPI.reducerPath]: LocationAPI.reducer,
@@ -33,7 +33,7 @@ export function makeStore() {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(StatusCodeErrorMiddleware)
-        .concat(AuthenticationAPI.middleware)
+        .concat(UserAPI.middleware)
         .concat(ProductAPI.middleware)
         .concat(CartAPI.middleware)
         .concat(LocationAPI.middleware)
