@@ -33,7 +33,7 @@ export const getServerSideProps = async (server: GetServerSidePropsContext) => {
 
   try {
     if (!token) {
-      const parseJson = JSON.parse(cartCookies);
+      const parseJson = JSON.parse(cartCookies as any);
       if (parseJson.length === 0) {
         return {
           redirect: {
