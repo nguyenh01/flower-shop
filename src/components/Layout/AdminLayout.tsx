@@ -220,7 +220,7 @@ const Container = styled.div`
 
   .content {
     width: 100%;
-    height: 100vh;
+    height: 140vh;
     padding: 16px;
     background-color: #f2f4f6;
 

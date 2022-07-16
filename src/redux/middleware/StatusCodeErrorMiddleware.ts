@@ -2,7 +2,7 @@ import { isRejectedWithValue, Middleware } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import router from 'next/router';
 
-export const StatusCodeErrorMiddleware: Middleware = () => (next) => (action) => {
+export const statusCodeErrorMiddleware: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     switch (action.payload.status) {
       case 403:

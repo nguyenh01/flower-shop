@@ -1,5 +1,5 @@
 import { combineReducers, configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { StatusCodeErrorMiddleware } from '@src/redux/middlewares/StatusCodeErrorMiddleware';
+import { statusCodeErrorMiddleware } from '@src/redux/middleware/StatusCodeErrorMiddleware';
 
 import userProfile from '@src/redux/slices/userSlice';
 import productSlice from '@src/redux/slices/productSlice';
@@ -13,6 +13,7 @@ import { OrderAPI } from '@src/api/OrderAPI';
 import { CategoryAPI } from '@src/api/CategoryAPI';
 import { MaterialAPI } from '@src/api/MaterialAPI';
 import { RevenueAPI } from '@src/api/RevenueAPI';
+import { DashboardAPI } from '@src/api/DashboardAPI';
 
 const rootReducer = combineReducers({
   userProfile,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   [CategoryAPI.reducerPath]: CategoryAPI.reducer,
   [MaterialAPI.reducerPath]: MaterialAPI.reducer,
   [RevenueAPI.reducerPath]: RevenueAPI.reducer,
+  [DashboardAPI.reducerPath]: DashboardAPI.reducer,
 });
 
 export function makeStore() {
@@ -34,7 +36,7 @@ export function makeStore() {
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
-        .concat(StatusCodeErrorMiddleware)
+        .concat(statusCodeErrorMiddleware)
         .concat(UserAPI.middleware)
         .concat(ProductAPI.middleware)
         .concat(CartAPI.middleware)
@@ -42,7 +44,8 @@ export function makeStore() {
         .concat(OrderAPI.middleware)
         .concat(CategoryAPI.middleware)
         .concat(MaterialAPI.middleware)
-        .concat(RevenueAPI.middleware),
+        .concat(RevenueAPI.middleware)
+        .concat(DashboardAPI.middleware),
   });
 }
 

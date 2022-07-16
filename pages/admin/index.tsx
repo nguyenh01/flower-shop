@@ -4,6 +4,7 @@ import dispatch from '@src/utils/dispatch';
 import { setSelection } from '@src/redux/slices/selectedMenuSlice';
 import { MenuAdminEnum, RoleEnum } from '@src/utils/constants';
 import AdministrationRoutingProtection from '@src/components/ServerSideRendering/AdministrationRoutingProtection';
+import DashboardAdministration from '@src/containers/Admin/Dashboard/Dashboard';
 
 const Dashboard = () => {
   dispatch(setSelection(MenuAdminEnum.DASHBOARD));
@@ -13,7 +14,7 @@ const Dashboard = () => {
       <Head>
         <title>Administrator - Dashboard</title>
       </Head>
-      <div>Dashboard</div>
+      <DashboardAdministration />
     </Fragment>
   );
 };
@@ -22,5 +23,5 @@ export default AdministrationRoutingProtection(
   Dashboard,
   [RoleEnum.ADMIN, RoleEnum.EMPLOYEE],
   'dashboard',
-  "The dashboard shows a summary of the store's information."
+  "Welcome back to Dashboard. The dashboard shows a summary of the store's information."
 );
