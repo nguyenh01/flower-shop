@@ -1,5 +1,5 @@
 import Path from '@src/utils/path';
-import { FunctionComponent, Key, ReactNode, useState } from 'react';
+import { FunctionComponent, Key, ReactNode, useEffect, useState } from 'react';
 import { MdSpaceDashboard } from 'react-icons/md';
 import styled from 'styled-components';
 import { Menu, MenuProps, Avatar, message } from 'antd';
@@ -8,7 +8,7 @@ import { FaBoxOpen } from 'react-icons/fa';
 import { BiCategory } from 'react-icons/bi';
 import { TbTools } from 'react-icons/tb';
 import { BsChatTextFill } from 'react-icons/bs';
-import { ImUsers } from 'react-icons/im';
+import { ImUsers, ImProfile } from 'react-icons/im';
 import { RiClipboardFill } from 'react-icons/ri';
 import { BiLogOut } from 'react-icons/bi';
 import useSelector from '@src/utils/useSelector';
@@ -17,7 +17,7 @@ import { logout as logOutSlice } from '@src/redux/slices/userSlice';
 import dispatch from '@src/utils/dispatch';
 import { setCart } from '@src/redux/slices/productSlice';
 import { useLogoutMutation } from '@src/api/UserAPI';
-import { MenuAdminEnum } from '@src/utils/constants';
+import { MenuAdminEnum, RoleEnum } from '@src/utils/constants';
 import { FaMoneyCheck } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
@@ -47,11 +47,13 @@ const getItem = (
 const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle }) => {
   const router = useRouter();
   const [logout] = useLogoutMutation();
-  const { profile } = useSelector((state) => state.userProfile);
+  const { profile, type } = useSelector((state) => state.userProfile);
   const { selected } = useSelector((state) => state.selectedMenu);
   useAuthentication();
 
-  const items: MenuItem[] = [
+  const isAdmin = type === RoleEnum.ADMIN;
+
+  const adminItems: MenuItem[] = [
     getItem('Dashboard', MenuAdminEnum.DASHBOARD, <MdSpaceDashboard />),
     getItem('Revenue', MenuAdminEnum.REVENUE, <FaMoneyCheck />),
     getItem('Order', MenuAdminEnum.ORDER, <RiClipboardFill />),
@@ -65,10 +67,32 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
     ]),
   ];
 
+  const employeeItems: MenuItem[] = [
+    getItem('Dashboard', MenuAdminEnum.DASHBOARD, <MdSpaceDashboard />),
+    getItem('Order', MenuAdminEnum.ORDER, <RiClipboardFill />),
+    getItem('Category', MenuAdminEnum.CATEGORY, <BiCategory />),
+    getItem('Material', MenuAdminEnum.MATERIAL, <TbTools />),
+    getItem('Product', MenuAdminEnum.PRODUCT, <FaBoxOpen />),
+    getItem('Message', MenuAdminEnum.MESSAGE, <BsChatTextFill />),
+    getItem('User List', 'sub1', <ImUsers />, [getItem('Customer', MenuAdminEnum.CUSTOMER)]),
+    getItem('Profile', MenuAdminEnum.PROFILE, <ImProfile />),
+  ];
+
   const [collapsed, setCollapsed] = useState(false);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  useEffect(() => {
+    if (selected === MenuAdminEnum.CUSTOMER || selected === MenuAdminEnum.EMPLOYEE) {
+      setOpenKeys(['sub1']);
+    }
+  }, [selected]);
+
+  const handleOpenChange = (openKeys: string[]) => {
+    setOpenKeys(openKeys);
   };
 
   const handleClick = ({ key }: any) => {
@@ -115,12 +139,14 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
   return (
     <Container>
       <Menu
+        openKeys={openKeys}
         selectedKeys={[selected]}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
-        items={items}
+        items={isAdmin ? adminItems : employeeItems}
         onClick={handleClick}
+        onOpenChange={handleOpenChange}
       />
       <div className="content">
         <div className="navbar mb-20">

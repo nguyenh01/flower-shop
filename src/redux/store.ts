@@ -3,6 +3,7 @@ import { StatusCodeErrorMiddleware } from '@src/redux/middlewares/StatusCodeErro
 
 import userProfile from '@src/redux/slices/userSlice';
 import productSlice from '@src/redux/slices/productSlice';
+import selectedMenu from './slices/selectedMenuSlice';
 
 import { UserAPI } from '@src/api/UserAPI';
 import { ProductAPI } from '@src/api/ProductAPI';
@@ -11,7 +12,7 @@ import { LocationAPI } from '@src/api/LocationAPI';
 import { OrderAPI } from '@src/api/OrderAPI';
 import { CategoryAPI } from '@src/api/CategoryAPI';
 import { MaterialAPI } from '@src/api/MaterialAPI';
-import selectedMenu from './slices/selectedMenuSlice';
+import { RevenueAPI } from '@src/api/RevenueAPI';
 
 const rootReducer = combineReducers({
   userProfile,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   [OrderAPI.reducerPath]: OrderAPI.reducer,
   [CategoryAPI.reducerPath]: CategoryAPI.reducer,
   [MaterialAPI.reducerPath]: MaterialAPI.reducer,
+  [RevenueAPI.reducerPath]: RevenueAPI.reducer,
 });
 
 export function makeStore() {
@@ -39,7 +41,8 @@ export function makeStore() {
         .concat(LocationAPI.middleware)
         .concat(OrderAPI.middleware)
         .concat(CategoryAPI.middleware)
-        .concat(MaterialAPI.middleware),
+        .concat(MaterialAPI.middleware)
+        .concat(RevenueAPI.middleware),
   });
 }
 

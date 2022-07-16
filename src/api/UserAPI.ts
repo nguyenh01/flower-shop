@@ -7,6 +7,8 @@ import {
   PutUserResponse,
   PutUserRequest,
   ChangePasswordRequest,
+  GetAccountListResponse,
+  GetAccountListRequest,
 } from '@src/api/model/user.data-model';
 
 const baseEndpoint = `/users`;
@@ -62,6 +64,13 @@ export const UserAPI = createApi({
       }),
       providesTags: (res, err) => (err ? [] : [{ type: 'UPDATE_INFO' }]),
     }),
+
+    getAccountList: builder.query<GetAccountListResponse, GetAccountListRequest>({
+      query: (params) => ({
+        url: baseEndpoint,
+        params,
+      }),
+    }),
   }),
 });
 
@@ -73,4 +82,5 @@ export const {
   useUpdateInfoMutation,
   useChangePasswordMutation,
   useLazyVerifyAccessTokenQuery,
+  useGetAccountListQuery,
 } = UserAPI;

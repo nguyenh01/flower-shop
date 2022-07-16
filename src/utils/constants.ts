@@ -17,6 +17,7 @@ export enum MenuAdminEnum {
   MESSAGE = '7',
   CUSTOMER = '8',
   EMPLOYEE = '9',
+  PROFILE = '10',
 }
 
 export enum OrderStatusEnum {

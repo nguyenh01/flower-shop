@@ -35,6 +35,7 @@ export interface TableProps<T> extends AntTableProps<T> {
   nextIcon?: any;
   showPagination?: boolean;
   loading: boolean;
+  className?: string;
 }
 
 const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
@@ -46,6 +47,7 @@ const Table = ({
   totalItems,
   showPagination = true,
   loading,
+  className,
   ...props
 }: TableProps<any>) => {
   const {
@@ -89,7 +91,7 @@ const Table = ({
   }, [columns, sortBy, sortDirection]);
 
   return (
-    <Container>
+    <Container className={className}>
       <StyledTable
         {...props}
         onChange={handleChange}

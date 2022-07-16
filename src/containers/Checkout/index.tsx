@@ -55,6 +55,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
 
   const gutter: [Gutter, Gutter] = useMemo(() => [12, 15], []);
   const span = useMemo(() => 24, []);
+
   const subtotal = cart?.listShoppingCartDetail?.reduce(
     (prevValue, currentValue) => prevValue + currentValue.unit_price * currentValue.quantity,
     0

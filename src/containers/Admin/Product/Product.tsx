@@ -172,8 +172,8 @@ const ProductAdministration: FunctionComponent = () => {
         image: item.imageList[0],
         name: item.name,
         description: item.description,
-        category: item.cate_id,
-        material: item.mate_id,
+        category: item.category_name,
+        material: item.material_name,
         unitsinstock: item.unitsinstock,
         price: item.price,
       }));

@@ -7,6 +7,8 @@ export interface ProductItem {
   unitsinstock: number;
   imageList: string[];
   description: string;
+  category_name: string;
+  material_name: string;
 }
 
 export interface ProductResponse {
