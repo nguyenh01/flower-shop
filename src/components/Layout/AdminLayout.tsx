@@ -47,6 +47,7 @@ const getItem = (
 const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle }) => {
   const router = useRouter();
   const [logout] = useLogoutMutation();
+  const refreshToken = localStorage.getItem('refreshToken');
   const { profile, type } = useSelector((state) => state.userProfile);
   const { selected } = useSelector((state) => state.selectedMenu);
   useAuthentication();
@@ -127,7 +128,7 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
   };
 
   const handleLogout = () => {
-    logout(null)
+    logout({ refreshToken })
       .unwrap()
       .then(() => {});
     dispatch(setCart([]));

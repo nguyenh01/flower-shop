@@ -135,6 +135,7 @@ const PopoverContent = ({ t }: PopoverContentProps) => {
 
 const PopoverContentWithAuthentication = ({ t }: PopoverContentProps) => {
   const router = useRouter();
+  const refreshToken = localStorage.getItem('refreshToken');
   const [logout] = useLogoutMutation();
 
   const handleGoToAccountPage = () => {
@@ -142,7 +143,7 @@ const PopoverContentWithAuthentication = ({ t }: PopoverContentProps) => {
   };
 
   const handleLogout = () => {
-    logout(null)
+    logout({ refreshToken })
       .unwrap()
       .then(() => {});
     dispatch(setCart([]));

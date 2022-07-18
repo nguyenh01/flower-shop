@@ -55,3 +55,7 @@ export interface GetAccountListResponse {
     page: number;
   };
 }
+
+export interface LogoutRequest {
+  refreshToken: string | null;
+}

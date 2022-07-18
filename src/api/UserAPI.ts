@@ -9,6 +9,7 @@ import {
   ChangePasswordRequest,
   GetAccountListResponse,
   GetAccountListRequest,
+  LogoutRequest,
 } from '@src/api/model/user.data-model';
 
 const baseEndpoint = `/users`;
@@ -26,7 +27,7 @@ export const UserAPI = createApi({
       }),
     }),
 
-    logout: builder.mutation<any, null>({
+    logout: builder.mutation<any, LogoutRequest>({
       query: () => ({
         url: `${baseEndpoint}/logout`,
         method: 'POST',
