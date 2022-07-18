@@ -13,6 +13,7 @@ module.exports = {
   publicRuntimeConfig: {
     API_URL: process.env.API_URL,
     URL: process.env.URL,
+    SOCKET_URL: process.env.SOCKET_URL,
   },
   nextConfig,
   ...withBundleAnalyzer({}),

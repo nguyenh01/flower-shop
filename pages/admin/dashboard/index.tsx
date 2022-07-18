@@ -21,7 +21,7 @@ const Dashboard = () => {
 
 export default AdministrationRoutingProtection(
   Dashboard,
-  [RoleEnum.ADMIN, RoleEnum.EMPLOYEE],
+  [RoleEnum.ADMIN],
   'dashboard',
   "Welcome back to Dashboard. The dashboard shows a summary of the store's information."
 );

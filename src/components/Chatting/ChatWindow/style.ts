@@ -63,7 +63,7 @@ const Container = styled.div`
     overflow-y: auto;
     box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%), inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
 
-    .time {
+    .date {
       font-size: 12px;
       background: #eee;
       padding: 4px 16px;
@@ -82,7 +82,7 @@ const Container = styled.div`
 
       &.me {
         background-color: ${(props) => props.theme.colors.primary};
-        margin: 16px 16px 16px auto;
+        margin: 14px 14px 4px auto;
         border-radius: 18px 18px 0 18px;
         color: #fff;
       }
@@ -90,7 +90,7 @@ const Container = styled.div`
       &.service {
         border-radius: 18px 18px 18px 0;
         background-color: #fff;
-        margin: 16px auto 16px 16px;
+        margin: 14px auto 4px 14px;
 
         .typing {
           display: inline-block;
@@ -127,6 +127,21 @@ const Container = styled.div`
             }
           }
         }
+      }
+    }
+
+    .time {
+      font-size: 12px;
+      color: #999;
+
+      &.me {
+        margin: 0 16px 8px auto;
+        text-align: right;
+      }
+
+      &.service {
+        margin: 0 auto 8px 16px;
+        text-align: left;
       }
     }
   }

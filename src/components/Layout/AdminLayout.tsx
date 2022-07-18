@@ -68,7 +68,6 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
   ];
 
   const employeeItems: MenuItem[] = [
-    getItem('Dashboard', MenuAdminEnum.DASHBOARD, <MdSpaceDashboard />),
     getItem('Order', MenuAdminEnum.ORDER, <RiClipboardFill />),
     getItem('Category', MenuAdminEnum.CATEGORY, <BiCategory />),
     getItem('Material', MenuAdminEnum.MATERIAL, <TbTools />),

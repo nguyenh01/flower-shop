@@ -14,6 +14,7 @@ import { CategoryAPI } from '@src/api/CategoryAPI';
 import { MaterialAPI } from '@src/api/MaterialAPI';
 import { RevenueAPI } from '@src/api/RevenueAPI';
 import { DashboardAPI } from '@src/api/DashboardAPI';
+import { MessageAPI } from '@src/api/MessageAPI';
 
 const rootReducer = combineReducers({
   userProfile,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   [MaterialAPI.reducerPath]: MaterialAPI.reducer,
   [RevenueAPI.reducerPath]: RevenueAPI.reducer,
   [DashboardAPI.reducerPath]: DashboardAPI.reducer,
+  [MessageAPI.reducerPath]: MessageAPI.reducer,
 });
 
 export function makeStore() {
@@ -45,7 +47,8 @@ export function makeStore() {
         .concat(CategoryAPI.middleware)
         .concat(MaterialAPI.middleware)
         .concat(RevenueAPI.middleware)
-        .concat(DashboardAPI.middleware),
+        .concat(DashboardAPI.middleware)
+        .concat(MessageAPI.middleware),
   });
 }
 

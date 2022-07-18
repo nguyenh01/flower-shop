@@ -49,6 +49,10 @@ const Container = styled.div`
         border-right: 5px solid ${(props) => props.theme.colors.blue};
       }
 
+      &.not-rep {
+        background: #d7f3ff;
+      }
+
       .avatar {
         margin-left: 20px;
         width: 45px !important;
@@ -70,6 +74,10 @@ const Container = styled.div`
       .name {
         color: #515151;
         margin: 0 0 0 6px;
+
+        &.not-rep {
+          font-weight: 600;
+        }
       }
 
       .message {
@@ -126,6 +134,16 @@ const Container = styled.div`
         background: #555;
       }
 
+      .date {
+        font-size: 12px;
+        background: #eee;
+        padding: 4px 16px;
+        border-radius: 2rem;
+        color: #999;
+        margin: 0 auto 10px auto;
+        width: fit-content;
+      }
+
       .message {
         display: flex;
         align-items: center;
@@ -168,6 +186,11 @@ const Container = styled.div`
         color: lightgrey;
         margin-bottom: 10px;
         margin-left: 85px;
+
+        &.me {
+          margin-right: 35px;
+          text-align: right;
+        }
       }
     }
 

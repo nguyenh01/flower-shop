@@ -64,7 +64,7 @@ const DashboardAdministration: FunctionComponent = () => {
           <Col span={span}>
             <Card
               title="Year's total"
-              value={formatAmount(dashboard?.total_week)}
+              value={formatAmount(dashboard?.total_year)}
               description="Total sales for current year"
               icon={<BsFillCalendar2CheckFill />}
               fromColor="#fb6340"

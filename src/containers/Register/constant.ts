@@ -42,7 +42,9 @@ export const payload = (object: any) => {
 export const handleAuthentication = (response: any) => {
   const convertTypeToString = response.type + '';
   cookie.set('token', response.token, { expires: 2 });
+  cookie.set('refreshToken', response.refreshToken);
   localStorage.setItem('token', response.token);
+  localStorage.setItem('refreshToken', response.refreshToken);
   localStorage.setItem('type', convertTypeToString);
   dispatch(loginSlice({ type: response.type }));
 };

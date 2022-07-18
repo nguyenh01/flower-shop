@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import {
   CartResponse,
   DeleteCartRequest,
@@ -13,7 +13,7 @@ const baseEndpoint = `/shoppingCarts`;
 
 export const CartAPI = createApi({
   reducerPath: 'CartAPI',
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   tagTypes: ['CART'],
   endpoints: (builder) => ({
     getCartById: builder.query<CartResponse, any>({

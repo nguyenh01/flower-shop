@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import {
   GetMaterialResponse,
   MaterialsRequest,
@@ -13,7 +13,7 @@ const baseEndpoint = '/materials';
 export const MaterialAPI = createApi({
   reducerPath: 'MaterialAPI',
   tagTypes: ['MATERIAL', 'UPDATE_MATERIAL'],
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   endpoints: (builder) => ({
     getMaterials: builder.query<MaterialsResponse, MaterialsRequest>({
       query: (params) => ({

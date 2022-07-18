@@ -22,9 +22,9 @@ const userSlice = createSlice({
       state.profile = initialState.profile;
       cookies.remove('token');
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('type');
       localStorage.removeItem('user_id');
-      //localStorage.removeItem('refreshToken');
       router.push('/');
     },
     setUserProfile(state, action) {

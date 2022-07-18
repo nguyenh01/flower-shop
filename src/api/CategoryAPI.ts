@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import {
   CategoriesRequest,
   CategoriesResponse,
@@ -13,7 +13,7 @@ const baseEndpoint = '/categories';
 export const CategoryAPI = createApi({
   reducerPath: 'CategoryAPI',
   tagTypes: ['CATEGORY', 'UPDATE_CATEGORY'],
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   endpoints: (builder) => ({
     getCategories: builder.query<CategoriesResponse, CategoriesRequest>({
       query: (params) => ({

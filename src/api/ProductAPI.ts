@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import {
   PostProductResponse,
   ProductItem,
@@ -11,7 +11,7 @@ const baseEndpoint = `/products`;
 
 export const ProductAPI = createApi({
   reducerPath: 'UserAPI',
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   tagTypes: ['PRODUCT', 'UPDATE_PRODUCT'],
   endpoints: (builder) => ({
     getProducts: builder.query<ProductResponse, ProductRequest>({

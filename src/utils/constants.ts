@@ -36,6 +36,6 @@ export const integerValidation = (field: string) => `${field} must be an integer
 export const positiveValidation = (field: string) => `${field} must be a positive number`;
 
 export const truncateString = (string: string, maxCharacter = 80) => {
-  if (string.length > maxCharacter) return string.slice(0, maxCharacter) + '...';
+  if (string?.length > maxCharacter) return string.slice(0, maxCharacter) + '...';
   return string;
 };

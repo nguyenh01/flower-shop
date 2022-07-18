@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import { LoginResponse, LoginRequest } from '@src/api/model/login.data-model';
 import {
   RegisterResponse,
@@ -15,7 +15,7 @@ const baseEndpoint = `/users`;
 
 export const UserAPI = createApi({
   reducerPath: 'AuthenticationAPI',
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   tagTypes: ['UPDATE_INFO'],
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
@@ -83,4 +83,5 @@ export const {
   useChangePasswordMutation,
   useLazyVerifyAccessTokenQuery,
   useGetAccountListQuery,
+  useLazyGetAccountListQuery,
 } = UserAPI;

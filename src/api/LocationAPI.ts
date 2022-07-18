@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import {
   DistrictRequest,
   DistrictResponse,
@@ -14,7 +14,7 @@ const baseEndpoint = '/shipFee';
 
 export const LocationAPI = createApi({
   reducerPath: 'LocationAPI',
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   endpoints: (builder) => ({
     getProvince: builder.query<ProvinceResponse, any>({
       query: () => ({

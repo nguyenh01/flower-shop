@@ -11,7 +11,7 @@ const Path = {
   CART: '/cart',
   CHECK_OUT: '/checkout',
   ADMIN: {
-    DASHBOARD: '/admin',
+    DASHBOARD: '/admin/dashboard',
     REVENUE: '/admin/revenue',
     ORDER: '/admin/order',
     ORDER_DETAIL: (id: string) => `/admin/order/detail/${id}`,

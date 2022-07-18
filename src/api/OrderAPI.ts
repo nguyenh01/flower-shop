@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '@src/api/baseQuery';
+import { baseQueryWithReAuth } from '@src/api/baseQuery';
 import {
   CreateOrderResponse,
   CreateOrderRequest,
@@ -12,7 +12,7 @@ const baseEndpoint = '/orders';
 
 export const OrderAPI = createApi({
   reducerPath: 'OrderAPI',
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   tagTypes: ['ORDER', 'STATUS'],
   endpoints: (builder) => ({
     getOrders: builder.query<any, GetOrdersRequest>({

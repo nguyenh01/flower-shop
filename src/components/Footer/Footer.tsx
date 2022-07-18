@@ -12,7 +12,11 @@ const Footer: FunctionComponent = () => {
   const isEmployee = type === RoleEnum.EMPLOYEE;
 
   const handleGoToAdminPage = () => {
-    router.push(Path.ADMIN.DASHBOARD);
+    if (isAdmin) {
+      router.push(Path.ADMIN.DASHBOARD);
+    } else {
+      router.push(Path.ADMIN.ORDER);
+    }
   };
 
   return (
