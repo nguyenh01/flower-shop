@@ -27,6 +27,7 @@ const Path = {
     MESSAGE: '/admin/message',
     CUSTOMER: '/admin/customer',
     EMPLOYEE: '/admin/employee',
+    PROFILE: '/admin/profile',
   },
 };
 

@@ -124,6 +124,9 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
       case MenuAdminEnum.EMPLOYEE:
         router.push(Path.ADMIN.EMPLOYEE);
         break;
+      case MenuAdminEnum.PROFILE:
+        router.push(Path.ADMIN.PROFILE);
+        break;
     }
   };
 

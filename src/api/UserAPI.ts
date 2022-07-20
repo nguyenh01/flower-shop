@@ -28,9 +28,10 @@ export const UserAPI = createApi({
     }),
 
     logout: builder.mutation<any, LogoutRequest>({
-      query: () => ({
+      query: (body) => ({
         url: `${baseEndpoint}/logout`,
         method: 'POST',
+        body,
       }),
     }),
 
