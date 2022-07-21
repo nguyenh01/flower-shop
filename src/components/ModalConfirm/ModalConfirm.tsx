@@ -1,5 +1,5 @@
 import { Modal, Space } from 'antd';
-import { FunctionComponent } from 'react';
+import { Fragment, FunctionComponent, ReactNode } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
 import { RiErrorWarningFill } from 'react-icons/ri';
@@ -9,12 +9,14 @@ import Button from '../Button/Button';
 
 interface ModalConfirmProps {
   type: 'success' | 'confirm' | 'delete';
+  bodyType?: 'confirm' | 'custom';
+  body?: ReactNode;
   visible: boolean;
   onClose: () => void;
   closeText?: string;
   onConfirm?: () => void;
   confirmText?: string;
-  title: string;
+  title?: string;
   description?: string;
   showCloseButton?: boolean;
   showConfirmButton?: boolean;
@@ -22,8 +24,14 @@ interface ModalConfirmProps {
   isConfirmLoading?: boolean;
 }
 
-const ModalConfirm: FunctionComponent<ModalConfirmProps> = ({
+enum BodyModal {
+  CONFIRM = 'confirm',
+}
+
+const CustomModal: FunctionComponent<ModalConfirmProps> = ({
   type,
+  bodyType = 'confirm',
+  body,
   visible,
   onClose,
   closeText,
@@ -52,17 +60,23 @@ const ModalConfirm: FunctionComponent<ModalConfirmProps> = ({
             <IoClose onClick={handleCloseModal} />
           </div>
         )}
-        <div className="type-icon mb-20">
-          {type === 'success' ? (
-            <BsCheckCircleFill className="success-icon" />
-          ) : type === 'delete' ? (
-            <TiDelete className="delete-icon" />
-          ) : (
-            <RiErrorWarningFill className="confirm-icon" />
-          )}
-        </div>
-        <div className="modal-title mb-25">{title}</div>
-        <div className="modal-description mb-25">{description}</div>
+        {bodyType === BodyModal.CONFIRM ? (
+          <Fragment>
+            <div className="type-icon mb-20">
+              {type === 'success' ? (
+                <BsCheckCircleFill className="success-icon" />
+              ) : type === 'delete' ? (
+                <TiDelete className="delete-icon" />
+              ) : (
+                <RiErrorWarningFill className="confirm-icon" />
+              )}
+            </div>
+            <div className="modal-title mb-25">{title}</div>
+            <div className="modal-description mb-25">{description}</div>
+          </Fragment>
+        ) : (
+          <div className="custom mb-20">{body}</div>
+        )}
         <div className="btn-group">
           <Space size={10}>
             {showCloseButton && (
@@ -87,7 +101,7 @@ const ModalConfirm: FunctionComponent<ModalConfirmProps> = ({
   );
 };
 
-const ModalContainer = styled(Modal)<{ type: string }>`
+const ModalContainer = styled(Modal)<{ type?: string }>`
   .ant-modal-content {
     border-radius: 10px;
   }
@@ -151,6 +165,17 @@ const ModalContainer = styled(Modal)<{ type: string }>`
       }
     }
   }
+
+  .custom .ant-input {
+    &:hover {
+      border-color: ${(props) => props.theme.colors.blue};
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 1px ${(props) => props.theme.colors.blue};
+      border-color: ${(props) => props.theme.colors.blue};
+    }
+  }
 `;
 
-export default ModalConfirm;
+export default CustomModal;

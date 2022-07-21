@@ -21,7 +21,7 @@ import { CartResponse } from '@src/api/model/cart.data-model';
 import formatAmount from '@src/utils/formatAmount';
 import Button from '@src/components/Button/Button';
 import useBooleanState from '@src/hooks/useBooleanState';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import { useCreateOrderMutation } from '@src/api/OrderAPI';
 import { OrderFormik } from '@src/api/model/order.data-model';
 import { useRouter } from 'next/router';
@@ -367,7 +367,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
           </div>
         </div>
       </div>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title="Confirmation"
         description="Please double check your order and select confirm!"
@@ -378,7 +378,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
         onConfirm={() => handleConfirmOrder(formik.values)}
         isConfirmLoading={isCreateOrderLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title="Order Success"
         description="Your order has been successfully placed. Please track your order!"

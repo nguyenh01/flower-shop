@@ -13,7 +13,7 @@ import Button from '@src/components/Button/Button';
 import { useGetCategoriesQuery } from '@src/api/CategoryAPI';
 import { useGetMaterialsQuery } from '@src/api/MaterialAPI';
 import { usePostProductMutation, usePutProductMutation } from '@src/api/ProductAPI';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
@@ -264,7 +264,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
           </Button>
         </Space>
       </div>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title="Confirmation"
         description="Changes will not be saved. Do you want to proceed?"
@@ -274,7 +274,7 @@ const ProductFormAdministration: FunctionComponent<ProductFormAdministrationProp
         onClose={confirmModal.toggle}
         onConfirm={handleConfirm}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title={`${isCreateForm ? 'Create' : 'Update'} Product Success`}
         showCloseButton={false}

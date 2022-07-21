@@ -23,7 +23,7 @@ import {
   useDeleteCartMutation,
   usePutCartItemMutation,
 } from '@src/api/CartAPI';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
 import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 import host from '@src/utils/host';
@@ -227,7 +227,7 @@ const Cart: FunctionComponent = () => {
           </div>
         )}
       </Wrapper>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title="Clear Cart"
         description="Are you sure you want to delete the cart?"

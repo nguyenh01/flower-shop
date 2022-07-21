@@ -9,7 +9,7 @@ import { FormContainer } from '@src/containers/Admin/Product/ProductForm';
 import { Col, Space } from 'antd';
 import Input from '@src/components/Input/Input';
 import Button from '@src/components/Button/Button';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import { usePostCategoryMutation, usePutCategoryMutation } from '@src/api/CategoryAPI';
 import { validationSchema } from './constant';
 
@@ -114,7 +114,7 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
           </Button>
         </Space>
       </div>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title="Confirmation"
         description="Changes will not be saved. Do you want to proceed?"
@@ -124,7 +124,7 @@ const CategoryForm: FunctionComponent<CategoryFormProps> = ({ type, initialValue
         onClose={confirmModal.toggle}
         onConfirm={handleConfirm}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title={`${isCreateForm ? 'Create' : 'Update'} Category Success`}
         showCloseButton={false}

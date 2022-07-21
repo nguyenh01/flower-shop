@@ -1,7 +1,7 @@
 import { useChangePasswordMutation } from '@src/api/UserAPI';
 import Button from '@src/components/Button/Button';
 import Input from '@src/components/Input/Input';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import Typography from '@src/components/Typography/Typography';
 import useBooleanState from '@src/hooks/useBooleanState';
 import Col from 'antd/lib/grid/col';
@@ -102,7 +102,7 @@ const ChangePassword: FunctionComponent = () => {
       <Button type="default" onClick={handleSubmitChangePassword}>
         Change
       </Button>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title="Change Password Confirmation"
         description="Do you want to change your password?"
@@ -113,7 +113,7 @@ const ChangePassword: FunctionComponent = () => {
         onConfirm={() => handleConfirmOrder(formik.values)}
         isConfirmLoading={isLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title="Change Password Success"
         description="Your password has been changed."
@@ -124,7 +124,7 @@ const ChangePassword: FunctionComponent = () => {
         confirmText="Close"
         showCloseIcon={false}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Can not change password"
         description="Your current password is incorrect."

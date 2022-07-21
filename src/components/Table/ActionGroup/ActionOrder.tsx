@@ -1,5 +1,5 @@
 import { useUpdateStatusMutation } from '@src/api/OrderAPI';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
 import { OrderStatusEnum } from '@src/utils/constants';
 import Path from '@src/utils/path';
@@ -91,7 +91,7 @@ const ActionOrder: FunctionComponent<ActionOrderProps> = ({ orderId, status }) =
           </Fragment>
         )}
       </Space>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title={type === TypeEnum.CANCEL ? 'Cancel Order' : 'Confirmation'}
         description={
@@ -106,7 +106,7 @@ const ActionOrder: FunctionComponent<ActionOrderProps> = ({ orderId, status }) =
         onConfirm={handleConfirmSubmit}
         isConfirmLoading={isLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title={type === TypeEnum.CANCEL ? 'Cancel Order Success' : 'Confirm Order Success'}
         showCloseButton={false}
@@ -116,7 +116,7 @@ const ActionOrder: FunctionComponent<ActionOrderProps> = ({ orderId, status }) =
         confirmText="Close"
         showCloseIcon={false}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Can not cancel order"
         description="You cannot cancel your order because your order has been confirmed."

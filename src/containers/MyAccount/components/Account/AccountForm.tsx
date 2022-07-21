@@ -12,13 +12,21 @@ import Button from '@src/components/Button/Button';
 import { Space, Row, Col } from 'antd';
 import { useUpdateInfoMutation } from '@src/api/UserAPI';
 import useBooleanState from '@src/hooks/useBooleanState';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 
 interface AccountFormProps {
-  toggle: () => void;
+  toggle?: () => void;
+  showBackButton?: boolean;
+  resetForm?: boolean;
+  spinColor?: 'pink' | 'blue';
 }
 
-const AccountForm: FunctionComponent<AccountFormProps> = ({ toggle }) => {
+const AccountForm: FunctionComponent<AccountFormProps> = ({
+  toggle,
+  showBackButton = true,
+  resetForm = true,
+  spinColor = 'pink',
+}) => {
   const { t } = useTranslation();
   const { profile } = useSelector((state) => state.userProfile);
   const [updateInfo, { isLoading }] = useUpdateInfoMutation();
@@ -52,7 +60,9 @@ const AccountForm: FunctionComponent<AccountFormProps> = ({ toggle }) => {
   };
 
   const handleBack = () => {
-    formik.handleReset(formik.values);
+    if (resetForm) {
+      formik.handleReset(formik.values);
+    }
     toggle && toggle();
   };
 
@@ -78,7 +88,7 @@ const AccountForm: FunctionComponent<AccountFormProps> = ({ toggle }) => {
   return (
     <Container>
       <Typography.Title className="mb-30">Change Information</Typography.Title>
-      <Spin spinning={!profile.email}>
+      <Spin spinning={!profile.email} spinColor={spinColor}>
         <Row className="mb-30" gutter={gutter}>
           <Col span={span}>
             <Input
@@ -109,15 +119,17 @@ const AccountForm: FunctionComponent<AccountFormProps> = ({ toggle }) => {
           </Col>
         </Row>
         <Space size={10}>
-          <Button type="default" onClick={handleBack}>
-            Back
-          </Button>
+          {showBackButton && (
+            <Button type="default" onClick={handleBack}>
+              Back
+            </Button>
+          )}
           <Button type="default" onClick={handleSubmit}>
             Update Info
           </Button>
         </Space>
       </Spin>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title="Confirmation"
         description="Do you want to change the information?"
@@ -128,7 +140,7 @@ const AccountForm: FunctionComponent<AccountFormProps> = ({ toggle }) => {
         onConfirm={handleConfirm}
         isConfirmLoading={isLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title="Changed Information Success"
         showCloseButton={false}

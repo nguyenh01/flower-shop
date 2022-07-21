@@ -10,7 +10,7 @@ import { truncateString } from '@src/utils/constants';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import useBooleanState from '@src/hooks/useBooleanState';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import { SearchArea, SearchText, SearchWrapper } from '@src/components/Table/style';
 import Button from '@src/components/Button/Button';
 import Input from '@src/components/Input/Input';
@@ -199,7 +199,7 @@ const ProductAdministration: FunctionComponent = () => {
         columns={columns as any}
         loading={isFetching}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Confirmation"
         description="Do you want to delete this product?"
@@ -210,7 +210,7 @@ const ProductAdministration: FunctionComponent = () => {
         onConfirm={handleConfirmDelete}
         isConfirmLoading={isLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title="Delete Success"
         showCloseButton={false}

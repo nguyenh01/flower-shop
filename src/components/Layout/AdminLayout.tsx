@@ -46,8 +46,10 @@ const getItem = (
 
 const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle }) => {
   const router = useRouter();
+
   const [logout] = useLogoutMutation();
-  const refreshToken = localStorage.getItem('refreshToken');
+  const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : '';
+
   const { profile, type } = useSelector((state) => state.userProfile);
   const { selected } = useSelector((state) => state.selectedMenu);
   useAuthentication();
@@ -162,9 +164,9 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
               size={40}
               gap={4}
             >
-              {profile.firstName.slice(0, 1)}
+              {profile.firstName?.slice(0, 1)}
             </Avatar>
-            Hello, <span className="name">{profile.firstName}!</span>
+            Hello, <span className="name">{profile.firstName} !</span>
             <BiLogOut className="logout-icon" onClick={handleLogout} />
           </div>
         </div>

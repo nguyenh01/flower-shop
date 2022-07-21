@@ -135,7 +135,8 @@ const PopoverContent = ({ t }: PopoverContentProps) => {
 
 const PopoverContentWithAuthentication = ({ t }: PopoverContentProps) => {
   const router = useRouter();
-  const refreshToken = localStorage.getItem('refreshToken');
+
+  const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : '';
   const [logout] = useLogoutMutation();
 
   const handleGoToAccountPage = () => {

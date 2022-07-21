@@ -175,7 +175,7 @@ const MessageAdministration: FunctionComponent = () => {
     customerList = sortCustomerList(customerList);
     setCustomers(customerList as any);
     //@ts-ignore
-    setCurCustomerId(customerList[0].id);
+    setCurCustomerId(customerList[0]?.id);
   };
 
   const renderConversation = () => {

@@ -13,7 +13,7 @@ import { MdKeyboardBackspace } from 'react-icons/md';
 import Container from './style';
 import Button from '@src/components/Button/Button';
 import useBooleanState from '@src/hooks/useBooleanState';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 
 const Order: FunctionComponent = () => {
   const gutter: [Gutter, Gutter] = useMemo(() => [0, 20], []);
@@ -220,7 +220,7 @@ const Order: FunctionComponent = () => {
           </Spin>
         </Fragment>
       )}
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title={isWaitingStatus ? 'Cancel Order' : 'Confirmation'}
         description={
@@ -235,7 +235,7 @@ const Order: FunctionComponent = () => {
         onConfirm={handleConfirm}
         isConfirmLoading={isLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Can not cancel order"
         description="You cannot cancel your order because your order has been confirmed."

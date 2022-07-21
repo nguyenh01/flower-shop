@@ -17,7 +17,7 @@ const baseEndpoint = `/users`;
 export const UserAPI = createApi({
   reducerPath: 'AuthenticationAPI',
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ['UPDATE_INFO'],
+  tagTypes: ['UPDATE_INFO', 'EMPLOYEE'],
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (body) => ({
@@ -72,6 +72,16 @@ export const UserAPI = createApi({
         url: baseEndpoint,
         params,
       }),
+      providesTags: (res, err) => (err ? [] : [{ type: 'EMPLOYEE' }]),
+    }),
+
+    createEmployee: builder.mutation<{ msg: string }, { email: string }>({
+      query: (body) => ({
+        url: `${baseEndpoint}/create`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['EMPLOYEE'],
     }),
   }),
 });
@@ -86,4 +96,5 @@ export const {
   useLazyVerifyAccessTokenQuery,
   useGetAccountListQuery,
   useLazyGetAccountListQuery,
+  useCreateEmployeeMutation,
 } = UserAPI;

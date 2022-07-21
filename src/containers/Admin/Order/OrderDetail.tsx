@@ -10,7 +10,7 @@ import host from '@src/utils/host';
 import formatAmount from '@src/utils/formatAmount';
 import Button from '@src/components/Button/Button';
 import useBooleanState from '@src/hooks/useBooleanState';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />;
 
@@ -204,7 +204,7 @@ const OrderDetailAdministration: FunctionComponent = () => {
           </Space>
         </div>
       </Spin>
-      <ModalConfirm
+      <CustomModal
         type="confirm"
         title={type === TypeEnum.CANCEL ? 'Cancel Order' : 'Confirmation'}
         description={
@@ -219,7 +219,7 @@ const OrderDetailAdministration: FunctionComponent = () => {
         onConfirm={handleConfirmSubmit}
         isConfirmLoading={isLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title={type === TypeEnum.CANCEL ? 'Cancel Order Success' : 'Confirm Order Success'}
         showCloseButton={false}
@@ -229,7 +229,7 @@ const OrderDetailAdministration: FunctionComponent = () => {
         confirmText="Close"
         showCloseIcon={false}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Can not cancel order"
         description="You cannot cancel your order because your order has been confirmed."

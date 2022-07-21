@@ -11,7 +11,7 @@ import { SearchArea, SearchText, SearchWrapper } from '@src/components/Table/sty
 import Button from '@src/components/Button/Button';
 import { PlusIcon } from '@src/components/Icons';
 import Input from '@src/components/Input/Input';
-import ModalConfirm from '@src/components/ModalConfirm/ModalConfirm';
+import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import Path from '@src/utils/path';
 import { useDeleteMaterialMutation, useGetMaterialsQuery } from '@src/api/MaterialAPI';
 
@@ -149,7 +149,7 @@ const MaterialAdministration: FunctionComponent = () => {
         columns={columns as any}
         loading={isFetching}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Confirmation"
         description="Do you want to delete this material?"
@@ -160,7 +160,7 @@ const MaterialAdministration: FunctionComponent = () => {
         onConfirm={handleConfirmDelete}
         isConfirmLoading={isDeleteLoading}
       />
-      <ModalConfirm
+      <CustomModal
         type="success"
         title="Delete Success"
         showCloseButton={false}
@@ -170,7 +170,7 @@ const MaterialAdministration: FunctionComponent = () => {
         confirmText="Close"
         showCloseIcon={false}
       />
-      <ModalConfirm
+      <CustomModal
         type="delete"
         title="Cannot Delete"
         description="This product material cannot be removed because there are some products with this material"
