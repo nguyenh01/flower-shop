@@ -6,7 +6,7 @@ import styled from 'styled-components';
 interface SpinProps {
   spinning: boolean;
   children: ReactNode;
-  spinColor: 'pink' | 'blue';
+  spinColor?: 'pink' | 'blue';
 }
 
 const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />;
@@ -19,7 +19,7 @@ const Spin: FunctionComponent<SpinProps> = ({ children, spinColor, ...props }) =
   );
 };
 
-const StyledSpin = styled(AntdSpin)<{ spinColor: 'pink' | 'blue' }>`
+const StyledSpin = styled(AntdSpin)<{ spinColor?: 'pink' | 'blue' }>`
   svg {
     fill: ${(props) =>
       props.spinColor === 'pink' ? props.theme.colors.primary : props.theme.colors.blue};
