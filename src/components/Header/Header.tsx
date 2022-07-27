@@ -18,6 +18,7 @@ import useSelector from '@src/utils/useSelector';
 import { setCart } from '@src/redux/slices/productSlice';
 import Cookies from 'js-cookie';
 import Input from '../Input/Input';
+import { t } from 'i18next';
 
 const Header: FunctionComponent = () => {
   const router = useRouter();
@@ -180,7 +181,7 @@ const PopoverSearchContent = () => {
     <Input
       className="search-input"
       type="text"
-      placeholder="Search out store"
+      placeholder={t('menu.searchOut')}
       value={search}
       onChange={handleChangeSearch}
       onPressEnter={handleEnterSearch}

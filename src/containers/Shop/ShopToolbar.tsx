@@ -2,12 +2,14 @@ import { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import Select from '@src/components/Select/Select';
 import { optionsSortBy } from '@src/containers/Shop/constant';
+import { useTranslation } from 'react-i18next';
 
 interface ShopToolbarProps {
   onChange: (value: string) => void;
 }
 
 const ShopToolbar: FunctionComponent<ShopToolbarProps> = ({ onChange }) => {
+  const { t } = useTranslation();
   const [value, setValue] = useState<string>('a-z');
 
   const handleChange = (event: any) => {
@@ -19,7 +21,7 @@ const ShopToolbar: FunctionComponent<ShopToolbarProps> = ({ onChange }) => {
     <Container className="mb-30">
       <div className="shop-layout"></div>
       <div className="sort">
-        <div className="sort-by">Sort by</div>
+        <div className="sort-by">{t('shop.sortBy')}</div>
         <Select
           name="sort"
           value={value}

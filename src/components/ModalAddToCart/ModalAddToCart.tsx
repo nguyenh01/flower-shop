@@ -7,6 +7,7 @@ import Button from '../Button/Button';
 import { useRouter } from 'next/router';
 import Path from '@src/utils/path';
 import host from '@src/utils/host';
+import { useTranslation } from 'react-i18next';
 
 interface ModalAddToCartProps {
   visible: boolean;
@@ -18,6 +19,7 @@ interface ModalAddToCartProps {
 }
 
 const ModalAddToCart: FunctionComponent<ModalAddToCartProps> = ({ visible, onClose, content }) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleGoToPage = (page: string) => {
@@ -39,14 +41,14 @@ const ModalAddToCart: FunctionComponent<ModalAddToCartProps> = ({ visible, onClo
             <div className="icon">
               <TiTick />
             </div>
-            Added to cart successfully!
+            {t('cart.addToCart')}
           </div>
           <Space size={16}>
             <Button type="secondary" onClick={() => handleGoToPage('cart')}>
-              View Cart
+              {t('cart.shoppingCart')}
             </Button>
             <Button type="secondary" onClick={() => handleGoToPage('check-out')}>
-              Checkout
+              {t('cart.checkOut')}
             </Button>
           </Space>
         </div>

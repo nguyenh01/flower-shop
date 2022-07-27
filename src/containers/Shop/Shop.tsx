@@ -14,6 +14,7 @@ import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScre
 import { useRouter } from 'next/router';
 import { Category } from '@src/api/model/category.data-model';
 import { Material } from '@src/api/model/material.data-model';
+import { useTranslation } from 'react-i18next';
 
 interface Option {
   label: string;
@@ -21,6 +22,7 @@ interface Option {
 }
 
 const Shop: FunctionComponent = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { product_name } = router.query;
 
@@ -97,19 +99,19 @@ const Shop: FunctionComponent = () => {
           <Col lg={6} span={24}>
             <FilterCheckbox
               className="mb-35"
-              title="Availability"
+              title={t('shop.availability')}
               options={optionAvailabilities}
               onChange={handleChangeAvailability}
             />
             <FilterCheckbox
               className="mb-35"
-              title="Category"
+              title={t('shop.category')}
               options={optionCategories}
               onChange={handleChangeCategory}
             />
             <FilterCheckbox
               className="mb-35"
-              title="Material"
+              title={t('shop.material')}
               options={optionMaterials}
               onChange={handleChangeMaterial}
             />

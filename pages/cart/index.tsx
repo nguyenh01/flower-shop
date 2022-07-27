@@ -13,7 +13,7 @@ const CartPage: NextPage = () => {
 
   const breadcrumbItems = [
     { name: t('menu.home'), link: Path.HOME },
-    { name: 'Your Shopping Cart', link: undefined },
+    { name: t('cart.yourCart'), link: undefined },
   ];
 
   return (
@@ -21,7 +21,7 @@ const CartPage: NextPage = () => {
       <Head>
         <title>Flower Sun - Cart</title>
       </Head>
-      <Breadcrumb breadcrumbTitle={'Your Shopping Cart'} breadcrumbItems={breadcrumbItems} />
+      <Breadcrumb breadcrumbTitle={t('cart.yourCart')} breadcrumbItems={breadcrumbItems} />
       <Cart />
     </Fragment>
   );

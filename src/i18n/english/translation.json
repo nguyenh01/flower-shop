@@ -25,7 +25,8 @@
     "login": "login",
     "register": "register",
     "logout": "logout",
-    "myAccount": "my account"
+    "myAccount": "my account",
+    "searchOut": "Search out store"
   },
   "home": {
     "wonderfulGift": "wonderful gift",
@@ -49,5 +50,40 @@
   "login": {
     "subtitle": "Please Login using account detail bellow.",
     "createAccount": "Create Account"
+  },
+  "shop": {
+    "sortBy": "Sort by",
+    "availability": "Availability",
+    "category": "Category",
+    "material": "Material",
+    "showing": "Showing",
+    "of": "of",
+    "result": "result"
+  },
+  "cart": {
+    "yourCart": "Your Shopping Cart",
+    "deleteSuccess": "Delete Success",
+    "updateCartSuccess": "Update Cart Success",
+    "image": "Image",
+    "product": "Product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "remove": "Remove",
+    "updateCart": "Update Cart",
+    "continue": "Continue Shopping",
+    "clear": "Clear Cart",
+    "shoppingCart": "Shopping Cart",
+    "cartEmpty": "Your cart is currently empty.",
+    "continueBrowsing": "Continue browsing",
+    "here": "here",
+    "confirmClearDescription": "Are you sure you want to delete the cart?",
+    "confirmYes": "Yes",
+    "confirmCancel": "Cancel",
+    "addToCart": "Added to cart successfully!",
+    "checkOut": "Checkout",
+    "cartTotal": "Cart Totals",
+    "subTotal": "Subtotal",
+    "proceed": "Proceed to Checkout"
   }
 }

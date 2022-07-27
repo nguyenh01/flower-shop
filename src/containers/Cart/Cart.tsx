@@ -27,6 +27,7 @@ import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
 import useBooleanState from '@src/hooks/useBooleanState';
 import SpinnerFullScreen from '@src/components/SpinnerFullScreen/SpinnerFullScreen';
 import host from '@src/utils/host';
+import { useTranslation } from 'react-i18next';
 
 interface CartItem {
   product_id: string;
@@ -34,6 +35,7 @@ interface CartItem {
 }
 
 const Cart: FunctionComponent = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const confirmClearCart = useBooleanState();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
@@ -97,7 +99,7 @@ const Cart: FunctionComponent = () => {
       deleteCartItem({ product_id: id })
         .unwrap()
         .then(() => {
-          message.success('Delete Success');
+          message.success(t('cart.deleteSuccess'));
         })
         .catch((error) => {
           console.log(error);
@@ -114,7 +116,7 @@ const Cart: FunctionComponent = () => {
       putCartItem({ carts: cartItem })
         .unwrap()
         .then(() => {
-          message.success('Update Cart Success');
+          message.success(t('cart.updateCartSuccess'));
         })
         .catch((error) => {
           console.log(error);
@@ -137,7 +139,7 @@ const Cart: FunctionComponent = () => {
       deleteCart({})
         .unwrap()
         .then(() => {
-          message.success('Delete Success');
+          message.success(t('cart.deleteSuccess'));
           confirmClearCart.toggle();
         })
         .catch((error) => {
@@ -161,7 +163,7 @@ const Cart: FunctionComponent = () => {
                   <tr>
                     {cartHeader.map((item) => (
                       <th key={item.name} className={item.className}>
-                        {item.name}
+                        {t(item.name as any)}
                       </th>
                     ))}
                   </tr>
@@ -206,33 +208,33 @@ const Cart: FunctionComponent = () => {
             </div>
             <div className="cart-update-option mb-30">
               <Button className="custom-btn" type="secondary" onClick={handleUpdateCart}>
-                Update Cart
+                {t('cart.updateCart')}
               </Button>
               <Button className="custom-btn" type="secondary" onClick={handleContinueShopping}>
-                Continue Shopping
+                {t('cart.continue')}
               </Button>
               <Button className="custom-btn" type="secondary" onClick={handleClearCart}>
-                Clear Cart
+                {t('cart.clear')}
               </Button>
             </div>
             <CartTotal total={total} />
           </Fragment>
         ) : (
           <div className="cart-empty">
-            <div className="title mb-10">Shopping Cart</div>
-            <div className="subtitle mb-10">Your cart is currently empty.</div>
+            <div className="title mb-10">{t('cart.shoppingCart')}</div>
+            <div className="subtitle mb-10">{t('cart.cartEmpty')}</div>
             <div className="description">
-              Continue browsing <Link href={Path.SHOP}>here</Link>
+              {t('cart.continueBrowsing')} <Link href={Path.SHOP}>{t('cart.here')}</Link>
             </div>
           </div>
         )}
       </Wrapper>
       <CustomModal
         type="confirm"
-        title="Clear Cart"
-        description="Are you sure you want to delete the cart?"
-        closeText="Cancel"
-        confirmText="Yes"
+        title={t('cart.clear')}
+        description={t('cart.confirmClearDescription')}
+        closeText={t('cart.confirmCancel')}
+        confirmText={t('cart.confirmYes')}
         visible={confirmClearCart.visible}
         onClose={confirmClearCart.toggle}
         onConfirm={handleConfirmClearCart}
@@ -247,6 +249,7 @@ interface CartTotalProps {
 }
 
 const CartTotal = ({ total }: CartTotalProps) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleGoToCheckout = () => {
@@ -255,21 +258,21 @@ const CartTotal = ({ total }: CartTotalProps) => {
 
   return (
     <div className="cart-calculate-items">
-      <div className="calculate-title">Cart Totals</div>
+      <div className="calculate-title">{t('cart.cartTotal')}</div>
       <table className="calculate-table">
         <tbody>
           <tr>
-            <td>Subtotal</td>
+            <td>{t('cart.subTotal')}</td>
             <td className="subtotal">{formatAmount(total)}</td>
           </tr>
           <tr className="total">
-            <td>Total</td>
+            <td>{t('cart.total')}</td>
             <td className="total-amount">{formatAmount(total)}</td>
           </tr>
         </tbody>
       </table>
       <Button className="custom-btn" type="secondary" onClick={handleGoToCheckout}>
-        Proceed to Checkout
+        {t('cart.proceed')}
       </Button>
     </div>
   );

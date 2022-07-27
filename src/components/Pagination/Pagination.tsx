@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { Pagination as PaginationAntd } from 'antd';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 interface PaginationProps {
   currentPage: number;
@@ -15,6 +16,7 @@ const Pagination: FunctionComponent<PaginationProps> = ({
   pageSize,
   onChange,
 }) => {
+  const { t } = useTranslation();
   const fromShowing = currentPage === 1 ? 1 : currentPage * pageSize - 8;
   const toShowing = currentPage === 1 ? 9 : currentPage * pageSize + 1;
 
@@ -28,7 +30,8 @@ const Pagination: FunctionComponent<PaginationProps> = ({
         pageSize={pageSize}
       />
       <div className="count-result">
-        Showing {fromShowing} - {toShowing} of {totalItems} result
+        {t('shop.showing')} {fromShowing} - {toShowing} {t('shop.of')} {totalItems}{' '}
+        {t('shop.result')}
       </div>
     </Container>
   );

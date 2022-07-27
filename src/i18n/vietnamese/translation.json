@@ -25,7 +25,8 @@
     "login": "đăng nhập",
     "register": "đăng ký",
     "logout": "đăng xuất",
-    "myAccount": "tài khoản của tôi"
+    "myAccount": "tài khoản của tôi",
+    "searchOut": "Tìm kiếm trong cửa hàng"
   },
   "home": {
     "wonderfulGift": "quà tặng tuyệt vời",
@@ -49,5 +50,40 @@
   "login": {
     "subtitle": "Vui lòng Đăng Nhập bằng cách điền tài khoản của bạn bên dưới.",
     "createAccount": "Tạo Tài Khoản"
+  },
+  "shop": {
+    "sortBy": "Sắp xếp theo",
+    "availability": "Có sẵn",
+    "category": "Loại",
+    "material": "Chất liệu",
+    "showing": "Hiển thị",
+    "of": "của",
+    "result": "kết quả"
+  },
+  "cart": {
+    "yourCart": "Giỏ Hàng Của Bạn",
+    "deleteSuccess": "Xóa Thành Công",
+    "updateCartSuccess": "Cập Nhật Giỏ Hàng Thành Công",
+    "image": "Hình Ảnh",
+    "product": "Sản Phẩm",
+    "price": "Giá Tiền",
+    "quantity": "Số Lượng",
+    "total": "Tổng Cộng",
+    "remove": "Xóa",
+    "updateCart": "Cập Nhật Giỏ Hàng",
+    "continue": "Tiếp Tục Mua Sắm",
+    "clear": "Xóa Tất Cả",
+    "shoppingCart": "Giỏ Hàng",
+    "cartEmpty": "Giỏ hàng của bạn hiện đang trống.",
+    "continueBrowsing": "Xem sản phẩm",
+    "here": "ở đây",
+    "confirmClearDescription": "Bạn có chắc chắn muốn xóa giỏ hàng không?",
+    "confirmYes": "Có",
+    "confirmCancel": "Hủy",
+    "addToCart": "Đã thêm vào giỏ hàng thành công!",
+    "checkOut": "Thanh Toán",
+    "cartTotal": "Tổng Tiền Giỏ Hàng",
+    "subTotal": "Tổng phụ",
+    "proceed": "Tiến hành Thanh Toán"
   }
 }

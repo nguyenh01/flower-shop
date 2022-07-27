@@ -1,8 +1,8 @@
 export const cartHeader = [
-  { className: 'thumbnail', name: 'Image' },
-  { className: 'title', name: 'Product' },
-  { className: 'price', name: 'Price' },
-  { className: 'quantity', name: 'Quantity' },
-  { className: 'total', name: 'Total' },
-  { className: 'remove', name: 'Remove' },
+  { className: 'thumbnail', name: 'cart.image' },
+  { className: 'title', name: 'cart.product' },
+  { className: 'price', name: 'cart.price' },
+  { className: 'quantity', name: 'cart.quantity' },
+  { className: 'total', name: 'cart.total' },
+  { className: 'remove', name: 'cart.remove' },
 ];
