@@ -69,7 +69,7 @@ const ChangePassword: FunctionComponent = () => {
 
   return (
     <Container>
-      <Typography.Title className="mb-30">change password</Typography.Title>
+      <Typography.Title className="mb-30">{t('myAccount.changePassword')}</Typography.Title>
       <Row className="mb-30" gutter={gutter}>
         <Col span={span}>
           <Input
@@ -100,7 +100,7 @@ const ChangePassword: FunctionComponent = () => {
         </Col>
       </Row>
       <Button type="default" onClick={handleSubmitChangePassword}>
-        Change
+        {t('myAccount.changePassword')}
       </Button>
       <CustomModal
         type="confirm"

@@ -28,49 +28,45 @@ CheckoutPage.getLayout = function getLayout(page: ReactElement) {
 
 export const getServerSideProps = async (server: GetServerSidePropsContext) => {
   const { resolvedUrl, req } = server;
-  const token = server?.req?.cookies?.token;
-  const cartCookies = server?.req?.cookies?.carts;
+  const token = await req?.cookies?.token;
+  const cartCookies = req?.cookies?.carts;
 
-  try {
-    if (!token) {
-      const parseJson = JSON.parse(cartCookies as any);
-      if (parseJson.length === 0) {
-        return {
-          redirect: {
-            permanent: false,
-            destination: Path.CART,
-          },
-        };
-      } else {
-        const formatCart = parseJson.map((item: any) => ({
-          product_id: item?.id,
-          quantity: item?.quantity,
-          product_name: item?.name,
-          imageList: [item?.image],
-          unit_price: item?.price,
-        }));
-        return { props: { data: { shoppingCart: {}, listShoppingCartDetail: formatCart } } };
-      }
-    }
-    if (req && token) {
-      const response = await axios.get(`${apiHost}/shoppingCarts`, {
-        headers: {
-          Authorization: 'Bearer ' + token,
+  if (!token) {
+    const parseJson = JSON.parse(cartCookies as any);
+    if (parseJson.length === 0) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: Path.CART,
         },
-      });
-      const checkCartItem = response?.data?.listShoppingCartDetail.length === 0;
-      if (checkCartItem && resolvedUrl === Path.CHECK_OUT) {
-        return {
-          redirect: {
-            permanent: false,
-            destination: Path.CART,
-          },
-        };
-      }
-      return { props: { data: response?.data } };
+      };
+    } else {
+      const formatCart = parseJson.map((item: any) => ({
+        product_id: item?.id,
+        quantity: item?.quantity,
+        product_name: item?.name,
+        imageList: [item?.image],
+        unit_price: item?.price,
+      }));
+      return { props: { data: { shoppingCart: {}, listShoppingCartDetail: formatCart } } };
     }
-  } catch (error) {
-    return { props: { data: 'error' } };
+  }
+  if (token) {
+    const response = await axios.get(`${apiHost}/shoppingCarts`, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+    const checkCartItem = response?.data?.listShoppingCartDetail.length === 0;
+    if (checkCartItem && resolvedUrl === Path.CHECK_OUT) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: Path.CART,
+        },
+      };
+    }
+    return { props: { data: response?.data } };
   }
 };
 

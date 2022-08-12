@@ -27,6 +27,11 @@ export enum OrderStatusEnum {
   Cancelled,
 }
 
+export enum LanguageEnum {
+  ENGLISH = 0,
+  VIETNAMESE = 1,
+}
+
 export const COLOR_STATUS = ['#3f51b5', '#2196f3', '#4caf50', '#f44336'];
 
 export const DEFAULT_FORMAT_DATE = 'MM/DD/YYYY';

@@ -14,8 +14,10 @@ import Container from './style';
 import Button from '@src/components/Button/Button';
 import useBooleanState from '@src/hooks/useBooleanState';
 import CustomModal from '@src/components/ModalConfirm/ModalConfirm';
+import { useTranslation } from 'react-i18next';
 
 const Order: FunctionComponent = () => {
+  const { t } = useTranslation();
   const gutter: [Gutter, Gutter] = useMemo(() => [0, 20], []);
   const confirmModal = useBooleanState();
   const failedModal = useBooleanState();
@@ -79,17 +81,17 @@ const Order: FunctionComponent = () => {
       ),
     },
     {
-      title: 'Product Name',
+      title: t('cart.product'),
       dataIndex: 'name',
       align: 'center',
     },
     {
-      title: 'Quantity',
+      title: t('cart.quantity'),
       dataIndex: 'quantity',
       align: 'center',
     },
     {
-      title: 'Price',
+      title: t('cart.price'),
       dataIndex: 'price',
       align: 'center',
       render: (price: number) => formatAmount(price),
@@ -101,24 +103,28 @@ const Order: FunctionComponent = () => {
       {showOrderDetail ? (
         <Fragment>
           <div className="back mb-30" onClick={handleBackOrderList}>
-            <MdKeyboardBackspace className="back-icon" /> Back
+            <MdKeyboardBackspace className="back-icon" /> {t('myAccount.back')}
           </div>
-          <Typography.Title className="mb-30">order detail</Typography.Title>
+          <Typography.Title className="mb-30">
+            {t('myAccount.orderDetail')} - {order?.orderInfo?.order_code}
+          </Typography.Title>
           <Spin spinning={isOrderFetching}>
             <div className="order-detail">
-              <Typography.Label className="label">Order Code</Typography.Label>
+              <Typography.Label className="label">{t('myAccount.orderCode')}</Typography.Label>
               <div>{order?.orderInfo?.order_code}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Order Date</Typography.Label>
+              <Typography.Label className="label">{t('myAccount.orderDate')}</Typography.Label>
               <div>{order?.orderInfo?.order_date}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Estimated Delivery</Typography.Label>
+              <Typography.Label className="label">
+                {t('myAccount.estimatedDelivery')}
+              </Typography.Label>
               <div>{order?.orderInfo?.ship_date}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Status</Typography.Label>
+              <Typography.Label className="label">{t('myAccount.status')}</Typography.Label>
               <div
                 style={{
                   fontWeight: 500,
@@ -129,28 +135,31 @@ const Order: FunctionComponent = () => {
               </div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Delivery Address</Typography.Label>
+              <Typography.Label className="label">
+                {t('myAccount.deliveryAddress')}
+              </Typography.Label>
               <div style={{ textAlign: 'right' }}>{order?.orderInfo?.full_address}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Recipient Email</Typography.Label>
+              <Typography.Label className="label">{t('myAccount.recipientEmail')}</Typography.Label>
               <div>{order?.orderInfo?.email}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Recipient Name</Typography.Label>
+              <Typography.Label className="label">{t('myAccount.recipientName')}</Typography.Label>
               <div>
                 {order?.orderInfo?.first_name} {order?.orderInfo?.last_name}
               </div>
             </div>
             <div className="order-detail">
-              <Typography.Label className="label">Recipient Phone Number</Typography.Label>
+              <Typography.Label className="label">{t('myAccount.recipientPhone')}</Typography.Label>
               <div>{order?.orderInfo?.phone}</div>
             </div>
             <Typography.Label>
-              Note: <span style={{ fontWeight: 400 }}>{order?.orderInfo?.note}</span>
+              {t('myAccount.note')}:{' '}
+              <span style={{ fontWeight: 400 }}>{order?.orderInfo?.note}</span>
             </Typography.Label>
             <Typography.Label2 className="order-info-title mb-20">
-              Order Information
+              {t('myAccount.orderInfo')}
             </Typography.Label2>
             <Table
               className="mb-20"
@@ -160,15 +169,15 @@ const Order: FunctionComponent = () => {
             />
             <hr />
             <div className="order-detail">
-              <Typography.Label>Calculated Temporary</Typography.Label>
+              <Typography.Label>{t('myAccount.calculatedTemporary')}</Typography.Label>
               <div>{formatAmount(order?.orderInfo?.product_fee)}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label>Ship Fee</Typography.Label>
+              <Typography.Label>{t('myAccount.shipFee')}</Typography.Label>
               <div>{formatAmount(order?.orderInfo?.ship_fee)}</div>
             </div>
             <div className="order-detail">
-              <Typography.Label>Total Payment</Typography.Label>
+              <Typography.Label>{t('myAccount.totalPayment')}</Typography.Label>
               <Typography.Label className="total-payment">
                 {formatAmount(order?.orderInfo?.total_fee)}
               </Typography.Label>
@@ -179,7 +188,7 @@ const Order: FunctionComponent = () => {
                 type="secondary"
                 onClick={handleShowConfirmModal}
               >
-                Received
+                {t('myAccount.received')}
               </Button>
             )}
             {isWaitingStatus && (
@@ -188,14 +197,14 @@ const Order: FunctionComponent = () => {
                 type="secondary"
                 onClick={handleShowConfirmModal}
               >
-                Cancel Order
+                {t('myAccount.cancelOrder')}
               </Button>
             )}
           </Spin>
         </Fragment>
       ) : (
         <Fragment>
-          <Typography.Title className="mb-30">purchase order</Typography.Title>
+          <Typography.Title className="mb-30">{t('myAccount.purchase')}</Typography.Title>
           <Spin spinning={isOrdersFetching}>
             {orders?.data?.length > 0 ? (
               <Row gutter={gutter} wrap>
@@ -213,9 +222,7 @@ const Order: FunctionComponent = () => {
                 ))}
               </Row>
             ) : (
-              <Typography.Label2 className="not-order">
-                You do not have any orders yet
-              </Typography.Label2>
+              <Typography.Label2 className="not-order">{t('myAccount.notOrder')}</Typography.Label2>
             )}
           </Spin>
         </Fragment>

@@ -9,6 +9,7 @@ const Container = styled.div`
     background-color: #d3d3d3;
     padding: 5px 10px;
     border-radius: 8px;
+    text-transform: capitalize;
     transition: all 0.3s ease-in-out;
 
     .back-icon {

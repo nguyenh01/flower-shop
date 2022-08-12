@@ -85,5 +85,40 @@
     "cartTotal": "Tổng Tiền Giỏ Hàng",
     "subTotal": "Tổng phụ",
     "proceed": "Tiến hành Thanh Toán"
+  },
+  "myAccount": {
+    "changeInfo": "thay đổi thông tin",
+    "purchase": "đơn hàng đã đặt",
+    "changePassword": "đổi mật khẩu",
+    "received": "đã nhận",
+    "waiting": "đang chờ",
+    "confirm": "đã xác nhận",
+    "cancelled": "đã hủy",
+    "back": "trở về",
+    "orderCode": "mã đơn hàng",
+    "orderDate": "ngày đặt hàng",
+    "estimatedDelivery": "ngày dự kiến giao hàng",
+    "status": "trạng thái",
+    "deliveryAddress": "địa chỉ nhận hàng",
+    "recipientEmail": "email người nhận",
+    "recipientName": "tên người nhận",
+    "recipientPhone": "số điện thoại người nhận",
+    "note": "ghi chú",
+    "orderInfo": "thông tin đơn hàng",
+    "calculatedTemporary": "tạm tính",
+    "shipFee": "phí giao hàng",
+    "totalPayment": "tổng thanh toán",
+    "changeInformation": "thay đổi thông tin",
+    "updateInfo": "cập nhật thông tin",
+    "notOrder": "bạn không có đơn hàng nào",
+    "orderDetail": "chi tiết đơn hàng",
+    "cancelOrder": "hủy đơn hàng"
+  },
+  "checkout": {
+    "contactInfo": "thông tin liên hệ",
+    "haveAccount": "Bạn đã có tài khoản?",
+    "shippingAddress": "địa chỉ giao hàng",
+    "completeOrder": "đặt hàng",
+    "returnCart": "Trở về giỏ hàng"
   }
 }

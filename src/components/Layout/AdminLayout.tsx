@@ -76,7 +76,7 @@ const AdminLayout: FunctionComponent<AdminLayoutProps> = ({ children, adminTitle
     getItem('Material', MenuAdminEnum.MATERIAL, <TbTools />),
     getItem('Product', MenuAdminEnum.PRODUCT, <FaBoxOpen />),
     getItem('Message', MenuAdminEnum.MESSAGE, <BsChatTextFill />),
-    getItem('User List', 'sub1', <ImUsers />, [getItem('Customer', MenuAdminEnum.CUSTOMER)]),
+    getItem('Customer', MenuAdminEnum.CUSTOMER, <ImUsers />),
     getItem('Profile', MenuAdminEnum.PROFILE, <ImProfile />),
   ];
 

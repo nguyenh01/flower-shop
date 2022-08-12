@@ -85,5 +85,40 @@
     "cartTotal": "Cart Totals",
     "subTotal": "Subtotal",
     "proceed": "Proceed to Checkout"
+  },
+  "myAccount": {
+    "changeInfo": "change info",
+    "purchase": "purchase order",
+    "changePassword": "change password",
+    "received": "received",
+    "waiting": "waiting",
+    "confirm": "confirm",
+    "cancelled": "cancelled",
+    "back": "back",
+    "orderCode": "order code",
+    "orderDate": "order date",
+    "estimatedDelivery": "estimated delivery",
+    "status": "status",
+    "deliveryAddress": "delivery address",
+    "recipientEmail": "recipient email",
+    "recipientName": "recipient name",
+    "recipientPhone": "recipient phone number",
+    "note": "note",
+    "orderInfo": "order information",
+    "calculatedTemporary": "calculated temporary",
+    "shipFee": "ship fee",
+    "totalPayment": "total payment",
+    "changeInformation": "change information",
+    "updateInfo": "update info",
+    "notOrder": "You do not have any orders yet",
+    "orderDetail": "order detail",
+    "cancelOrder": "cancel order"
+  },
+  "checkout": {
+    "contactInfo": "contact information",
+    "haveAccount": "Already have an account?",
+    "shippingAddress": "shipping address",
+    "completeOrder": "complete order",
+    "returnCart": "return to cart"
   }
 }

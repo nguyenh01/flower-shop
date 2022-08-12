@@ -22,6 +22,7 @@ import vietnamese_translation from '@src/i18n/vietnamese/translation.json';
 
 import Layout from '@src/components/Layout/Layout';
 import Cookies from 'js-cookie';
+import { LanguageEnum } from '@src/utils/constants';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -51,6 +52,13 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const cartCookie = Cookies.get('carts');
     if (!cartCookie) {
       Cookies.set('carts', '[]');
+    }
+  }, []);
+
+  useEffect(() => {
+    const languageCookie = Cookies.get('language');
+    if (!languageCookie) {
+      Cookies.set('language', `${LanguageEnum.ENGLISH}`);
     }
   }, []);
 

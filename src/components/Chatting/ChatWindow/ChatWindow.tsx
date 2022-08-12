@@ -144,7 +144,7 @@ const ChatWindow: FunctionComponent<ChatWindowProps> = ({ toggle }) => {
           <IoClose className="close-icon" />
         </div>
       </div>
-      <Spin spinning={isFetching}>
+      <Spin spinning={isFetching} spinColor="pink">
         <div className="messages">
           {renderMessages()} {typing && <Typing />}
         </div>

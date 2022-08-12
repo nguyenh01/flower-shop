@@ -1,12 +1,9 @@
+import { LanguageEnum } from '@src/utils/constants';
 import { Drawer } from 'antd';
-import { FunctionComponent, useState } from 'react';
+import Cookies from 'js-cookie';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoCloseSharp } from 'react-icons/io5';
-
-enum LanguageEnum {
-  ENGLISH = 0,
-  VIETNAMESE = 1,
-}
 
 interface MenuDrawerProps {
   visible: boolean;
@@ -15,12 +12,24 @@ interface MenuDrawerProps {
 
 const MenuDrawer: FunctionComponent<MenuDrawerProps> = ({ visible, onClose }) => {
   const { i18n, t } = useTranslation();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(LanguageEnum.ENGLISH);
 
   const handleChangeLanguage = (language: number) => {
-    i18n.changeLanguage(language === 0 ? 'english' : 'vietnamese');
-    language === 0 ? setActive(0) : setActive(1);
+    i18n.changeLanguage(language === LanguageEnum.ENGLISH ? 'english' : 'vietnamese');
+    if (language === LanguageEnum.ENGLISH) {
+      Cookies.set('language', `${LanguageEnum.ENGLISH}`);
+      setActive(LanguageEnum.ENGLISH);
+    } else {
+      Cookies.set('language', `${LanguageEnum.VIETNAMESE}`);
+      setActive(LanguageEnum.VIETNAMESE);
+    }
   };
+
+  useEffect(() => {
+    const languageCookie = Cookies.get('language');
+    const formatLanguageCookieToNumber = Number(languageCookie);
+    handleChangeLanguage && handleChangeLanguage(formatLanguageCookieToNumber);
+  }, []);
 
   return (
     <Drawer
@@ -36,13 +45,17 @@ const MenuDrawer: FunctionComponent<MenuDrawerProps> = ({ visible, onClose }) =>
         <div className="switcher-title">{t('menu.language')}:</div>
         <div className="language-container">
           <div
-            className={`${active === 0 ? 'language-button active-btn' : 'language-button'}`}
+            className={`${
+              active === LanguageEnum.ENGLISH ? 'language-button active-btn' : 'language-button'
+            }`}
             onClick={() => handleChangeLanguage(LanguageEnum.ENGLISH)}
           >
             english
           </div>
           <div
-            className={`${active === 1 ? 'language-button active-btn' : 'language-button'}`}
+            className={`${
+              active === LanguageEnum.VIETNAMESE ? 'language-button active-btn' : 'language-button'
+            }`}
             onClick={() => handleChangeLanguage(LanguageEnum.VIETNAMESE)}
           >
             vietnamese

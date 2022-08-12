@@ -73,6 +73,7 @@ const Container = styled.div`
 
     .text {
       font-size: 15px;
+      text-transform: capitalize;
     }
 
     .price {
@@ -86,6 +87,7 @@ const Container = styled.div`
 
     .text {
       font-size: 16px;
+      text-transform: capitalize;
     }
 
     .price {
@@ -107,6 +109,7 @@ const Container = styled.div`
 
     .section-title {
       color: #333;
+      text-transform: capitalize;
       ${(props) => props.theme.fontCustom(18, 400, 23.4)}
     }
 
@@ -126,10 +129,12 @@ const Container = styled.div`
 
     .shipping-title {
       color: #333;
+      text-transform: capitalize;
       ${(props) => props.theme.fontCustom(18, 400, 23.4)}
     }
 
     .order-btn {
+      text-transform: capitalize;
       background-color: ${(props) => props.theme.colors.primary};
       border-radius: 5px;
       height: 60px;

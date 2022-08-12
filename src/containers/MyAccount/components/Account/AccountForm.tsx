@@ -87,7 +87,7 @@ const AccountForm: FunctionComponent<AccountFormProps> = ({
 
   return (
     <Container>
-      <Typography.Title className="mb-30">Change Information</Typography.Title>
+      <Typography.Title className="mb-30">{t('myAccount.changeInformation')}</Typography.Title>
       <Spin spinning={!profile.email} spinColor={spinColor}>
         <Row className="mb-30" gutter={gutter}>
           <Col span={span}>
@@ -121,11 +121,11 @@ const AccountForm: FunctionComponent<AccountFormProps> = ({
         <Space size={10}>
           {showBackButton && (
             <Button type="default" onClick={handleBack}>
-              Back
+              {t('myAccount.back')}
             </Button>
           )}
           <Button type="default" onClick={handleSubmit}>
-            Update Info
+            {t('myAccount.updateInfo')}
           </Button>
         </Space>
       </Spin>

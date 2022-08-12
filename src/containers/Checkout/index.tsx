@@ -183,10 +183,10 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
             <Logo />
           </div>
           <div className="section-header mb-20">
-            <div className="section-title">Contact information</div>
+            <div className="section-title">{t('checkout.contactInfo')}</div>
             {!isAuth && (
               <div className="check-account">
-                Already have an account? <Link href={Path.LOGIN}>Log in</Link>
+                {t('checkout.haveAccount')} <Link href={Path.LOGIN}>{t('menu.login')}</Link>
               </div>
             )}
           </div>
@@ -229,7 +229,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
                 />
               </Col>
               <Col className="shipping-title" span={span}>
-                Shipping address
+                {t('checkout.shippingAddress')}
               </Col>
               <Col span={span}>
                 <Select
@@ -320,9 +320,9 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
               </Col>
               <Col className="order-place" span={span}>
                 <Button className="order-btn" type="secondary" onClick={handleOrder}>
-                  Complete order
+                  {t('checkout.completeOrder')}
                 </Button>
-                <Link href={Path.CART}>Return to cart</Link>
+                <Link href={Path.CART}>{t('checkout.returnCart')}</Link>
               </Col>
             </Row>
           </div>
@@ -350,16 +350,16 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
           </div>
           <div className="total-line mb-25">
             <div className="line mb-10">
-              <div className="text">Subtotal</div>
+              <div className="text">{t('cart.subTotal')}</div>
               <div className="price">{formatAmount(subtotal)}</div>
             </div>
             <div className="line">
-              <div className="text">Shipping</div>
+              <div className="text">{t('myAccount.shipFee')}</div>
               <div className="price">{formatAmount(shippingFee)}</div>
             </div>
           </div>
           <div className="total">
-            <div className="text">Total</div>
+            <div className="text">{t('myAccount.totalPayment')}</div>
             <div className="price">
               <span className="currency">VND</span>
               <div>{formatAmount(subtotal + shippingFee)}</div>
