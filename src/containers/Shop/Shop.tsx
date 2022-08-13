@@ -146,7 +146,7 @@ const Shop: FunctionComponent = () => {
 };
 
 const Container = styled.div`
-  height: 100%;
+  height: 150vh;
   padding: 80px 0;
 `;
 
