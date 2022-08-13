@@ -19,7 +19,7 @@ export const validationSchema = yup.object().shape({
   email: yup.string().trim().email('Invalid Email').required(requiredValidation('Email')),
   phone: yup
     .string()
-    .matches(/(\+|)([0-9])\w+/g, { message: 'Invalid Phone Number' })
+    .matches(/(\+|)(84|0[3|5|7|8|9])+([0-9]{8})\b/g, { message: 'Invalid Phone Number' })
     .required(requiredValidation('Phone Number')),
   password: yup
     .string()

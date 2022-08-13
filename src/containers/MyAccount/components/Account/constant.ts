@@ -12,6 +12,6 @@ export const validationSchema = yup.object().shape({
   lastName: yup.string().trim().required(requiredValidation('Last Name')),
   phone: yup
     .string()
-    .matches(/(\+|)([0-9])\w+/g, { message: 'Invalid Phone Number' })
+    .matches(/(\+|)(84|0[3|5|7|8|9])+([0-9]{8})\b/g, { message: 'Invalid Phone Number' })
     .required(requiredValidation('Phone Number')),
 });
