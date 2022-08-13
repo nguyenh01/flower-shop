@@ -48,10 +48,13 @@ const initialFullAddressValue = {
 
 const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
   const { t } = useTranslation();
+
   const router = useRouter();
   const { isAuth, profile } = useSelector((state) => state.userProfile);
+
   const confirmModal = useBooleanState();
   const successModal = useBooleanState();
+  const failedModal = useBooleanState();
 
   const gutter: [Gutter, Gutter] = useMemo(() => [12, 15], []);
   const span = useMemo(() => 24, []);
@@ -68,6 +71,7 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
 
   const [shippingFee, setShippingFee] = useState(0);
   const [fullAddress, setFullAddress] = useState<FullAddress>(initialFullAddressValue);
+  const [failMessage, setFailMessage] = useState<string>('');
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -163,7 +167,13 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
         await dispatch(CartAPI.util.invalidateTags(['CART']));
         successModal.toggle();
       })
-      .catch(() => {});
+      .catch((error) => {
+        if (error.status === 400) {
+          setFailMessage(error.data.msg);
+          confirmModal.toggle();
+          failedModal.toggle();
+        }
+      });
   };
 
   const handleConfirmSuccess = () => {
@@ -386,6 +396,17 @@ const Checkout: FunctionComponent<CheckoutProps> = ({ cart }) => {
         visible={successModal.visible}
         onClose={successModal.toggle}
         onConfirm={handleConfirmSuccess}
+        confirmText="Close"
+        showCloseIcon={false}
+      />
+      <CustomModal
+        type="delete"
+        title="Cannot Order"
+        description={failMessage}
+        showCloseButton={false}
+        visible={failedModal.visible}
+        onClose={failedModal.toggle}
+        onConfirm={failedModal.toggle}
         confirmText="Close"
         showCloseIcon={false}
       />
