@@ -26,7 +26,7 @@ const MyAccount: FunctionComponent = () => {
 
 const Container = styled.div`
   padding: 100px 0;
-  height: 100%;
+  height: 150vh;
 `;
 
 export default MyAccount;

@@ -152,7 +152,7 @@ const Login: FunctionComponent = () => {
 };
 
 const Container = styled.div`
-  height: 100%;
+  height: 150vh;
   padding: 100px 0;
 
   .wrapper {
